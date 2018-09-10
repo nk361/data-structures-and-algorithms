@@ -42,6 +42,9 @@
     <ClInclude Include="c_linked_list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="c_int_binary_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

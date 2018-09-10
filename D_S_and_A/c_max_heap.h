@@ -7,7 +7,7 @@ class c_max_heap : public c_heap
 public:
 	c_max_heap() = delete;
 
-	explicit c_max_heap(int const& num) : c_heap(num) {}
+	explicit c_max_heap(int const& val) : c_heap(val) {}
 
 	void add_item(int const& val) override
 	{
@@ -86,7 +86,7 @@ public:
 					else
 					{
 						current->left = new c_node<int>{ val };
-						size++;
+						++size;
 						break;
 					}
 				}
@@ -101,7 +101,7 @@ public:
 					else
 					{
 						current->right = new c_node<int>{ val };
-						size++;
+						++size;
 						break;
 					}
 				}
@@ -120,7 +120,8 @@ public:
 
 	void add_items(std::vector<int> const& vals) override
 	{
-		
+		for (int val : vals)
+			this->add_item(val);
 	}
 
 	void remove_item() override//this would be the same except the > check in a min heap

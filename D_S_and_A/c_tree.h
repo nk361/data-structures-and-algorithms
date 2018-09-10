@@ -22,45 +22,35 @@ public:
 	 *After a node is deleted, current it set to the last item on the stack or the parent of that deleted node
 	 *Later I may upgrade this deconstructor to handle any amount of children that a single node can have
 	 *Because this is an iterative method instead of recursive, there is no stack issue with larger size, only the size of the vector of ancestors
+	 *When the tree is properly balanced, ancestors can reach a max length of nlogn, if the tree is not balanced, it can reach a max length of n
 	 */
 	~c_tree()
 	{
-		c_node<MyType> * * current = &root;
+		c_node<MyType> * * current = &root;//made to navigate without changing tree pointer values unless intended
 		std::vector<c_node<MyType> * *> ancestors = { current };//using this vector like a stack
 		while(true)
 		{
-			//std::cout << "Currently on: " << (*current)->value << std::endl;
-
 			if((*current)->left != nullptr)
 			{
-				//std::cout << "Going left" << std::endl;
-
 				current = &((*current)->left);
 				ancestors.push_back(current);
 			}
 			else if((*current)->right != nullptr)
 			{
-				//std::cout << "Going right" << std::endl;
-				
 				current = &((*current)->right);
 				ancestors.push_back(current);
 			}
 			if((*current)->left == nullptr && (*current)->right == nullptr)
 			{
-				//std::cout << "Deleting: " << (*current)->value << std::endl;
-
 				ancestors.pop_back();
 
 				delete (*current);
 				(*current) = nullptr;
 
-				if(root == nullptr)
-				{
-					//std::cout << "Tree deleted" << std::endl;
+				if(root == nullptr)//tree deleted
 					break;
-				}
 
-				current = ancestors.back();
+				current = ancestors.back();//go back up one parent
 			}
 		}
 	}

@@ -33,6 +33,27 @@ TEST(TreeHeader, TreeConstructors)
 	test_destructor_four.add_item(74);//an infinite loop is entered when a tree tries to add a fourth item or maybe tries to destroy it
 }
 
+TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
+{
+	c_int_binary_tree b_tree{ 30 };
+	b_tree.add_items({ 12, 72, 109, 23, 83, 22, 43, 28, 67, 43, 30 });
+
+	EXPECT_EQ(b_tree.root->value, 30);
+	
+	EXPECT_EQ(b_tree.root->left->value, 12);
+	EXPECT_EQ(b_tree.root->right->value, 72);
+
+	EXPECT_EQ(b_tree.root->right->right->value, 109);
+	EXPECT_EQ(b_tree.root->left->right->value, 23);
+	EXPECT_EQ(b_tree.root->right->right->left->value, 83);
+	EXPECT_EQ(b_tree.root->left->right->left->value, 22);
+	EXPECT_EQ(b_tree.root->right->left->value, 43);
+	EXPECT_EQ(b_tree.root->left->right->right->value, 28);
+	EXPECT_EQ(b_tree.root->right->left->right->value, 67);
+	EXPECT_EQ(b_tree.root->right->left->right->left->value, 43);
+	EXPECT_EQ(b_tree.root->right->left->left->value, 30);
+}
+
 TEST(c_max_heapTests, c_max_heapTempFunctionTests)
 {
 	//c_heap testing{ 30 };
@@ -100,6 +121,17 @@ TEST(c_max_heapTests, c_max_heapTempFunctionTests)
 		32
 		
 		*/
+	}
+
+	{
+		c_max_heap larger_tree{ 10 };
+		larger_tree.add_items({ 20, 50, 72, 19, 67, 5, 32, 48, 95, 140, 34, 18 });
+
+		EXPECT_EQ(larger_tree.root->value, 10);//all these checks are before moving items up the tree
+		EXPECT_EQ(larger_tree.root->left->left->left->value, 32);
+		EXPECT_EQ(larger_tree.root->right->right->left, nullptr);
+		EXPECT_EQ(larger_tree.root->right->right->right, nullptr);
+		EXPECT_EQ(larger_tree.root->right->left->left->value, 34);
 	}
 }
 

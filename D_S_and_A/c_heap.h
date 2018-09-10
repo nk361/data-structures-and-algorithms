@@ -2,18 +2,20 @@
 #include "c_node.h"
 #include "c_tree.h"
 #include <cmath>
+//#include "c_binary_tree.h"
+#include "c_int_binary_tree.h"
 
 //in a heap, always remove only the root
-class c_heap : public c_tree<int>
+class c_heap : public c_int_binary_tree//public c_tree<int>
 {
 public:
 	int size;
 
 	c_heap() = delete;
 
-	explicit c_heap(int const& num) : c_tree<int>(num), size(1) {}
+	explicit c_heap(int const& num) : c_int_binary_tree(num), size(1) {}
 
-	virtual void add_item(int const& val) override = 0;
+	virtual void add_item(int const& val) override = 0;//can't call the int binary tree add, heaps have different add orders
 
 	/*void add_item(int const& val) override
 	{

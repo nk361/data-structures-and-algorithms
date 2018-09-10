@@ -3,47 +3,17 @@
 #include "c_node.h"
 #include "c_tree.h"
 
-class c_binary_tree : public c_tree<int>
+template <class MyType>
+class c_binary_tree : public c_tree<MyType>
 {
 public:
 	c_binary_tree() = delete;
 
-	explicit c_binary_tree(int const& num) : c_tree(num) {}
+	explicit c_binary_tree(MyType const& val) : c_tree(val) {}
 	
-	void add_item(int const& val) override
-	{
-		c_node<int> * current = root;
-		while(true)
-		{
-			if(val < current->value)// && current.left == nullptr)
-			{
-				if (current->left == nullptr)
-				{
-					current->left = new c_node<int>{ val };
-					break;
-				}
-				current = current->left;
-			}
-			else//greater than or equal to
-			{
-				if(current->right == nullptr)
-				{
-					current->right = new c_node<int>{ val };
-					break;
-				}
-				current = current->right;
-			}
-		}
-	}
+	virtual void add_item(MyType const& val) override = 0;//needs defined in derived classes for them to decide where to place that type
 
-	void add_items(std::vector<int> const& vals) override
-	{
-		for (int val : vals)
-			this->add_item(val);
-	}
+	virtual void add_items(std::vector<MyType> const& vals) override = 0;//probably just a for each calling their add_item function
 
-	void remove_item(int const& val)
-	{
-		
-	}
+	virtual void remove_item(MyType const& val) = 0;
 };

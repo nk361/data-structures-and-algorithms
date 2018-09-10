@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="c_binary_tree.h" />
     <ClInclude Include="c_heap.h" />
+    <ClInclude Include="c_int_binary_tree.h" />
     <ClInclude Include="c_linked_list.h" />
     <ClInclude Include="c_max_heap.h" />
     <ClInclude Include="c_red_black_tree_node.h" />
