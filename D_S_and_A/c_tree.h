@@ -23,7 +23,7 @@ public:
 	 *Later I may upgrade this deconstructor to handle any amount of children that a single node can have
 	 *Because this is an iterative method instead of recursive, there is no stack issue with larger size, only the size of the vector of ancestors
 	 *When the tree is properly balanced, ancestors can reach a max length of nlogn, if the tree is not balanced, it can reach a max length of n
-	 */
+	 
 	~c_tree()
 	{
 		c_node<MyType> * * current = &root;//made to navigate without changing tree pointer values unless intended
@@ -53,7 +53,7 @@ public:
 				current = ancestors.back();//go back up one parent
 			}
 		}
-	}
+	}*/
 
 	virtual void add_item(MyType const& val) = 0;
 	virtual void add_items(std::vector<MyType> const& vals) = 0;
