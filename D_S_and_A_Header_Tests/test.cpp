@@ -52,6 +52,56 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree.root->right->left->right->value, 67);
 	EXPECT_EQ(b_tree.root->right->left->right->left->value, 43);
 	EXPECT_EQ(b_tree.root->right->left->left->value, 30);
+
+	//tree rotations!
+	c_int_binary_tree b_tree_need_l_r{ { 4, 6, 8 } };
+	EXPECT_EQ(b_tree_need_l_r.root->value, 4);
+	EXPECT_EQ(b_tree_need_l_r.root->right->value, 6);
+	EXPECT_EQ(b_tree_need_l_r.root->right->right->value, 8);
+	b_tree_need_l_r.root = b_tree_need_l_r.rotate_left(b_tree_need_l_r.root);
+	EXPECT_EQ(b_tree_need_l_r.root->value, 6);
+	EXPECT_EQ(b_tree_need_l_r.root->left->value, 4);
+	EXPECT_EQ(b_tree_need_l_r.root->right->value, 8);
+
+	c_int_binary_tree b_tree_need_r_r{ { 8, 6, 4 } };
+	EXPECT_EQ(b_tree_need_r_r.root->value, 8);
+	EXPECT_EQ(b_tree_need_r_r.root->left->value, 6);
+	EXPECT_EQ(b_tree_need_r_r.root->left->left->value, 4);
+	b_tree_need_r_r.root = b_tree_need_r_r.rotate_right(b_tree_need_r_r.root);
+	EXPECT_EQ(b_tree_need_l_r.root->value, 6);
+	EXPECT_EQ(b_tree_need_l_r.root->left->value, 4);
+	EXPECT_EQ(b_tree_need_l_r.root->right->value, 8);
+
+	c_int_binary_tree b_tree_need_l_r_rotate_two_calls{ { 8, 4, 6 } };
+	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->value, 8);
+	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->left->value, 4);
+	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->left->right->value, 6);
+	b_tree_need_l_r_rotate_two_calls.root->left = b_tree_need_l_r_rotate_two_calls.rotate_left(b_tree_need_l_r_rotate_two_calls.root->left);//rotate on parent, not grandparent
+	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->value, 8);
+	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->left->value, 6);
+	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->left->left->value, 4);
+	b_tree_need_l_r_rotate_two_calls.root = b_tree_need_l_r_rotate_two_calls.rotate_right(b_tree_need_l_r_rotate_two_calls.root);
+	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->value, 6);
+	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->left->value, 4);
+	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->right->value, 8);
+
+	c_int_binary_tree b_tree_need_l_r_rotate_one_call{ { 8, 4, 6 } };
+	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->value, 8);
+	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->left->value, 4);
+	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->left->right->value, 6);
+	b_tree_need_l_r_rotate_one_call.root = b_tree_need_l_r_rotate_one_call.rotate_left_right(b_tree_need_l_r_rotate_one_call.root);
+	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->value, 6);
+	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->left->value, 4);
+	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->right->value, 8);
+
+	c_int_binary_tree b_tree_need_r_l_rotate_one_call{ { 4, 8, 6 } };
+	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->value, 4);
+	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->right->value, 8);
+	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->right->left->value, 6);
+	b_tree_need_r_l_rotate_one_call.root = b_tree_need_r_l_rotate_one_call.rotate_right_left(b_tree_need_r_l_rotate_one_call.root);
+	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->value, 6);
+	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->left->value, 4);
+	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->right->value, 8);
 }
 
 TEST(c_max_heapTests, c_max_heapTempFunctionTests)
