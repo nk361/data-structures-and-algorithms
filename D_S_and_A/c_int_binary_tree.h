@@ -44,6 +44,30 @@ public:
 			this->add_item(val);
 	}
 
+	c_node<int> * find_node(int const& val)
+	{
+		c_node<int> * * current = &root;
+		while(true)
+		{
+			if((*current)->value == val)
+				return *current;
+			if(val < (*current)->value)
+			{
+				if ((*current)->left == nullptr)
+					return nullptr;
+				current = &((*current)->left);
+			}
+			else
+			{
+				if ((*current)->right == nullptr)
+					return nullptr;
+				current = &((*current)->right);
+			}
+		}
+	}
+
+	//find the value first ^ return it, then delete it with trickle down
+	//I need a find method anyway, so might as well use it in remove
 
 	//keep track of previous/parent node
 	//find one node that has to go and remove it
@@ -59,7 +83,28 @@ public:
 	//And then I place my subtree there and navigate down it with the other subtree
 	void remove_item(int const& val) override
 	{
+		//c_node<int> * * remove = this->&find_node(val);
+		//if(remove != nullptr)
+		{
+			//if(remove->left == nullptr && remove->right == nullptr)
+
+
+			//c_node<int> * current = remove->left;
+			//while (true)
+			{
+				
+			}
+		}
+
 		/*c_node<int> * * current = &root;
+		c_node<int> * previous = (*current);
+
+		while(true)
+		{
+			
+		}
+
+		c_node<int> * * current = &root;
 		while(true)
 		{
 			if(val < (*current)->value)
@@ -99,7 +144,7 @@ public:
 
 	//Maybe pass the node that has the value we want to remove
 	//and start the loop here for changing the tree
-	void trickle_down(c_node<int>& current)
+	void trickle_down(c_node<int> * current)
 	{
 		
 	}

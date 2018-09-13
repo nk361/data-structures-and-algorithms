@@ -102,6 +102,16 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->value, 6);
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->left->value, 4);
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->right->value, 8);
+
+	c_int_binary_tree b_tree_find_node{ { 17, 77, 114, 28, 88, 27, 48, 33, 72, 48, 35 } };
+	EXPECT_EQ(b_tree_find_node.find_node(27)->value, 27);
+	EXPECT_EQ(b_tree_find_node.find_node(72)->value, 72);
+	EXPECT_EQ(b_tree_find_node.find_node(77)->value, 77);
+	EXPECT_EQ(b_tree_find_node.find_node(17)->value, 17);
+	EXPECT_EQ(b_tree_find_node.find_node(8), nullptr);
+	EXPECT_EQ(b_tree_find_node.find_node(10050), nullptr);
+
+	//next up, removing a node then maybe work towards heap sort
 }
 
 TEST(c_max_heapTests, c_max_heapTempFunctionTests)
