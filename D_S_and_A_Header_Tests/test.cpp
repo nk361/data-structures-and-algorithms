@@ -30,7 +30,7 @@ TEST(TreeHeader, TreeConstructors)
 	c_max_heap test_destructor_four{ 20 };
 	test_destructor_four.add_item(67);
 	test_destructor_four.add_item(19);
-	test_destructor_four.add_item(74);//an infinite loop is entered when a tree tries to add a fourth item or maybe tries to destroy it
+	test_destructor_four.add_item(74);
 }
 
 TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
@@ -68,9 +68,9 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_need_r_r.root->left->value, 6);
 	EXPECT_EQ(b_tree_need_r_r.root->left->left->value, 4);
 	b_tree_need_r_r.root = b_tree_need_r_r.rotate_right(b_tree_need_r_r.root);
-	EXPECT_EQ(b_tree_need_l_r.root->value, 6);
-	EXPECT_EQ(b_tree_need_l_r.root->left->value, 4);
-	EXPECT_EQ(b_tree_need_l_r.root->right->value, 8);
+	EXPECT_EQ(b_tree_need_r_r.root->value, 6);
+	EXPECT_EQ(b_tree_need_r_r.root->left->value, 4);
+	EXPECT_EQ(b_tree_need_r_r.root->right->value, 8);
 
 	c_int_binary_tree b_tree_need_l_r_rotate_two_calls{ { 8, 4, 6 } };
 	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->value, 8);
@@ -90,9 +90,9 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->left->value, 4);
 	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->left->right->value, 6);
 	b_tree_need_l_r_rotate_one_call.root = b_tree_need_l_r_rotate_one_call.rotate_left_right(b_tree_need_l_r_rotate_one_call.root);
-	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->value, 6);
-	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->left->value, 4);
-	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->right->value, 8);
+	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->value, 6);
+	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->left->value, 4);
+	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->right->value, 8);
 
 	c_int_binary_tree b_tree_need_r_l_rotate_one_call{ { 4, 8, 6 } };
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->value, 4);
@@ -133,17 +133,17 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_remove_complex.root->left->left->value, 2);
 	EXPECT_EQ(b_tree_remove_complex.root->left->right->value, 4);
 	EXPECT_EQ(b_tree_remove_complex.root->left->left->left->value, 1);
-	b_tree_remove_complex.remove_item(3);
+	b_tree_remove_complex.remove_item(3);//see if subtree's root can be removed
 	EXPECT_EQ(b_tree_remove_complex.root->left->value, 4);
 	EXPECT_EQ(b_tree_remove_complex.root->left->left->value, 2);
 	EXPECT_EQ(b_tree_remove_complex.root->left->right, nullptr);
 	EXPECT_EQ(b_tree_remove_complex.root->left->left->left->value, 1);
-	b_tree_remove_complex.remove_item(5);
+	b_tree_remove_complex.remove_item(5);//see if root can be removed
 	EXPECT_EQ(b_tree_remove_complex.root->value, 6);
 	EXPECT_EQ(b_tree_remove_complex.root->left->value, 4);
 	EXPECT_EQ(b_tree_remove_complex.root->right->value, 7);
 	EXPECT_EQ(b_tree_remove_complex.root->right->left, nullptr);
-	b_tree_remove_complex.remove_item(6);
+	b_tree_remove_complex.remove_item(6);//checking that items in the tree become the new root in the correct order
 	EXPECT_EQ(b_tree_remove_complex.root->value, 7);
 	b_tree_remove_complex.remove_item(7);
 	EXPECT_EQ(b_tree_remove_complex.root->value, 8);
@@ -154,17 +154,13 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	b_tree_remove_complex.remove_item(4);
 	EXPECT_EQ(b_tree_remove_complex.root->value, 2);
 	b_tree_remove_complex.remove_item(2);
-	EXPECT_EQ(b_tree_remove_complex.root->value, 1);
+	EXPECT_EQ(b_tree_remove_complex.root->value, 1);//check that all has been successfully deleted except root
 	EXPECT_EQ(b_tree_remove_complex.root->left, nullptr);
 	EXPECT_EQ(b_tree_remove_complex.root->right, nullptr);
-
-	//next up, removing a node then maybe work towards heap sort
 }
 
 TEST(c_max_heapTests, c_max_heapTempFunctionTests)
 {
-	//c_heap testing{ 30 };
-
 	EXPECT_EQ(c_heap::amount_in_level(0), 1);
 	EXPECT_EQ(c_heap::amount_in_level(1), 2);
 	EXPECT_EQ(c_heap::amount_in_level(2), 4);

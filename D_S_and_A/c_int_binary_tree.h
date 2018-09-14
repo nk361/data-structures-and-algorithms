@@ -6,15 +6,15 @@ class c_int_binary_tree : public c_binary_tree<int>
 public:
 	c_int_binary_tree() = delete;
 
-	c_int_binary_tree(int const& val) : c_binary_tree<int>(val) {}
+	explicit c_int_binary_tree(int const& val) : c_binary_tree<int>(val) {}
 
-	c_int_binary_tree(std::vector<int> const& vals) : c_binary_tree<int>(vals[0])
+	explicit c_int_binary_tree(std::vector<int> const& vals) : c_binary_tree<int>(vals[0])
 	{
-		for (size_t i = 1; i < vals.size(); ++i)
+		for (size_t i = 1; i < vals.size(); ++i)//start at one, send first val off to be root
 			this->c_int_binary_tree::add_item(vals[i]);
 	}
 
-	void add_item(int const& val) override
+	virtual void add_item(int const& val) override
 	{
 		c_node<int> * current = root;
 		while (true)
@@ -38,13 +38,13 @@ public:
 			}
 	}
 
-	void add_items(std::vector<int> const& vals) override
+	virtual void add_items(std::vector<int> const& vals) override
 	{
 		for (int val : vals)
 			this->add_item(val);
 	}
 
-	c_node<int> * * find_node(int const& val)
+	c_node<int> * * find_node(int const& val)//return pointer to pointer so the node in the tree can be changed
 	{
 		c_node<int> * * current = &root;
 		while(true)
@@ -70,40 +70,33 @@ public:
 	{
 		c_node<int> * * found = find_node(val);
 		
-		if((*found) != nullptr)
+		if(*found != nullptr)
 			if((*found)->left == nullptr && (*found)->right == nullptr)
 			{
-				delete (*found);
-				(*found) = nullptr;
+				delete *found;
+				*found = nullptr;
 			}
 			else if((*found)->right == nullptr)
-				(*found) = (*found)->left;
+				*found = (*found)->left;
 			else if((*found)->left == nullptr)
-				(*found) = (*found)->right;
-			else//both child nodes have values
+				*found = (*found)->right;
+			else//both child nodes exist
 			{
-				c_node<int> * * current = &(*found)->right;
-				while(true)//search for the leftmost node of right child
+				c_node<int> * * current = &(*found)->right;//search for the leftmost node of right child
+				while(true)
 					if ((*current)->left != nullptr)
 						current = &(*current)->left;
 					else
 						break;
-				(*found)->value = (*current)->value;
+				(*found)->value = (*current)->value;//swap with next largest in tree
 
 				if((*current)->right == nullptr)//delete node if all the way left
 				{
-					delete (*current);
-					(*current) = nullptr;
+					delete *current;
+					*current = nullptr;
 				}
 				else//move right nodes up if it was purely the right node
-					(*current) = (*current)->right;
+					*current = (*current)->right;
 			}
-	}
-
-	//Maybe pass the node that has the value we want to remove
-	//and start the loop here for changing the tree
-	void trickle_down(c_node<int> * current)
-	{
-		
 	}
 };

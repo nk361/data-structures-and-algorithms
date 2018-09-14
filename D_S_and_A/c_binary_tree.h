@@ -42,8 +42,8 @@ public:
 				{
 					ancestors.pop_back();
 
-					delete (*current);
-					(*current) = nullptr;
+					delete *current;
+					*current = nullptr;
 
 					if (this->root == nullptr)//tree deleted
 						break;
