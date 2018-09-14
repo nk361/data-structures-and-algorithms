@@ -104,12 +104,59 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->right->value, 8);
 
 	c_int_binary_tree b_tree_find_node{ { 17, 77, 114, 28, 88, 27, 48, 33, 72, 48, 35 } };
-	EXPECT_EQ(b_tree_find_node.find_node(27)->value, 27);
-	EXPECT_EQ(b_tree_find_node.find_node(72)->value, 72);
-	EXPECT_EQ(b_tree_find_node.find_node(77)->value, 77);
-	EXPECT_EQ(b_tree_find_node.find_node(17)->value, 17);
-	EXPECT_EQ(b_tree_find_node.find_node(8), nullptr);
-	EXPECT_EQ(b_tree_find_node.find_node(10050), nullptr);
+	EXPECT_EQ((*b_tree_find_node.find_node(27))->value, 27);
+	EXPECT_EQ((*b_tree_find_node.find_node(72))->value, 72);
+	EXPECT_EQ((*b_tree_find_node.find_node(77))->value, 77);
+	EXPECT_EQ((*b_tree_find_node.find_node(17))->value, 17);
+	EXPECT_EQ((*b_tree_find_node.find_node(8)), nullptr);
+	EXPECT_EQ((*b_tree_find_node.find_node(10050)), nullptr);
+
+	c_int_binary_tree b_tree_remove_simple{ { 4, 1, 8, 6, 3, 2 } };
+	EXPECT_EQ(b_tree_remove_simple.root->left->value, 1);
+	EXPECT_EQ(b_tree_remove_simple.root->left->right->value, 3);
+	EXPECT_EQ(b_tree_remove_simple.root->left->right->left->value, 2);
+	b_tree_remove_simple.remove_item(1);//see if tree is brought up with only right node
+	EXPECT_EQ(b_tree_remove_simple.root->left->value, 3);
+	EXPECT_EQ(b_tree_remove_simple.root->left->left->value, 2);
+	b_tree_remove_simple.remove_item(3);//see if left node is brought up
+	b_tree_remove_simple.remove_item(8);//see if left tree is brought up
+	b_tree_remove_simple.remove_item(6);//remove node by itself
+	b_tree_remove_simple.remove_item(2);//remove last node from root
+	EXPECT_EQ(b_tree_remove_simple.root->value, 4);//root is last lect
+	EXPECT_EQ(b_tree_remove_simple.root->left, nullptr);
+	EXPECT_EQ(b_tree_remove_simple.root->left, nullptr);
+	b_tree_remove_simple.remove_item(4);
+	EXPECT_EQ(b_tree_remove_simple.root, nullptr);
+
+	c_int_binary_tree b_tree_remove_complex{ { 5, 3, 7, 2, 4, 6, 8, 1, 9 } };
+	EXPECT_EQ(b_tree_remove_complex.root->left->value, 3);
+	EXPECT_EQ(b_tree_remove_complex.root->left->left->value, 2);
+	EXPECT_EQ(b_tree_remove_complex.root->left->right->value, 4);
+	EXPECT_EQ(b_tree_remove_complex.root->left->left->left->value, 1);
+	b_tree_remove_complex.remove_item(3);
+	EXPECT_EQ(b_tree_remove_complex.root->left->value, 4);
+	EXPECT_EQ(b_tree_remove_complex.root->left->left->value, 2);
+	EXPECT_EQ(b_tree_remove_complex.root->left->right, nullptr);
+	EXPECT_EQ(b_tree_remove_complex.root->left->left->left->value, 1);
+	b_tree_remove_complex.remove_item(5);
+	EXPECT_EQ(b_tree_remove_complex.root->value, 6);
+	EXPECT_EQ(b_tree_remove_complex.root->left->value, 4);
+	EXPECT_EQ(b_tree_remove_complex.root->right->value, 7);
+	EXPECT_EQ(b_tree_remove_complex.root->right->left, nullptr);
+	b_tree_remove_complex.remove_item(6);
+	EXPECT_EQ(b_tree_remove_complex.root->value, 7);
+	b_tree_remove_complex.remove_item(7);
+	EXPECT_EQ(b_tree_remove_complex.root->value, 8);
+	b_tree_remove_complex.remove_item(8);
+	EXPECT_EQ(b_tree_remove_complex.root->value, 9);
+	b_tree_remove_complex.remove_item(9);
+	EXPECT_EQ(b_tree_remove_complex.root->value, 4);
+	b_tree_remove_complex.remove_item(4);
+	EXPECT_EQ(b_tree_remove_complex.root->value, 2);
+	b_tree_remove_complex.remove_item(2);
+	EXPECT_EQ(b_tree_remove_complex.root->value, 1);
+	EXPECT_EQ(b_tree_remove_complex.root->left, nullptr);
+	EXPECT_EQ(b_tree_remove_complex.root->right, nullptr);
 
 	//next up, removing a node then maybe work towards heap sort
 }
