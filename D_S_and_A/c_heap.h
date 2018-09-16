@@ -1,12 +1,9 @@
 #pragma once
-#include "c_node.h"
-#include "c_tree.h"
 #include <cmath>
-//#include "c_binary_tree.h"
 #include "c_int_binary_tree.h"
 
 //in a heap, always remove only the root
-class c_heap : public c_int_binary_tree//public c_tree<int>
+class c_heap : public c_int_binary_tree<c_node>//public c_tree<int>
 {
 public:
 	int size;

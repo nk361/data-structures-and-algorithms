@@ -1,12 +1,13 @@
 #pragma once
 #include "c_int_binary_tree.h"
+#include "c_AVL_node.h"
 
-class AVL_int_binary_tree : public c_int_binary_tree
+class c_AVL_int_binary_tree : public c_int_binary_tree<c_AVL_node>
 {
 public:
-	AVL_int_binary_tree() = delete;
+	c_AVL_int_binary_tree() = delete;
 
-	explicit AVL_int_binary_tree(int const& val) : c_int_binary_tree(val) {}
+	explicit c_AVL_int_binary_tree(int const& val) : c_int_binary_tree(val) {}
 
 	void add_item(int const& val) override
 	{

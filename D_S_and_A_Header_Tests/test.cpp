@@ -35,7 +35,7 @@ TEST(TreeHeader, TreeConstructors)
 
 TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 {
-	c_int_binary_tree b_tree{ 30 };
+	c_int_binary_tree<c_node> b_tree{ 30 };
 	b_tree.add_items({ 12, 72, 109, 23, 83, 22, 43, 28, 67, 43, 30 });
 
 	EXPECT_EQ(b_tree.root->value, 30);
@@ -54,7 +54,7 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree.root->right->left->left->value, 30);
 
 	//tree rotations!
-	c_int_binary_tree b_tree_need_l_r{ { 4, 6, 8 } };
+	c_int_binary_tree<c_node> b_tree_need_l_r{ { 4, 6, 8 } };
 	EXPECT_EQ(b_tree_need_l_r.root->value, 4);
 	EXPECT_EQ(b_tree_need_l_r.root->right->value, 6);
 	EXPECT_EQ(b_tree_need_l_r.root->right->right->value, 8);
@@ -63,7 +63,7 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_need_l_r.root->left->value, 4);
 	EXPECT_EQ(b_tree_need_l_r.root->right->value, 8);
 
-	c_int_binary_tree b_tree_need_r_r{ { 8, 6, 4 } };
+	c_int_binary_tree<c_node> b_tree_need_r_r{ { 8, 6, 4 } };
 	EXPECT_EQ(b_tree_need_r_r.root->value, 8);
 	EXPECT_EQ(b_tree_need_r_r.root->left->value, 6);
 	EXPECT_EQ(b_tree_need_r_r.root->left->left->value, 4);
@@ -72,7 +72,7 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_need_r_r.root->left->value, 4);
 	EXPECT_EQ(b_tree_need_r_r.root->right->value, 8);
 
-	c_int_binary_tree b_tree_need_l_r_rotate_two_calls{ { 8, 4, 6 } };
+	c_int_binary_tree<c_node> b_tree_need_l_r_rotate_two_calls{ { 8, 4, 6 } };
 	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->value, 8);
 	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->left->value, 4);
 	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->left->right->value, 6);
@@ -85,7 +85,7 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->left->value, 4);
 	EXPECT_EQ(b_tree_need_l_r_rotate_two_calls.root->right->value, 8);
 
-	c_int_binary_tree b_tree_need_l_r_rotate_one_call{ { 8, 4, 6 } };
+	c_int_binary_tree<c_node> b_tree_need_l_r_rotate_one_call{ { 8, 4, 6 } };
 	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->value, 8);
 	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->left->value, 4);
 	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->left->right->value, 6);
@@ -94,7 +94,7 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->left->value, 4);
 	EXPECT_EQ(b_tree_need_l_r_rotate_one_call.root->right->value, 8);
 
-	c_int_binary_tree b_tree_need_r_l_rotate_one_call{ { 4, 8, 6 } };
+	c_int_binary_tree<c_node> b_tree_need_r_l_rotate_one_call{ { 4, 8, 6 } };
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->value, 4);
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->right->value, 8);
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->right->left->value, 6);
@@ -103,7 +103,7 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->left->value, 4);
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->right->value, 8);
 
-	c_int_binary_tree b_tree_find_node{ { 17, 77, 114, 28, 88, 27, 48, 33, 72, 48, 35 } };
+	c_int_binary_tree<c_node> b_tree_find_node{ { 17, 77, 114, 28, 88, 27, 48, 33, 72, 48, 35 } };
 	EXPECT_EQ((*b_tree_find_node.find_node(27))->value, 27);
 	EXPECT_EQ((*b_tree_find_node.find_node(72))->value, 72);
 	EXPECT_EQ((*b_tree_find_node.find_node(77))->value, 77);
@@ -111,7 +111,7 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ((*b_tree_find_node.find_node(8)), nullptr);
 	EXPECT_EQ((*b_tree_find_node.find_node(10050)), nullptr);
 
-	c_int_binary_tree b_tree_remove_simple{ { 4, 1, 8, 6, 3, 2 } };
+	c_int_binary_tree<c_node> b_tree_remove_simple{ { 4, 1, 8, 6, 3, 2 } };
 	EXPECT_EQ(b_tree_remove_simple.root->left->value, 1);
 	EXPECT_EQ(b_tree_remove_simple.root->left->right->value, 3);
 	EXPECT_EQ(b_tree_remove_simple.root->left->right->left->value, 2);
@@ -128,7 +128,7 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	b_tree_remove_simple.remove_item(4);
 	EXPECT_EQ(b_tree_remove_simple.root, nullptr);
 
-	c_int_binary_tree b_tree_remove_complex{ { 5, 3, 7, 2, 4, 6, 8, 1, 9 } };
+	c_int_binary_tree<c_node> b_tree_remove_complex{ { 5, 3, 7, 2, 4, 6, 8, 1, 9 } };
 	EXPECT_EQ(b_tree_remove_complex.root->left->value, 3);
 	EXPECT_EQ(b_tree_remove_complex.root->left->left->value, 2);
 	EXPECT_EQ(b_tree_remove_complex.root->left->right->value, 4);

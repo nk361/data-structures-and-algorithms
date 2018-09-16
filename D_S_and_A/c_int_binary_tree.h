@@ -1,14 +1,15 @@
 #pragma once
 #include "c_binary_tree.h"
 
-class c_int_binary_tree : public c_binary_tree<int>
+template<template<class> class NodeType>
+class c_int_binary_tree : public c_binary_tree<int, NodeType>
 {
 public:
 	c_int_binary_tree() = delete;
 
-	explicit c_int_binary_tree(int const& val) : c_binary_tree<int>(val) {}
+	explicit c_int_binary_tree(int const& val) : c_binary_tree<int, NodeType>(val) {}
 
-	explicit c_int_binary_tree(std::vector<int> const& vals) : c_binary_tree<int>(vals[0])
+	explicit c_int_binary_tree(std::vector<int> const& vals) : c_binary_tree<int, NodeType>(vals[0])
 	{
 		for (size_t i = 1; i < vals.size(); ++i)//start at one, send first val off to be root
 			this->c_int_binary_tree::add_item(vals[i]);
@@ -16,13 +17,13 @@ public:
 
 	virtual void add_item(int const& val) override
 	{
-		c_node<int> * current = root;
+		NodeType<int> * current = root;
 		while (true)
 			if (val < current->value)
 			{
 				if (current->left == nullptr)
 				{
-					current->left = new c_node<int>{ val };
+					current->left = new NodeType<int>{ val };
 					break;
 				}
 				current = current->left;
@@ -31,7 +32,7 @@ public:
 			{
 				if (current->right == nullptr)
 				{
-					current->right = new c_node<int>{ val };
+					current->right = new NodeType<int>{ val };
 					break;
 				}
 				current = current->right;
@@ -44,9 +45,9 @@ public:
 			this->add_item(val);
 	}
 
-	c_node<int> * * find_node(int const& val)//return pointer to pointer so the node in the tree can be changed
+	NodeType<int> * * find_node(int const& val)//return pointer to pointer so the node in the tree can be changed
 	{
-		c_node<int> * * current = &root;
+		NodeType<int> * * current = &root;
 		while(true)
 		{
 			if((*current)->value == val)
@@ -68,7 +69,7 @@ public:
 
 	void remove_item(int const& val) override
 	{
-		c_node<int> * * found = find_node(val);
+		NodeType<int> * * found = find_node(val);
 		
 		if(*found != nullptr)
 			if((*found)->left == nullptr && (*found)->right == nullptr)
@@ -82,7 +83,7 @@ public:
 				*found = (*found)->right;
 			else//both child nodes exist
 			{
-				c_node<int> * * current = &(*found)->right;//search for the leftmost node of right child
+				NodeType<int> * * current = &(*found)->right;//search for the leftmost node of right child
 				while(true)
 					if ((*current)->left != nullptr)
 						current = &(*current)->left;

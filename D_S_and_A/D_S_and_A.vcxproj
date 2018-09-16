@@ -147,7 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AVL_int_binary_tree.h" />
+    <ClInclude Include="c_AVL_binary_tree.h" />
+    <ClInclude Include="c_AVL_int_binary_tree.h" />
+    <ClInclude Include="c_AVL_node.h" />
     <ClInclude Include="c_binary_tree.h" />
     <ClInclude Include="c_heap.h" />
     <ClInclude Include="c_int_binary_tree.h" />

@@ -1,15 +1,15 @@
 #pragma once
-template <class MyType>
+template <class ValType>
 class c_node
 {
 public:
-	MyType value;
+	ValType value;
 	//c_node * children[];
 	c_node * left, * right;
 
 	c_node() = delete;
 
-	explicit c_node(MyType val)//, int const& kids)
+	explicit c_node(ValType val)//, int const& kids)
 	{
 		value = val;
 		//children[kids];
@@ -19,7 +19,7 @@ public:
 		left = right = nullptr;
 	}
 
-	~c_node()
+	virtual ~c_node()
 	{
 		delete left, right;
 		left = right = nullptr;

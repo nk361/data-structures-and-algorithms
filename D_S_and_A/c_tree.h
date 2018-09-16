@@ -2,17 +2,19 @@
 #include "c_node.h"
 #include <vector>
 
-template <class MyType>
+template <typename ValType, template<class> class NodeType>
+//template <class MyType>
 class c_tree
 {
 public:
-	c_node<MyType> * root;
+	NodeType<ValType> * root;
+	//c_node<MyType> * root;
 
 	c_tree() = delete;
 
-	explicit c_tree(MyType const& val)
+	explicit c_tree(ValType const& val)
 	{
-		root = new c_node<MyType>{ val };
+		root = new NodeType<ValType>{ val };
 	}
 
 	/*
@@ -55,6 +57,6 @@ public:
 		}
 	}*/
 
-	virtual void add_item(MyType const& val) = 0;
-	virtual void add_items(std::vector<MyType> const& vals) = 0;
+	virtual void add_item(ValType const& val) = 0;
+	virtual void add_items(std::vector<ValType> const& vals) = 0;
 };
