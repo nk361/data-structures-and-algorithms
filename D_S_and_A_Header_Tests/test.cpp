@@ -1,7 +1,47 @@
 #include "pch.h"
+#include "../D_S_and_A/c_general_algorithms.h"
 #include "../D_S_and_A/c_node.h"
 #include "../D_S_and_A/c_heap.h"
 #include "../D_S_and_A/c_max_heap.h"
+#include "../D_S_and_A/c_AVL_int_binary_tree.h"
+
+TEST(GeneralAlgorithmsHeader, SmallGeneralAlgorithms)
+{
+	int sorted_array[]{ 1, 2, 3, 4, 5 };
+	c_general_algorithms::scramble_array(sorted_array, sizeof(sorted_array) / sizeof(sorted_array[0]));
+	EXPECT_FALSE(sorted_array[0] == 1 && sorted_array[1] == 2 && sorted_array[2] == 3 && sorted_array[3] == 4 && sorted_array[4] == 5);
+
+	std::string sorted_strings[]{ "Ashley", "Briana", "Cathy", "Darcy", "Emily", "Fatima", "Gretchen", "Hannah" };
+	c_general_algorithms::scramble_array(sorted_strings, sizeof(sorted_strings) / sizeof(sorted_strings[0]));
+	EXPECT_FALSE(sorted_strings[0] == "Ashley" && sorted_strings[1] == "Briana" && sorted_strings[2] == "Cathy" && sorted_strings[3] == "Darcy" && sorted_strings[4] == "Emily" && sorted_strings[5] == "Fatima" && sorted_strings[6] == "Gretchen" && sorted_strings[7] == "Hannah");
+
+	int values_to_sum[]{ 5, 2, 9, 8, 4, 10, 15 };
+	std::pair<int, int> twelve = c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 12);
+	EXPECT_EQ(twelve.first, 8);
+	EXPECT_EQ(twelve.second, 4);
+	std::pair<int, int> nineteen = c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 19);
+	EXPECT_EQ(nineteen.first, 9);
+	EXPECT_EQ(nineteen.second, 10);
+	std::pair<int, int> twenty = c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 20);
+	EXPECT_EQ(twenty.first, 5);
+	EXPECT_EQ(twenty.second, 15);
+	std::pair<int, int> fifty = c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 50);
+	EXPECT_TRUE(!fifty.first && !fifty.second);//Sum values not found
+	
+	//neither lamda function uses the index here, but still need to accept it to be called
+	int(*multiply_sum)(int const&, int const&, int const&) = [](int const& index, int const& a, int const& b) { return a * b; };
+	EXPECT_EQ(c_general_algorithms::summation(1, 5, multiply_sum, 10, 2), 100);
+
+	double(*add_three)(int const&, double const&, double const&, double const&) = [](int const& index, double const& a, double const& b, double const& c) { return a + b + c; };
+	EXPECT_DOUBLE_EQ(c_general_algorithms::summation(1, 9, add_three, 5.5, 8.2, 10.7), 219.6);
+
+	//lambda using the index
+	double(*index_formula)(int const&, int const&) = [](int const& index, int const& x) { return pow(x, index + 2); };//x^(n + 2)
+	EXPECT_DOUBLE_EQ(c_general_algorithms::summation(-3, 5, index_formula, 4), 21845.25);
+
+	int(*sum_arrays)(int const&, std::vector<int> const&, std::vector<int> const&) = [](int const& index, std::vector<int> const& a, std::vector<int> const& b) { return a[index] * b[index]; };
+	EXPECT_EQ(c_general_algorithms::summation(0, 2, sum_arrays, std::vector<int>{ 1, 2, 3 }, std::vector<int>{ 4, 5, 6 }), 32);
+}
 
 TEST(TreeNodeHeader, TreeNodeConstructors)
 {
@@ -159,7 +199,29 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_remove_complex.root->right, nullptr);
 }
 
-TEST(c_max_heapTests, c_max_heapTempFunctionTests)
+TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
+{
+	c_AVL_int_binary_tree avl_add{ 10 };
+	EXPECT_EQ(avl_add.root->value, 10);
+	EXPECT_EQ(avl_add.root->parent, nullptr);
+	EXPECT_EQ(avl_add.root->left, nullptr);
+	EXPECT_EQ(avl_add.root->right, nullptr);
+	avl_add.add_item(15);
+	EXPECT_EQ(avl_add.root->right->value, 15);
+	EXPECT_EQ(avl_add.root->right->parent->value, 10);
+	EXPECT_EQ(avl_add.root->right->left, nullptr);
+	EXPECT_EQ(avl_add.root->right->right, nullptr);
+	avl_add.root->right->parent->value = 11;
+	EXPECT_EQ(avl_add.root->value, 11);//checking to be sure parent is a reference and not a copy
+
+	//possible reasons to rotate
+	//left rotate when two in a row have no left child
+	//right rotate when two in a row have no right child
+	//left-right rotate when there is no left child then there is a right child//these two are probably super wrong
+	//right-left rotate when there is no right child then there is a left child
+}
+
+TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 {
 	EXPECT_EQ(c_heap::amount_in_level(0), 1);
 	EXPECT_EQ(c_heap::amount_in_level(1), 2);

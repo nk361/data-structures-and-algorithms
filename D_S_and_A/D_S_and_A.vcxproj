@@ -151,6 +151,7 @@
     <ClInclude Include="c_AVL_int_binary_tree.h" />
     <ClInclude Include="c_AVL_node.h" />
     <ClInclude Include="c_binary_tree.h" />
+    <ClInclude Include="c_general_algorithms.h" />
     <ClInclude Include="c_heap.h" />
     <ClInclude Include="c_int_binary_tree.h" />
     <ClInclude Include="c_linked_list.h" />

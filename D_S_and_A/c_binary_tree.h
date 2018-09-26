@@ -20,7 +20,7 @@ public:
 	 *Because this is an iterative method instead of recursive, there is no stack issue with larger size, only the size of the vector of ancestors
 	 *When the tree is properly balanced, ancestors can reach a max length of nlogn, if the tree is not balanced, it can reach a max length of n
 	 */
-	~c_binary_tree()
+	virtual ~c_binary_tree()
 	{
 		if (this->root != nullptr)//incase root was all that was left and it got removed
 		{
@@ -42,7 +42,7 @@ public:
 				{
 					ancestors.pop_back();
 
-					delete *current;
+					delete *current;std::cout << "Working" << std::endl;
 					*current = nullptr;
 
 					if (this->root == nullptr)//tree deleted
@@ -60,7 +60,7 @@ public:
 
 	virtual void remove_item(ValType const& val) = 0;
 
-	c_node<ValType> * rotate_left(c_node<ValType> * grandparent)//these only work for c_node nodes
+	virtual c_node<ValType> * rotate_left(c_node<ValType> * grandparent)//these only work for c_node nodes
 	{
 		c_node<ValType> * temp = grandparent->right;
 		grandparent->right = temp->left;
@@ -68,7 +68,7 @@ public:
 		return temp;//the new grandparent
 	}
 
-	c_node<ValType> * rotate_right(c_node<ValType> * grandparent)
+	virtual c_node<ValType> * rotate_right(c_node<ValType> * grandparent)
 	{
 		c_node<ValType> * temp = grandparent->left;
 		grandparent->left = temp->right;
@@ -76,13 +76,13 @@ public:
 		return temp;
 	}
 
-	c_node<ValType> * rotate_left_right(c_node<ValType> * grandparent)
+	virtual c_node<ValType> * rotate_left_right(c_node<ValType> * grandparent)
 	{
 		grandparent->left = rotate_left(grandparent->left);
 		return rotate_right(grandparent);
 	}
 
-	c_node<ValType> * rotate_right_left(c_node<ValType> * grandparent)
+	virtual c_node<ValType> * rotate_right_left(c_node<ValType> * grandparent)
 	{
 		grandparent->right = rotate_right(grandparent->right);
 		return rotate_left(grandparent);
