@@ -13,11 +13,11 @@ namespace c_general_algorithms
 	void static scramble_array(MyType vals[], size_t const& size)
 	{	
 		srand(time(nullptr));
-		for (size_t i = size - 1; i > 0; --i)
+		for (size_t i{ size - 1 }; i > 0; --i)
 		{
-			size_t ran = floor(rand() % i);
+			size_t ran{ static_cast<size_t>(floor(rand() % i)) };
 			
-			MyType temp = vals[i];
+			MyType temp{ vals[i] };
 			vals[i] = vals[ran];
 			vals[ran] = temp;
 		}
@@ -32,8 +32,8 @@ namespace c_general_algorithms
 	template<class ArrayType, class SumType>
 	std::pair<ArrayType, ArrayType> static pair_equal_to_sum(ArrayType const vals[], size_t const& size, SumType const& desired_sum)
 	{
-		std::unordered_map<std::string, ArrayType> encountered;
-		for(int i = 0; i < size; ++i)
+		std::unordered_map<std::string, ArrayType> encountered{};
+		for(int i{ 0 }; i < size; ++i)
 		{
 			typename std::unordered_map<std::string, ArrayType>::iterator found = encountered.find(std::to_string(desired_sum - vals[i]));
 			if (found == encountered.end())
@@ -44,16 +44,27 @@ namespace c_general_algorithms
 		return { 0, 0 };
 	}
 
-	//This function is meant to mimic the Sigma symbol in math for summation
+	//This function is meant to mimic the Capital Sigma symbol in math for summation
 	//The first parameter of the function you pass is the index for what changes per iteration
 	//It takes a start index, an end index, for the amount of times it will sum
 	//After that it takes a function and the functions paramters that it will call and sum the returned value of
 	template<class ReturnType, class ... Types>
-	ReturnType summation(int const& start, int const& end, ReturnType (*f)(int const& index, Types const& ... args), Types const& ... args)
+	ReturnType capital_sigma(int const& start, int const& end, ReturnType (*f)(int const& index, Types const& ... args), Types const& ... args)
 	{
-		ReturnType overall_sum = 0;
-		for (int i = start; i <= end; ++i)
+		ReturnType overall_sum{ 0 };
+		for (int i{ start }; i <= end; ++i)
 			overall_sum += (*f)(i, args...);
 		return overall_sum;
+	}
+
+	//This function is meant to mimic the Capital Pi symbol in math for product
+	//This function is exactly like Capital Sigma/Summation except it multiplies function results instead of adding them
+	template<class ReturnType, class ... Types>
+	ReturnType capital_pi(int const& start, int const& end, ReturnType (*f)(int const& index, Types const& ... args), Types const& ... args)
+	{
+		ReturnType overall_product{ 1 };
+		for (int i{ start }; i <= end; ++i)
+			overall_product *= (*f)(i, args...);
+		return overall_product;
 	}
 }

@@ -42,7 +42,7 @@ public:
 				{
 					ancestors.pop_back();
 
-					delete *current;std::cout << "Working" << std::endl;
+					delete *current;
 					*current = nullptr;
 
 					if (this->root == nullptr)//tree deleted

@@ -25,22 +25,25 @@ TEST(GeneralAlgorithmsHeader, SmallGeneralAlgorithms)
 	std::pair<int, int> twenty = c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 20);
 	EXPECT_EQ(twenty.first, 5);
 	EXPECT_EQ(twenty.second, 15);
-	std::pair<int, int> fifty = c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 50);
+	std::pair<int, int> const fifty = c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 50);
 	EXPECT_TRUE(!fifty.first && !fifty.second);//Sum values not found
 	
 	//neither lamda function uses the index here, but still need to accept it to be called
 	int(*multiply_sum)(int const&, int const&, int const&) = [](int const& index, int const& a, int const& b) { return a * b; };
-	EXPECT_EQ(c_general_algorithms::summation(1, 5, multiply_sum, 10, 2), 100);
+	EXPECT_EQ(c_general_algorithms::capital_sigma(1, 5, multiply_sum, 10, 2), 100);
 
 	double(*add_three)(int const&, double const&, double const&, double const&) = [](int const& index, double const& a, double const& b, double const& c) { return a + b + c; };
-	EXPECT_DOUBLE_EQ(c_general_algorithms::summation(1, 9, add_three, 5.5, 8.2, 10.7), 219.6);
+	EXPECT_DOUBLE_EQ(c_general_algorithms::capital_sigma(1, 9, add_three, 5.5, 8.2, 10.7), 219.6);
 
 	//lambda using the index
 	double(*index_formula)(int const&, int const&) = [](int const& index, int const& x) { return pow(x, index + 2); };//x^(n + 2)
-	EXPECT_DOUBLE_EQ(c_general_algorithms::summation(-3, 5, index_formula, 4), 21845.25);
+	EXPECT_DOUBLE_EQ(c_general_algorithms::capital_sigma(-3, 5, index_formula, 4), 21845.25);
 
 	int(*sum_arrays)(int const&, std::vector<int> const&, std::vector<int> const&) = [](int const& index, std::vector<int> const& a, std::vector<int> const& b) { return a[index] * b[index]; };
-	EXPECT_EQ(c_general_algorithms::summation(0, 2, sum_arrays, std::vector<int>{ 1, 2, 3 }, std::vector<int>{ 4, 5, 6 }), 32);
+	EXPECT_EQ(c_general_algorithms::capital_sigma(0, 2, sum_arrays, std::vector<int>{ 1, 2, 3 }, std::vector<int>{ 4, 5, 6 }), 32);
+
+	double(*multiply_this)(int const&, double const&, double const&, double const&) = [](int const& index, double const& a, double const& b, double const& c) { return a * index + b * index + c * index; };
+	EXPECT_DOUBLE_EQ(c_general_algorithms::capital_pi(1, 3, multiply_this, 5.0, 2.0, 3.0), 6000.0);
 }
 
 TEST(TreeNodeHeader, TreeNodeConstructors)
@@ -214,11 +217,16 @@ TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
 	avl_add.root->right->parent->value = 11;
 	EXPECT_EQ(avl_add.root->value, 11);//checking to be sure parent is a reference and not a copy
 
-	//possible reasons to rotate
-	//left rotate when two in a row have no left child
-	//right rotate when two in a row have no right child
-	//left-right rotate when there is no left child then there is a right child//these two are probably super wrong
-	//right-left rotate when there is no right child then there is a left child
+	c_AVL_int_binary_tree avl_height{ 11 };//why can I not initialize with a list?
+	avl_height.add_item(5);
+	avl_height.add_item(2);
+	avl_height.add_item(3);
+	avl_height.add_item(82);
+	EXPECT_EQ(avl_height.height(avl_height.root->left), 3);
+	EXPECT_EQ(avl_height.height(avl_height.root), 4);
+	EXPECT_EQ(avl_height.height(avl_height.root->left->left), 2);
+	EXPECT_EQ(avl_height.height(avl_height.root->left->left->right), 1);
+	EXPECT_EQ(avl_height.height(avl_height.root->right), 1);
 }
 
 TEST(c_max_heap_tests, c_max_heap_temp_function_tests)

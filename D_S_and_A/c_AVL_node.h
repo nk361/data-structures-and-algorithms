@@ -1,5 +1,6 @@
 #pragma once
 
+//I may try to write algorithms in a way that it doesn't need a stored parent node incase I can use the generic node header instead
 template <typename  ValType>
 class c_AVL_node
 {

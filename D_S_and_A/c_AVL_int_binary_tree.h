@@ -1,5 +1,4 @@
 #pragma once
-#include "c_int_binary_tree.h"
 #include "c_AVL_node.h"
 #include "c_AVL_binary_tree.h"
 
@@ -10,12 +9,18 @@ public:
 
 	explicit c_AVL_int_binary_tree(int const& val) : c_AVL_binary_tree(val) {}//calling this leads to c_node...
 
+	explicit c_AVL_int_binary_tree(std::vector<int> const& vals) : c_AVL_binary_tree(vals[0])
+	{
+		for (size_t i = 1; i < vals.size(); ++i)//because parent isn't being set for the avl nodes?
+			this->c_AVL_int_binary_tree::add_item(vals[i]);
+	}
+
 	void check_balance(c_AVL_node<int> const& new_node)
 	{
 		
 	}
 
-	void add_item(int const& val) override
+	virtual void add_item(int const& val) override
 	{
 		//I need to add an item, know where it was, check for violations, and fix them if there are any
 		c_AVL_node<int> * * current = &root;
@@ -47,13 +52,13 @@ public:
 		}
 	}
 
-	void add_items(std::vector<int> const& vals) override
+	virtual void add_items(std::vector<int> const& vals) override
 	{
 		for (int val : vals)
 			this->add_item(val);
 	}
 
-	void remove_item(int const& val) override
+	virtual void remove_item(int const& val) override
 	{
 		
 	}
