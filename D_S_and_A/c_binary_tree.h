@@ -60,29 +60,29 @@ public:
 
 	virtual void remove_item(ValType const& val) = 0;
 
-	virtual c_node<ValType> * rotate_left(c_node<ValType> * grandparent)//these only work for c_node nodes
+	NodeType<ValType> * rotate_left(NodeType<ValType> * grandparent)//these only work for nodes that don't have other pointer references to change
 	{
-		c_node<ValType> * temp = grandparent->right;
+		NodeType<ValType> * temp = grandparent->right;
 		grandparent->right = temp->left;
 		temp->left = grandparent;
 		return temp;//the new grandparent
 	}
 
-	virtual c_node<ValType> * rotate_right(c_node<ValType> * grandparent)
+	NodeType<ValType> * rotate_right(NodeType<ValType> * grandparent)
 	{
-		c_node<ValType> * temp = grandparent->left;
+		NodeType<ValType> * temp = grandparent->left;
 		grandparent->left = temp->right;
 		temp->right = grandparent;
 		return temp;
 	}
 
-	virtual c_node<ValType> * rotate_left_right(c_node<ValType> * grandparent)
+	NodeType<ValType> * rotate_left_right(NodeType<ValType> * grandparent)
 	{
 		grandparent->left = rotate_left(grandparent->left);
 		return rotate_right(grandparent);
 	}
 
-	virtual c_node<ValType> * rotate_right_left(c_node<ValType> * grandparent)
+	NodeType<ValType> * rotate_right_left(NodeType<ValType> * grandparent)
 	{
 		grandparent->right = rotate_right(grandparent->right);
 		return rotate_left(grandparent);

@@ -204,29 +204,110 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 
 TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
 {
-	c_AVL_int_binary_tree avl_add{ 10 };
-	EXPECT_EQ(avl_add.root->value, 10);
-	EXPECT_EQ(avl_add.root->parent, nullptr);
-	EXPECT_EQ(avl_add.root->left, nullptr);
-	EXPECT_EQ(avl_add.root->right, nullptr);
-	avl_add.add_item(15);
-	EXPECT_EQ(avl_add.root->right->value, 15);
-	EXPECT_EQ(avl_add.root->right->parent->value, 10);
-	EXPECT_EQ(avl_add.root->right->left, nullptr);
-	EXPECT_EQ(avl_add.root->right->right, nullptr);
-	avl_add.root->right->parent->value = 11;
-	EXPECT_EQ(avl_add.root->value, 11);//checking to be sure parent is a reference and not a copy
-
-	c_AVL_int_binary_tree avl_height{ 11 };//why can I not initialize with a list?
-	avl_height.add_item(5);
-	avl_height.add_item(2);
-	avl_height.add_item(3);
-	avl_height.add_item(82);
-	EXPECT_EQ(avl_height.height(avl_height.root->left), 3);
-	EXPECT_EQ(avl_height.height(avl_height.root), 4);
-	EXPECT_EQ(avl_height.height(avl_height.root->left->left), 2);
-	EXPECT_EQ(avl_height.height(avl_height.root->left->left->right), 1);
+	c_AVL_int_binary_tree<c_node> avl_height{ { 18, 5, 20 } };
+	EXPECT_EQ(avl_height.height(avl_height.root), 2);
+	EXPECT_EQ(avl_height.height(avl_height.root->left), 1);
 	EXPECT_EQ(avl_height.height(avl_height.root->right), 1);
+	EXPECT_EQ(avl_height.height(avl_height.root->left->left), 0);//nullptr height is 0
+
+	//rotation diagram below
+	c_AVL_int_binary_tree<c_node> avl_int_tree_add_item_and_rebal{ 10 };
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->value, 10);
+	avl_int_tree_add_item_and_rebal.add_item(5);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->left->value, 5);
+	avl_int_tree_add_item_and_rebal.add_item(2);//right rotation
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->value, 5);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->left->value, 2);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->value, 10);
+
+	avl_int_tree_add_item_and_rebal.add_item(4);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->left->right->value, 4);
+	avl_int_tree_add_item_and_rebal.add_item(3);//right left rotation
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->value, 5);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->left->value, 3);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->value, 10);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->left->left->value, 2);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->left->right->value, 4);
+
+	avl_int_tree_add_item_and_rebal.add_item(12);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->right->value, 12);
+	avl_int_tree_add_item_and_rebal.add_item(18);//left rotation
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->value, 5);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->left->value, 3);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->value, 12);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->left->left->value, 2);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->left->right->value, 4);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->left->value, 10);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->right->value, 18);
+
+	avl_int_tree_add_item_and_rebal.add_item(15);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->right->left->value, 15);
+	avl_int_tree_add_item_and_rebal.add_item(17);//left right rotation
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->value, 5);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->left->value, 3);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->value, 12);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->left->left->value, 2);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->left->right->value, 4);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->left->value, 10);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->right->value, 17);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->right->left->value, 15);
+	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->right->right->value, 18);
+
+	/*
+	      10			   5			//right rotate on 10
+		  /				  /\
+		 5			->	 2 10
+		/				 
+		2				
+
+		 5					5			//right left rotate on 2
+		 /\					/\
+		2 10		->		3 10
+		\					/\
+		 4					2 4
+		/
+		3
+
+		5					  5			//left rotate on 10
+		/\					 / \
+		3 10		->		3   12
+		/\  \				/\  / \
+		2 4  12				2 4 10 18
+			  \
+			   18
+
+		  5					  5			//left right rotate on 18
+		 / \				 / \
+		3   12		->		3   12
+		/\  / \				/\  / \
+		2 4 10 18			2 4 10 17
+			   /				   /\
+			  15				  15 18
+			   \
+				17
+	 */
+
+	c_AVL_int_binary_tree<c_node> avl_int_sorted_list{ { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 } };
+	EXPECT_EQ(avl_int_sorted_list.root->value, 4);
+	EXPECT_EQ(avl_int_sorted_list.root->left->value, 2);
+	EXPECT_EQ(avl_int_sorted_list.root->right->value, 8);
+	EXPECT_EQ(avl_int_sorted_list.root->left->left->value, 1);
+	EXPECT_EQ(avl_int_sorted_list.root->left->right->value, 3);
+	EXPECT_EQ(avl_int_sorted_list.root->right->left->value, 6);
+	EXPECT_EQ(avl_int_sorted_list.root->right->right->value, 9);
+	EXPECT_EQ(avl_int_sorted_list.root->right->left->left->value, 5);
+	EXPECT_EQ(avl_int_sorted_list.root->right->left->right->value, 7);
+	EXPECT_EQ(avl_int_sorted_list.root->right->right->right->value, 10);
+
+	/*
+		  4
+		  /\
+		 2  8
+		/\  /\
+		1 3 6 9
+		    /\ \
+		   5  7 10
+	 */
 }
 
 TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
