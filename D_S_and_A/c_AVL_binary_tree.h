@@ -62,11 +62,11 @@ public:
 			if(height((*chain_node)->left->left) > height((*chain_node)->left->right))//right rotation needed
 				*chain_node = rotate_right((*chain_node));
 			else
-				*chain_node = rotate_left_right((*chain_node));//left right needed
+				*chain_node = rotate_left_right((*chain_node));//left right rotation needed
 		else if(static_cast<int>(height((*chain_node)->left) - height((*chain_node)->right)) < -1)//violation on right
 			if(height((*chain_node)->right->left) < height((*chain_node)->right->right))
 				*chain_node = rotate_left((*chain_node));//left rotation needed
 			else
-				*chain_node = rotate_right_left((*chain_node));//right left needed
+				*chain_node = rotate_right_left((*chain_node));//right left rotation needed
 	}
 };

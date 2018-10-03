@@ -146,13 +146,18 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->left->value, 4);
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->right->value, 8);
 
-	c_int_binary_tree<c_node> b_tree_find_node{ { 17, 77, 114, 28, 88, 27, 48, 33, 72, 48, 35 } };
-	EXPECT_EQ((*b_tree_find_node.find_node(27))->value, 27);
-	EXPECT_EQ((*b_tree_find_node.find_node(72))->value, 72);
-	EXPECT_EQ((*b_tree_find_node.find_node(77))->value, 77);
-	EXPECT_EQ((*b_tree_find_node.find_node(17))->value, 17);
-	EXPECT_EQ((*b_tree_find_node.find_node(8)), nullptr);
-	EXPECT_EQ((*b_tree_find_node.find_node(10050)), nullptr);
+	c_int_binary_tree<c_node> b_tree_find_node_and_lca{ { 17, 77, 114, 28, 88, 27, 48, 33, 72, 48, 35 } };
+	EXPECT_EQ((*b_tree_find_node_and_lca.find_node(27, &b_tree_find_node_and_lca.root))->value, 27);
+	EXPECT_EQ((*b_tree_find_node_and_lca.find_node(72, &b_tree_find_node_and_lca.root))->value, 72);
+	EXPECT_EQ((*b_tree_find_node_and_lca.find_node(77, &b_tree_find_node_and_lca.root))->value, 77);
+	EXPECT_EQ((*b_tree_find_node_and_lca.find_node(17, &b_tree_find_node_and_lca.root))->value, 17);
+	EXPECT_EQ((*b_tree_find_node_and_lca.find_node(8, &b_tree_find_node_and_lca.root)), nullptr);
+	EXPECT_EQ((*b_tree_find_node_and_lca.find_node(10050, &b_tree_find_node_and_lca.root)), nullptr);
+
+	EXPECT_EQ((*b_tree_find_node_and_lca.lca(&b_tree_find_node_and_lca.root, 88, 72))->value, 77);
+	EXPECT_EQ((*b_tree_find_node_and_lca.lca(&b_tree_find_node_and_lca.root, 35, 72))->value, 48);
+	EXPECT_EQ(*b_tree_find_node_and_lca.lca(&b_tree_find_node_and_lca.root, 38, 77), nullptr);//first value not in tree
+	EXPECT_EQ(*b_tree_find_node_and_lca.lca(&b_tree_find_node_and_lca.root, 17, 200), nullptr);//second value not in tree
 
 	c_int_binary_tree<c_node> b_tree_remove_simple{ { 4, 1, 8, 6, 3, 2 } };
 	EXPECT_EQ(b_tree_remove_simple.root->left->value, 1);
@@ -254,13 +259,14 @@ TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
 	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->right->right->right->value, 18);
 
 	/*
-	      10			   5			//right rotate on 10
+			Tab sizes are different in VS than github
+	      10			   5			right rotate on 10
 		  /				  /\
 		 5			->	 2 10
 		/				 
 		2				
 
-		 5					5			//right left rotate on 2
+		 5					5			right left rotate on 2
 		 /\					/\
 		2 10		->		3 10
 		\					/\
@@ -268,7 +274,7 @@ TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
 		/
 		3
 
-		5					  5			//left rotate on 10
+		5					  5			left rotate on 10
 		/\					 / \
 		3 10		->		3   12
 		/\  \				/\  / \
@@ -276,7 +282,7 @@ TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
 			  \
 			   18
 
-		  5					  5			//left right rotate on 18
+		  5					  5			left right rotate on 18
 		 / \				 / \
 		3   12		->		3   12
 		/\  / \				/\  / \

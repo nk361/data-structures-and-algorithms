@@ -19,6 +19,9 @@
     <Filter Include="Header Files\Algorithms">
       <UniqueIdentifier>{133b4254-5e72-4a8a-a854-9a65d90f99c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Data Structures\Data Structure Shared">
+      <UniqueIdentifier>{a660606b-6323-4ee4-ac72-d57281c2cfe7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -62,6 +65,9 @@
     </ClInclude>
     <ClInclude Include="c_general_algorithms.h">
       <Filter>Header Files\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="c_int_binary_funcs.h">
+      <Filter>Header Files\Data Structures\Data Structure Shared</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

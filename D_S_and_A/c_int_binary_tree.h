@@ -1,8 +1,9 @@
 #pragma once
 #include "c_binary_tree.h"
+#include "c_int_binary_funcs.h"
 
 template<template<class> class NodeType>
-class c_int_binary_tree : public c_binary_tree<int, NodeType>
+class c_int_binary_tree : public c_binary_tree<int, NodeType>, public c_int_binary_funcs<NodeType>
 {
 public:
 	c_int_binary_tree() = delete;
@@ -45,31 +46,9 @@ public:
 			this->add_item(val);
 	}
 
-	NodeType<int> * * find_node(int const& val)//return pointer to pointer so the node in the tree can be changed
-	{
-		NodeType<int> * * current = &root;
-		while(true)
-		{
-			if((*current)->value == val)
-				return current;
-			if(val < (*current)->value)
-			{
-				if ((*current)->left == nullptr)
-					return &(*current)->left;//returning a reference to a pointer holding nullptr
-				current = &(*current)->left;
-			}
-			else
-			{
-				if ((*current)->right == nullptr)
-					return &(*current)->right;//returning a reference to a pointer holding nullptr
-				current = &(*current)->right;
-			}
-		}
-	}
-
 	void remove_item(int const& val) override
 	{
-		NodeType<int> * * found = find_node(val);
+		NodeType<int> * * found = find_node(val, &root);
 		
 		if(*found != nullptr)
 			if((*found)->left == nullptr && (*found)->right == nullptr)

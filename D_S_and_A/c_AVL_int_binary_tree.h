@@ -1,8 +1,9 @@
 #pragma once
 #include "c_AVL_binary_tree.h"
+#include "c_int_binary_funcs.h"
 
 template<template<class> class NodeType>
-class c_AVL_int_binary_tree : public c_AVL_binary_tree<int, NodeType>//, public c_int_binary_tree<NodeType>
+class c_AVL_int_binary_tree : public c_AVL_binary_tree<int, NodeType>, public c_int_binary_funcs<NodeType>
 {
 public:
 	c_AVL_int_binary_tree() = delete;
@@ -26,7 +27,7 @@ public:
 				if ((*current)->left == nullptr)
 				{
 					(*current)->left = new NodeType<int>{ val };
-					for (int i = ancestors.size() - 1; i >= 0; --i)//only starting at size minus 1 because this ^ new node wasn't added to ancestors
+					for (int i = ancestors.size() - 1; i >= 0; --i)//starting with the first possible grandparent, - 1 instead of - 2 because current wasn't added
 						rebalance(ancestors[i]);
 					break;
 				}
@@ -53,32 +54,9 @@ public:
 			this->add_item(val);
 	}
 
-	//for now I'll copy these from c_int_binary_tree, but I think I can get them here through inheritance somehow
-	NodeType<int> * * find_node(int const& val)//return pointer to pointer so the node in the tree can be changed
-	{
-		NodeType<int> * * current = &root;
-		while (true)
-		{
-			if ((*current)->value == val)
-				return current;
-			if (val < (*current)->value)
-			{
-				if ((*current)->left == nullptr)
-					return &(*current)->left;//returning a reference to a pointer holding nullptr
-				current = &(*current)->left;
-			}
-			else
-			{
-				if ((*current)->right == nullptr)
-					return &(*current)->right;//returning a reference to a pointer holding nullptr
-				current = &(*current)->right;
-			}
-		}
-	}
-
 	void remove_item(int const& val) override
 	{
-		NodeType<int> * * found = find_node(val);
+		NodeType<int> * * found = find_node(val, &root);
 
 		if (*found != nullptr)
 			if ((*found)->left == nullptr && (*found)->right == nullptr)
