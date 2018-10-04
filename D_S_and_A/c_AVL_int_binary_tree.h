@@ -63,9 +63,6 @@ public:
 			{
 				delete *ancestors[ancestors.size() - 1];
 				*ancestors[ancestors.size() - 1] = nullptr;
-
-				for (int i = ancestors.size() - 1 - 1; i >= 0; --i)//i must be int type, size_t cannot go less than zero
-					rebalance(ancestors[i]);
 			}
 			else if ((*ancestors[ancestors.size() - 1])->right == nullptr)//only one child node exists, so just overwrite *found with that child
 				*ancestors[ancestors.size() - 1] = (*ancestors[ancestors.size() - 1])->left;
@@ -88,9 +85,8 @@ public:
 				}
 				else//move right nodes up if it was purely the right node
 					*current = (*current)->right;
-
-				for (int i = ancestors.size() - 1 - 1; i >= 0; --i)//i must be int type, size_t cannot go less than zero, - 2 to start at first possible grandparent
-					rebalance(ancestors[i]);
 			}
+		for (int i = ancestors.size() - 1 - 1; i >= 0; --i)//i must be int type, size_t cannot go less than zero, - 2 to start at first possible grandparent
+			rebalance(ancestors[i]);
 	}
 };
