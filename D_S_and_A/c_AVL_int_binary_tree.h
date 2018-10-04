@@ -39,7 +39,7 @@ public:
 				if ((*current)->right == nullptr)
 				{
 					(*current)->right = new NodeType<int>{ val };
-					for (int i = ancestors.size() - 1; i >= 0; --i)
+					for (int i = ancestors.size() - 1; i >= 0; --i)//i must be int in these because when size_t/unsigned int goes below 0 it becomes a very high number
 						rebalance(ancestors[i]);
 					break;
 				}
@@ -56,27 +56,30 @@ public:
 
 	void remove_item(int const& val) override
 	{
-		NodeType<int> * * found = find_node(val, &root);
+		std::vector<NodeType<int> * *> ancestors{ find_node_with_path(&root, val) };
 
-		if (*found != nullptr)
-			if ((*found)->left == nullptr && (*found)->right == nullptr)
+		if (*ancestors[ancestors.size() - 1] != nullptr)
+			if ((*ancestors[ancestors.size() - 1])->left == nullptr && (*ancestors[ancestors.size() - 1])->right == nullptr)
 			{
-				delete *found;
-				*found = nullptr;
+				delete *ancestors[ancestors.size() - 1];
+				*ancestors[ancestors.size() - 1] = nullptr;
+
+				for (int i = ancestors.size() - 1 - 1; i >= 0; --i)//i must be int type, size_t cannot go less than zero
+					rebalance(ancestors[i]);
 			}
-			else if ((*found)->right == nullptr)
-				*found = (*found)->left;
-			else if ((*found)->left == nullptr)
-				*found = (*found)->right;
+			else if ((*ancestors[ancestors.size() - 1])->right == nullptr)//only one child node exists, so just overwrite *found with that child
+				*ancestors[ancestors.size() - 1] = (*ancestors[ancestors.size() - 1])->left;
+			else if ((*ancestors[ancestors.size() - 1])->left == nullptr)
+				*ancestors[ancestors.size() - 1] = (*ancestors[ancestors.size() - 1])->right;
 			else//both child nodes exist
 			{
-				NodeType<int> * * current = &(*found)->right;//search for the leftmost node of right child
+				NodeType<int> * * current = &(*ancestors[ancestors.size() - 1])->right;//search for the leftmost node of right child
 				while (true)
 					if ((*current)->left != nullptr)
 						current = &(*current)->left;
 					else
 						break;
-				(*found)->value = (*current)->value;//swap with next largest in tree
+				(*ancestors[ancestors.size() - 1])->value = (*current)->value;//swap with next largest in tree
 
 				if ((*current)->right == nullptr)//delete node if all the way left
 				{
@@ -85,6 +88,9 @@ public:
 				}
 				else//move right nodes up if it was purely the right node
 					*current = (*current)->right;
+
+				for (int i = ancestors.size() - 1 - 1; i >= 0; --i)//i must be int type, size_t cannot go less than zero, - 2 to start at first possible grandparent
+					rebalance(ancestors[i]);
 			}
 	}
 };

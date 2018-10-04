@@ -48,7 +48,7 @@ public:
 
 	void remove_item(int const& val) override
 	{
-		NodeType<int> * * found = find_node(val, &root);
+		NodeType<int> * * found = find_node(&root, val);
 		
 		if(*found != nullptr)
 			if((*found)->left == nullptr && (*found)->right == nullptr)

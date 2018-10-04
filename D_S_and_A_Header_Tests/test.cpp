@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "array"
 #include "../D_S_and_A/c_general_algorithms.h"
 #include "../D_S_and_A/c_node.h"
 #include "../D_S_and_A/c_heap.h"
@@ -146,18 +147,37 @@ TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->left->value, 4);
 	EXPECT_EQ(b_tree_need_r_l_rotate_one_call.root->right->value, 8);
 
-	c_int_binary_tree<c_node> b_tree_find_node_and_lca{ { 17, 77, 114, 28, 88, 27, 48, 33, 72, 48, 35 } };
-	EXPECT_EQ((*b_tree_find_node_and_lca.find_node(27, &b_tree_find_node_and_lca.root))->value, 27);
-	EXPECT_EQ((*b_tree_find_node_and_lca.find_node(72, &b_tree_find_node_and_lca.root))->value, 72);
-	EXPECT_EQ((*b_tree_find_node_and_lca.find_node(77, &b_tree_find_node_and_lca.root))->value, 77);
-	EXPECT_EQ((*b_tree_find_node_and_lca.find_node(17, &b_tree_find_node_and_lca.root))->value, 17);
-	EXPECT_EQ((*b_tree_find_node_and_lca.find_node(8, &b_tree_find_node_and_lca.root)), nullptr);
-	EXPECT_EQ((*b_tree_find_node_and_lca.find_node(10050, &b_tree_find_node_and_lca.root)), nullptr);
+	c_int_binary_tree<c_node> b_tree_int_binary_funcs{ { 17, 77, 114, 28, 88, 27, 48, 33, 72, 48, 35 } };
+	EXPECT_EQ((*b_tree_int_binary_funcs.find_node(&b_tree_int_binary_funcs.root, 27))->value, 27);
+	EXPECT_EQ((*b_tree_int_binary_funcs.find_node(&b_tree_int_binary_funcs.root, 72))->value, 72);
+	EXPECT_EQ((*b_tree_int_binary_funcs.find_node(&b_tree_int_binary_funcs.root, 77))->value, 77);
+	EXPECT_EQ((*b_tree_int_binary_funcs.find_node(&b_tree_int_binary_funcs.root, 17))->value, 17);
+	EXPECT_EQ((*b_tree_int_binary_funcs.find_node(&b_tree_int_binary_funcs.root, 8)), nullptr);
+	EXPECT_EQ((*b_tree_int_binary_funcs.find_node(&b_tree_int_binary_funcs.root, 10050)), nullptr);
 
-	EXPECT_EQ((*b_tree_find_node_and_lca.lca(&b_tree_find_node_and_lca.root, 88, 72))->value, 77);
-	EXPECT_EQ((*b_tree_find_node_and_lca.lca(&b_tree_find_node_and_lca.root, 35, 72))->value, 48);
-	EXPECT_EQ(*b_tree_find_node_and_lca.lca(&b_tree_find_node_and_lca.root, 38, 77), nullptr);//first value not in tree
-	EXPECT_EQ(*b_tree_find_node_and_lca.lca(&b_tree_find_node_and_lca.root, 17, 200), nullptr);//second value not in tree
+	EXPECT_EQ((*b_tree_int_binary_funcs.lca(&b_tree_int_binary_funcs.root, 88, 72))->value, 77);
+	EXPECT_EQ((*b_tree_int_binary_funcs.lca(&b_tree_int_binary_funcs.root, 35, 72))->value, 48);
+	EXPECT_EQ(*b_tree_int_binary_funcs.lca(&b_tree_int_binary_funcs.root, 38, 77), nullptr);//first value not in tree
+	EXPECT_EQ(*b_tree_int_binary_funcs.lca(&b_tree_int_binary_funcs.root, 17, 200), nullptr);//second value not in tree
+
+	EXPECT_EQ(b_tree_int_binary_funcs.depth(b_tree_int_binary_funcs.root, b_tree_int_binary_funcs.root->right->right->left->value), 4);
+	EXPECT_EQ(b_tree_int_binary_funcs.depth(b_tree_int_binary_funcs.root, b_tree_int_binary_funcs.root->right->left->left->value), 4);
+	EXPECT_EQ(b_tree_int_binary_funcs.depth(b_tree_int_binary_funcs.root, 35), 6);
+	EXPECT_EQ(b_tree_int_binary_funcs.depth(b_tree_int_binary_funcs.root, b_tree_int_binary_funcs.root->value), 1);
+
+	std::vector<c_node<int> * *> eithty_eight_path{ b_tree_int_binary_funcs.find_node_with_path(&b_tree_int_binary_funcs.root, 88) };
+	ASSERT_EQ(eithty_eight_path.size(), 4);
+	std::array<int, 4> values_to_check_path1{ 17, 77, 114, 88 };
+	for (size_t i{ 0 }; i < eithty_eight_path.size(); ++i)
+		EXPECT_EQ((*eithty_eight_path[i])->value, values_to_check_path1[i]);
+	std::vector<c_node<int> * *> seventy_two_path{ b_tree_int_binary_funcs.find_node_with_path(&b_tree_int_binary_funcs.root, 72) };
+	ASSERT_EQ(seventy_two_path.size(), 5);
+	std::array<int, 5> values_to_check_path2{ 17, 77, 28, 48, 72 };
+	for (size_t i{ 0 }; i < seventy_two_path.size(); ++i)
+		EXPECT_EQ((*seventy_two_path[i])->value, values_to_check_path2[i]);
+	std::vector<c_node<int> * *> seventeen_path{ b_tree_int_binary_funcs.find_node_with_path(&b_tree_int_binary_funcs.root, 17) };//test root
+	ASSERT_EQ(seventeen_path.size(), 1);
+	EXPECT_EQ((*seventeen_path[0])->value, 17);
 
 	c_int_binary_tree<c_node> b_tree_remove_simple{ { 4, 1, 8, 6, 3, 2 } };
 	EXPECT_EQ(b_tree_remove_simple.root->left->value, 1);
@@ -314,6 +334,20 @@ TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
 		    /\ \
 		   5  7 10
 	 */
+
+	//same layout, with 10 added ^
+	c_AVL_int_binary_tree<c_node> avl_remove_rebalance{ { 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 } };
+	avl_remove_rebalance.remove_item(20);
+	EXPECT_EQ(avl_remove_rebalance.root->right->right->right, nullptr);
+	avl_remove_rebalance.remove_item(19);//imbalance in 18, cause left right rotate on 18
+	EXPECT_EQ(avl_remove_rebalance.root->value, 14);
+	EXPECT_EQ(avl_remove_rebalance.root->left->value, 12);
+	EXPECT_EQ(avl_remove_rebalance.root->right->value, 17);
+	EXPECT_EQ(avl_remove_rebalance.root->left->left->value, 11);
+	EXPECT_EQ(avl_remove_rebalance.root->left->right->value, 13);
+	EXPECT_EQ(avl_remove_rebalance.root->right->left->value, 16);
+	EXPECT_EQ(avl_remove_rebalance.root->right->right->value, 18);
+	EXPECT_EQ(avl_remove_rebalance.root->right->left->left->value, 15);
 }
 
 TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
