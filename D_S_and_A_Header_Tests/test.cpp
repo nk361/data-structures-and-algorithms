@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "array"
-#include "../D_S_and_A/c_general_algorithms.h"
-#include "../D_S_and_A/c_node.h"
-#include "../D_S_and_A/c_heap.h"
-#include "../D_S_and_A/c_max_heap.h"
-#include "../D_S_and_A/c_AVL_int_binary_tree.h"
+#include "../D_S_and_A/Algorithms/c_general_algorithms.h"
+#include "../D_S_and_A/Data Structures/c_node.h"
+#include "../D_S_and_A/Data Structures/c_heap.h"
+#include "../D_S_and_A/Data Structures/c_max_heap.h"
+#include "../D_S_and_A/Data Structures/c_AVL_int_binary_tree.h"
+#include "../D_S_and_A/Algorithms/c_bubble_sort.h"
 
 TEST(GeneralAlgorithmsHeader, SmallGeneralAlgorithms)
 {
@@ -12,9 +13,9 @@ TEST(GeneralAlgorithmsHeader, SmallGeneralAlgorithms)
 	c_general_algorithms::scramble_array(sorted_array, sizeof(sorted_array) / sizeof(sorted_array[0]));
 	EXPECT_FALSE(sorted_array[0] == 1 && sorted_array[1] == 2 && sorted_array[2] == 3 && sorted_array[3] == 4 && sorted_array[4] == 5);
 
-	std::string sorted_strings[]{ "Ashley", "Briana", "Cathy", "Darcy", "Emily", "Fatima", "Gretchen", "Hannah" };
+	std::string sorted_strings[]{ "Amy", "Briana", "Cathy", "Darcy", "Emily", "Fatima", "Gretchen", "Hannah" };
 	c_general_algorithms::scramble_array(sorted_strings, sizeof(sorted_strings) / sizeof(sorted_strings[0]));
-	EXPECT_FALSE(sorted_strings[0] == "Ashley" && sorted_strings[1] == "Briana" && sorted_strings[2] == "Cathy" && sorted_strings[3] == "Darcy" && sorted_strings[4] == "Emily" && sorted_strings[5] == "Fatima" && sorted_strings[6] == "Gretchen" && sorted_strings[7] == "Hannah");
+	EXPECT_FALSE(sorted_strings[0] == "Amy" && sorted_strings[1] == "Briana" && sorted_strings[2] == "Cathy" && sorted_strings[3] == "Darcy" && sorted_strings[4] == "Emily" && sorted_strings[5] == "Fatima" && sorted_strings[6] == "Gretchen" && sorted_strings[7] == "Hannah");
 
 	int values_to_sum[]{ 5, 2, 9, 8, 4, 10, 15 };
 	std::pair<int, int> twelve = c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 12);
@@ -54,27 +55,10 @@ TEST(TreeNodeHeader, TreeNodeConstructors)
 	EXPECT_EQ(number.left, nullptr);
 	EXPECT_EQ(number.right, nullptr);
 
-	c_node<std::string> string{ "Test" };
-	EXPECT_STREQ(string.value.c_str(), "Test");
-	EXPECT_EQ(string.left, nullptr);
-	EXPECT_EQ(string.right, nullptr);
-}
-
-TEST(TreeHeader, TreeConstructors)
-{
-	c_max_heap test_destructor{ 45 };
-
-	c_max_heap test_destructor_two{ 32 };
-	test_destructor_two.add_item(65);
-
-	c_max_heap test_destructor_three{ 15 };
-	test_destructor_three.add_item(70);
-	test_destructor_three.add_item(43);
-
-	c_max_heap test_destructor_four{ 20 };
-	test_destructor_four.add_item(67);
-	test_destructor_four.add_item(19);
-	test_destructor_four.add_item(74);
+	c_node<std::string> word{ "Test" };
+	EXPECT_STREQ(word.value.c_str(), "Test");
+	EXPECT_EQ(word.left, nullptr);
+	EXPECT_EQ(word.right, nullptr);
 }
 
 TEST(c_int_binary_treeTests, c_int_binary_treeFunctionTests)
@@ -404,56 +388,62 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(c_heap::amount_last_level(5), 2);
 	EXPECT_EQ(c_heap::amount_last_level(6), 3);
 
-	{
-		c_max_heap temp_tree{ 10 };
-		EXPECT_EQ(temp_tree.root->value, 10);
-		EXPECT_EQ(temp_tree.root->left, nullptr);
-		EXPECT_EQ(temp_tree.root->right, nullptr);
+	c_max_heap temp_tree{ 10 };
+	EXPECT_EQ(temp_tree.root->value, 10);
+	EXPECT_EQ(temp_tree.root->left, nullptr);
+	EXPECT_EQ(temp_tree.root->right, nullptr);
 
-		EXPECT_EQ(temp_tree.size, 1);
-		EXPECT_EQ(temp_tree.amount_in_level(0), 1);
-		EXPECT_EQ(temp_tree.amount_complete_levels(temp_tree.size), 1);
+	EXPECT_EQ(temp_tree.size, 1);
+	EXPECT_EQ(temp_tree.amount_in_level(0), 1);
+	EXPECT_EQ(temp_tree.amount_complete_levels(temp_tree.size), 1);
 
-		temp_tree.add_item(15);
-		EXPECT_EQ(temp_tree.root->value, 10);
-		EXPECT_FALSE(temp_tree.root->left == nullptr);
-		EXPECT_EQ(temp_tree.root->left->value, 15);
-		EXPECT_EQ(temp_tree.root->right, nullptr);
+	temp_tree.add_item(15);
+	EXPECT_EQ(temp_tree.root->value, 10);
+	EXPECT_FALSE(temp_tree.root->left == nullptr);
+	EXPECT_EQ(temp_tree.root->left->value, 15);
+	EXPECT_EQ(temp_tree.root->right, nullptr);
 
-		temp_tree.add_item(19);
-		EXPECT_EQ(temp_tree.root->value, 10);
-		EXPECT_EQ(temp_tree.root->left->value, 15);
-		EXPECT_FALSE(temp_tree.root->right == nullptr);
-		EXPECT_EQ(temp_tree.root->right->value, 19);
+	temp_tree.add_item(19);
+	EXPECT_EQ(temp_tree.root->value, 10);
+	EXPECT_EQ(temp_tree.root->left->value, 15);
+	EXPECT_FALSE(temp_tree.root->right == nullptr);
+	EXPECT_EQ(temp_tree.root->right->value, 19);
 
-		temp_tree.add_item(32);
-		EXPECT_EQ(temp_tree.root->value, 10);
-		EXPECT_EQ(temp_tree.root->left->value, 15);
-		EXPECT_EQ(temp_tree.root->right->value, 19);
-		EXPECT_FALSE(temp_tree.root->left->left == nullptr);
-		EXPECT_EQ(temp_tree.root->left->left->value, 32);
+	temp_tree.add_item(32);
+	EXPECT_EQ(temp_tree.root->value, 10);
+	EXPECT_EQ(temp_tree.root->left->value, 15);
+	EXPECT_EQ(temp_tree.root->right->value, 19);
+	EXPECT_FALSE(temp_tree.root->left->left == nullptr);
+	EXPECT_EQ(temp_tree.root->left->left->value, 32);
 
-		/*
+	/*
 		
-		   10
-		   /\
-		  15 19
-		 /
-		32
+		10
+		/\
+		15 19
+		/
+	32
 		
-		*/
-	}
+	*/
 
-	{
-		c_max_heap larger_tree{ 10 };
-		larger_tree.add_items({ 20, 50, 72, 19, 67, 5, 32, 48, 95, 140, 34, 18 });
+	c_max_heap larger_tree{ 10 };
+	larger_tree.add_items({ 20, 50, 72, 19, 67, 5, 32, 48, 95, 140, 34, 18 });
 
-		EXPECT_EQ(larger_tree.root->value, 10);//all these checks are before moving items up the tree
-		EXPECT_EQ(larger_tree.root->left->left->left->value, 32);
-		EXPECT_EQ(larger_tree.root->right->right->left, nullptr);
-		EXPECT_EQ(larger_tree.root->right->right->right, nullptr);
-		EXPECT_EQ(larger_tree.root->right->left->left->value, 34);
-	}
+	EXPECT_EQ(larger_tree.root->value, 10);//all these checks are before moving items up the tree
+	EXPECT_EQ(larger_tree.root->left->left->left->value, 32);
+	EXPECT_EQ(larger_tree.root->right->right->left, nullptr);
+	EXPECT_EQ(larger_tree.root->right->right->right, nullptr);
+	EXPECT_EQ(larger_tree.root->right->left->left->value, 34);
+}
+
+TEST(c_sorts, c_sort_header_tests)
+{
+	int small[]{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	c_general_algorithms::scramble_array(small, 10);
+
+	c_bubble_sort::sort(small, 10);
+	for (int i = 0; i < 10 - 1; ++i)
+		EXPECT_TRUE(small[i] <= small[i + 1]);
 }
 
 int main(int argc, char * argv[])//char **argv

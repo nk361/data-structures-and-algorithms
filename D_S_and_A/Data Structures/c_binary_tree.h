@@ -1,6 +1,4 @@
 #pragma once
-#include "stdafx.h"
-#include "c_node.h"
 #include "c_tree.h"
 
 template <typename  ValType, template<class> class NodeType>

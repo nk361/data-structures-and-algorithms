@@ -13,15 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Data Structures">
-      <UniqueIdentifier>{b912c26e-798b-4b9a-9938-a065830c898d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Algorithms">
-      <UniqueIdentifier>{133b4254-5e72-4a8a-a854-9a65d90f99c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Data Structures\Data Structure Shared">
-      <UniqueIdentifier>{a660606b-6323-4ee4-ac72-d57281c2cfe7}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -30,44 +21,47 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_AVL_binary_tree.h">
-      <Filter>Header Files\Data Structures</Filter>
+    <ClInclude Include="Data Structures\c_AVL_binary_tree.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_AVL_int_binary_tree.h">
-      <Filter>Header Files\Data Structures</Filter>
+    <ClInclude Include="Data Structures\c_AVL_int_binary_tree.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_AVL_node.h">
-      <Filter>Header Files\Data Structures</Filter>
+    <ClInclude Include="Data Structures\c_AVL_node.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_binary_tree.h">
-      <Filter>Header Files\Data Structures</Filter>
+    <ClInclude Include="Data Structures\c_binary_tree.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_heap.h">
-      <Filter>Header Files\Data Structures</Filter>
+    <ClInclude Include="Data Structures\c_heap.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_int_binary_tree.h">
-      <Filter>Header Files\Data Structures</Filter>
+    <ClInclude Include="Data Structures\c_int_binary_funcs.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_linked_list.h">
-      <Filter>Header Files\Data Structures</Filter>
+    <ClInclude Include="Data Structures\c_int_binary_tree.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_max_heap.h">
-      <Filter>Header Files\Data Structures</Filter>
+    <ClInclude Include="Data Structures\c_linked_list.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_node.h">
-      <Filter>Header Files\Data Structures</Filter>
+    <ClInclude Include="Data Structures\c_max_heap.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_red_black_tree_node.h">
-      <Filter>Header Files\Data Structures</Filter>
+    <ClInclude Include="Data Structures\c_node.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_tree.h">
-      <Filter>Header Files\Data Structures</Filter>
+    <ClInclude Include="Data Structures\c_red_black_tree_node.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_general_algorithms.h">
-      <Filter>Header Files\Algorithms</Filter>
+    <ClInclude Include="Data Structures\c_tree.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="c_int_binary_funcs.h">
-      <Filter>Header Files\Data Structures\Data Structure Shared</Filter>
+    <ClInclude Include="Algorithms\c_general_algorithms.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithms\c_bubble_sort.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
