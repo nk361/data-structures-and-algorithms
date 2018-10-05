@@ -46,6 +46,8 @@ public:
 	//takes a size and returns how many nodes are in the last level of the tree including zero if the tree is complete
 	int static amount_last_level(int const& sz)
 	{
+		if (sz == 0)//when root is the last level, return 1 instead of 0
+			return 1;
 		return sz - amount_full_tree(amount_complete_levels(sz));
 	}
 };

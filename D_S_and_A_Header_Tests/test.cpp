@@ -335,11 +335,13 @@ TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
 		   5  7 10
 	 */
 
+	//c_AVL_int_binary_tree functions are tested in c_int_binary_tree already ^
+
 	//same layout, with 10 added ^
 	c_AVL_int_binary_tree<c_node> avl_remove_rebalance{ { 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 } };
-	avl_remove_rebalance.remove_item(20);
+	avl_remove_rebalance.remove_item(20);//remove leaf
 	EXPECT_EQ(avl_remove_rebalance.root->right->right->right, nullptr);
-	avl_remove_rebalance.remove_item(19);//imbalance in 18, cause left right rotate on 18
+	avl_remove_rebalance.remove_item(19);//remove leaf, imbalance in 18, cause left right rotation on 18
 	EXPECT_EQ(avl_remove_rebalance.root->value, 14);
 	EXPECT_EQ(avl_remove_rebalance.root->left->value, 12);
 	EXPECT_EQ(avl_remove_rebalance.root->right->value, 17);
@@ -348,6 +350,30 @@ TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
 	EXPECT_EQ(avl_remove_rebalance.root->right->left->value, 16);
 	EXPECT_EQ(avl_remove_rebalance.root->right->right->value, 18);
 	EXPECT_EQ(avl_remove_rebalance.root->right->left->left->value, 15);
+
+	avl_remove_rebalance.remove_item(12);//remove node with two children
+	EXPECT_EQ(avl_remove_rebalance.root->value, 14);
+	EXPECT_EQ(avl_remove_rebalance.root->left->value, 13);
+	EXPECT_EQ(avl_remove_rebalance.root->right->value, 17);
+	EXPECT_EQ(avl_remove_rebalance.root->left->left->value, 11);
+	EXPECT_EQ(avl_remove_rebalance.root->right->left->value, 16);
+	EXPECT_EQ(avl_remove_rebalance.root->right->right->value, 18);
+	EXPECT_EQ(avl_remove_rebalance.root->right->left->left->value, 15);
+
+	avl_remove_rebalance.remove_item(13);//remove node with one left child, right left rotation on 14
+	EXPECT_EQ(avl_remove_rebalance.root->value, 16);
+	EXPECT_EQ(avl_remove_rebalance.root->left->value, 14);
+	EXPECT_EQ(avl_remove_rebalance.root->right->value, 17);
+	EXPECT_EQ(avl_remove_rebalance.root->left->left->value, 11);
+	EXPECT_EQ(avl_remove_rebalance.root->left->right->value, 15);
+	EXPECT_EQ(avl_remove_rebalance.root->right->right->value, 18);
+
+	avl_remove_rebalance.remove_item(16);//delete root
+	avl_remove_rebalance.remove_item(18);//delete node with just one right child, left right rotation on 17/root
+	EXPECT_EQ(avl_remove_rebalance.root->value, 15);
+	EXPECT_EQ(avl_remove_rebalance.root->left->value, 14);
+	EXPECT_EQ(avl_remove_rebalance.root->right->value, 17);
+	EXPECT_EQ(avl_remove_rebalance.root->left->left->value, 11);
 }
 
 TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
@@ -370,6 +396,7 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(c_heap::amount_complete_levels(15), 4);
 	EXPECT_EQ(c_heap::amount_complete_levels(7), 3);
 
+	EXPECT_EQ(c_heap::amount_last_level(0), 1);
 	EXPECT_EQ(c_heap::amount_last_level(1), 0);
 	EXPECT_EQ(c_heap::amount_last_level(2), 1);
 	EXPECT_EQ(c_heap::amount_last_level(3), 0);
