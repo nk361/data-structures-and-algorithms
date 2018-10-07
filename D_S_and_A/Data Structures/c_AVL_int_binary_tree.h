@@ -83,9 +83,13 @@ public:
 				NodeType<int> * * current = &(*ancestors[ancestors.size() - 1])->right;//search for the leftmost node of right child
 				while (true)
 					if ((*current)->left != nullptr)
+					{
+						ancestors.push_back(current);//add the previous each time to rebalance later
 						current = &(*current)->left;
+					}
 					else
 						break;
+
 				(*ancestors[ancestors.size() - 1])->value = (*current)->value;//swap with next largest in tree
 
 				if ((*current)->right == nullptr)//delete node if all the way left

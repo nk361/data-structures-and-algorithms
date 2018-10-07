@@ -63,6 +63,9 @@
     <ClInclude Include="Algorithms\c_bubble_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithms\c_counting_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

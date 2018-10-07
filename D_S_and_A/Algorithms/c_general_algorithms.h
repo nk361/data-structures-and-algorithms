@@ -24,7 +24,7 @@ namespace c_general_algorithms
 	}
 
 	//This algorithm takes an array, the size of that array, and the sum of two numbers from the array that you want it to find
-	//You must make sure that the values can have a sum, differece, and can be converted to a string for a map key to use this function
+	//You must make sure that the values can have a sum, differece
 	//It loops through the array in O(n) looking for the supplement value to equal the sum
 	//If it doesn't find it, it adds the current value to an unordered_map to be looked for later
 	//If it does find it, the function returns THE FIRST pair of values in order that they are in in the array that sum to the desired value
@@ -32,12 +32,12 @@ namespace c_general_algorithms
 	template<class ArrayType, class SumType>
 	std::pair<ArrayType, ArrayType> static pair_equal_to_sum(ArrayType const vals[], size_t const& size, SumType const& desired_sum)
 	{
-		std::unordered_map<std::string, ArrayType> encountered{};
+		std::unordered_map<ArrayType, ArrayType> encountered{};
 		for(int i{ 0 }; i < size; ++i)
 		{
-			typename std::unordered_map<std::string, ArrayType>::iterator found = encountered.find(std::to_string(desired_sum - vals[i]));
+			typename std::unordered_map<ArrayType, ArrayType>::iterator found = encountered.find(desired_sum - vals[i]);
 			if (found == encountered.end())
-				encountered.insert({ std::to_string(vals[i]), vals[i] });
+				encountered.insert({ vals[i], vals[i] });
 			else
 				return { desired_sum - vals[i], vals[i] };
 		}

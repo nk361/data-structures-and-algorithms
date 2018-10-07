@@ -35,7 +35,7 @@ public:
 
 				for (size_t i = ancestors.size() - 1; true; --i)//loop to look for the next path or exit if reached the end
 				{
-					if (ancestors.size() == 0)//went all the way up to root without another path
+					if (ancestors.empty())//went all the way up to root without another path
 						return max_height;
 					if (ancestors[i].second && ancestors[i].first->right != nullptr)//found an ancestor with an unexplored right node
 					{
@@ -61,12 +61,12 @@ public:
 		if(static_cast<int>(height((*chain_node)->left) - height((*chain_node)->right)) > 1)//violation on left
 			if(height((*chain_node)->left->left) > height((*chain_node)->left->right))//right rotation needed
 				*chain_node = rotate_right((*chain_node));
-			else
-				*chain_node = rotate_left_right((*chain_node));//left right rotation needed
+			else//left right rotation needed
+				*chain_node = rotate_left_right((*chain_node));
 		else if(static_cast<int>(height((*chain_node)->left) - height((*chain_node)->right)) < -1)//violation on right
-			if(height((*chain_node)->right->left) < height((*chain_node)->right->right))
-				*chain_node = rotate_left((*chain_node));//left rotation needed
-			else
-				*chain_node = rotate_right_left((*chain_node));//right left rotation needed
+			if(height((*chain_node)->right->left) < height((*chain_node)->right->right))//left rotation needed
+				*chain_node = rotate_left((*chain_node));
+			else//right left rotation needed
+				*chain_node = rotate_right_left((*chain_node));
 	}
 };

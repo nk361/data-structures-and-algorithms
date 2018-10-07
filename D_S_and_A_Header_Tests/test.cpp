@@ -6,6 +6,7 @@
 #include "../D_S_and_A/Data Structures/c_max_heap.h"
 #include "../D_S_and_A/Data Structures/c_AVL_int_binary_tree.h"
 #include "../D_S_and_A/Algorithms/c_bubble_sort.h"
+#include "../D_S_and_A/Algorithms/c_counting_sort.h"
 
 TEST(GeneralAlgorithmsHeader, SmallGeneralAlgorithms)
 {
@@ -417,13 +418,11 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(temp_tree.root->left->left->value, 32);
 
 	/*
-		
-		10
-		/\
-		15 19
-		/
-	32
-		
+		  10
+		  /\
+		 15 19
+		 /
+		32
 	*/
 
 	c_max_heap larger_tree{ 10 };
@@ -438,12 +437,29 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 
 TEST(c_sorts, c_sort_header_tests)
 {
-	int small[]{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	unsigned int small[]{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	unsigned int small_duplicates[]{ 1, 2, 4, 4, 4, 6, 7, 10, 9, 10 };
 	c_general_algorithms::scramble_array(small, 10);
+	c_general_algorithms::scramble_array(small_duplicates, 10);
 
-	c_bubble_sort::sort(small, 10);
+	c_bubble_sort<unsigned int>::sort(small, 10);
+	c_bubble_sort<unsigned int>::sort(small_duplicates, 10);
+
 	for (int i = 0; i < 10 - 1; ++i)
 		EXPECT_TRUE(small[i] <= small[i + 1]);
+	for (int i = 0; i < 10 - 1; ++i)
+		EXPECT_TRUE(small_duplicates[i] <= small_duplicates[i + 1]);
+
+	c_general_algorithms::scramble_array(small, 10);
+	c_general_algorithms::scramble_array(small_duplicates, 10);
+
+	c_counting_sort::sort(small, 10);
+	c_counting_sort::sort(small_duplicates, 10);
+
+	for (int i = 0; i < 10 - 1; ++i)
+		EXPECT_TRUE(small[i] <= small[i + 1]);
+	for (int i = 0; i < 10 - 1; ++i)
+		EXPECT_TRUE(small_duplicates[i] <= small_duplicates[i + 1]);
 }
 
 int main(int argc, char * argv[])//char **argv

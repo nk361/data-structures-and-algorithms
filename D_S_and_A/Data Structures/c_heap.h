@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include "c_node.h"
 #include "c_int_binary_tree.h"
 
 //in a heap, always remove only the root
