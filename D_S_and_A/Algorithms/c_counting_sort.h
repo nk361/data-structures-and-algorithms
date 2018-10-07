@@ -4,7 +4,7 @@
 class c_counting_sort
 {
 public:
-	//O(n + k) where k is the amount of unique values
+	//O(n)
 	//This algorithm only takes positive integer values to sort
 	//This sorting algorithm first adds unique values from the array to a map, if they're already in the map, it increments their count
 	//After all unique values are counted, it adds the count of each spot to the spot's count behind it
