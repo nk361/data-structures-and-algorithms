@@ -12,13 +12,13 @@ public:
 
 	explicit c_int_binary_tree(std::vector<int> const& vals) : c_binary_tree<int, NodeType>(vals[0])
 	{
-		for (size_t i = 1; i < vals.size(); ++i)//start at one, send first val off to be root
+		for (size_t i{ 1 }; i < vals.size(); ++i)//start at one, send first val off to be root
 			this->c_int_binary_tree::add_item(vals[i]);
 	}
 
 	virtual void add_item(int const& val) override
 	{
-		NodeType<int> * current = root;
+		NodeType<int> * current{ root };
 		while (true)
 			if (val < current->value)
 			{
@@ -48,7 +48,7 @@ public:
 
 	void remove_item(int const& val) override
 	{
-		NodeType<int> * * found = find_node(&root, val);
+		NodeType<int> * * found{ find_node(&root, val) };
 		
 		if(*found != nullptr)
 			if((*found)->left == nullptr && (*found)->right == nullptr)
@@ -62,7 +62,7 @@ public:
 				*found = (*found)->right;
 			else//both child nodes exist
 			{
-				NodeType<int> * * current = &(*found)->right;//search for the leftmost node of right child
+				NodeType<int> * * current{ &(*found)->right };//search for the leftmost node of right child
 				while(true)
 					if ((*current)->left != nullptr)
 						current = &(*current)->left;

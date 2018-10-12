@@ -12,8 +12,8 @@ public:
 	//So it leaves one more spot at the end of the array out of the check each time until only the first two values are left to check
 	MyType static *sort(MyType arr[], int const& size)
 	{
-		for (int i = size - 1; i >= 0; --i)
-			for (int j = 0; j < i; ++j)
+		for (int i{ size - 1 }; i >= 0; --i)
+			for (int j{ 0 }; j < i; ++j)
 				if (arr[j] > arr[j + 1])
 					std::swap(arr[j], arr[j + 1]);
 		return arr;

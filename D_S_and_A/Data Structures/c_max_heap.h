@@ -1,121 +1,107 @@
 #pragma once
-#include <iostream>
 #include "c_heap.h"
 
-class c_max_heap : public c_heap
+class c_max_heap : public c_heap<int>
 {
 public:
 	c_max_heap() = delete;
 
 	explicit c_max_heap(int const& val) : c_heap(val) {}
 
-	void add_item(int const& val) override
+	explicit c_max_heap(std::vector<int> const& vals) : c_heap(vals[0])
 	{
-		//if(size > 0 && size < 3)
-		//{
-			//root->left = new c_node<int>{ val };
+		for (size_t i{ 1 }; i < vals.size(); ++i)//start at one, send first val off to be root
+			this->c_max_heap::add_item(vals[i]);
+	}
 
-			//std::cout << "root " << (root == nullptr) << std::endl;
-			//std::cout << root->value << std::endl;
+	void trickle_up(std::vector<c_node<int> * *> ancstrs) const
+	{
+		for (int i{ static_cast<int>(ancstrs.size()) - 1 }; i >= 1; --i)//go up the ancestors list stopping at ancestor 1 not last
+			if ((*ancstrs[i])->value > (*ancstrs[i - 1])->value)//check if current item is greater than it's parent
+				std::swap((*ancstrs[i])->value, (*ancstrs[i - 1])->value);
+			else
+				break;//break because no nodes above should be less than their children if added correctly
+	}
 
-			//std::cout << "Results" << std::endl;
-			//std::cout << (root->left == nullptr) << std::endl;
-			//std::cout << (root->right == nullptr) << std::endl;
-
-			//c_node<int> * test = new c_node<int>{ val };
-			//std::cout << test->value << std::endl;
-			//delete test;
-
-
-			//if (root->left == nullptr)
-				//root->left = new c_node<int>{ val };
-			//else
-				//root->right = new c_node<int>{ val };
-
-			//std::cout << "Working here" << std::endl;
-
-			//(root->left == nullptr ? root->left : root->right) = new c_node<int>{ val };
-			//size++;
-		//}
-		//else
-		//{
-			//std::cout << "Shouldn't get here yet" << std::endl;
-			//need to know amount currently in last generation and the amount that last generation can hold
-			//int amount_last_level = size - amount_full_tree(amount_complete_levels(size));//amount in last level
-			//where the new value is inserted should be at this ^ plus one in the last level
-			int open_spot = amount_last_level(size);
-			//std::cout << open_spot << std::endl;
-			//int complete_levels = amount_complete_levels(size);//how many levels I need to navigate through
-			//std::cout << amount_complete_levels(size) << " complete" << std::endl;
-
-			//If last level is full, find the max of the next level, else, amount of the partially complete one
-			//int max_of_last_level = amount_last_level(size) == 0 ? amount_in_level(amount_complete_levels(size)) : amount_in_level(amount_complete_levels(size) - 1);
-			//SECOND PART OF THIS LINE ^^^ GIVES WRONG LEVEL TO GET THE MAX OF
-			int max_of_last_level = amount_in_level(amount_complete_levels(size));
-
-		//if (amount_last_level(size) == 0)
-				//max_of_last_level = amount_in_level(amount_complete_levels(size));
-			//else
-				//max_of_last_level = amount_in_level(amount_complete_levels(size) - 1);
-
-				
-
-			//int max_of_last_level = amount_in_level(amount_full_tree(amount_complete_levels(size)) + 1);
-			//std::cout << "Value " << val << std::endl;
-			//std::cout << "max " << max_of_last_level << std::endl;
-			//now I know where the open spot is, I need to navigate to it
-			//how will I tell which ways to turn?
-			//I need to calculate the amount the last level would have if completed, to know how far left or right I need to go
-			
-			//do I need to know how many full levels there are?
-			//or can I just keep going down the tree until there's an open left or right, checking left first?
-			c_node<int> * current = root;
-			int current_level = 0;
-			int previous_calc = 0;
+	void trickle_down()
+	{
+		if(root->left != nullptr)//if root has at least one child that may need swapped
+		{
+			c_node<int> * * current{ &root };
 			while(true)
 			{
-				//std::cout << open_spot << " < " << previous_calc << " + " << max_of_last_level << " / " << amount_in_level(current_level + 1) << std::endl;
-				//std::cout << "Looping forever?" << std::endl;
-
-				if(open_spot < previous_calc + max_of_last_level / amount_in_level(current_level + 1))
+				if ((*current)->left == nullptr && (*current)->right == nullptr)//reached leaf node
+					break;
+				if((*current)->right == nullptr)//no right, swap left (heaps can never have a no left child while having a right child, no check needed)
 				{
-					if(current->left != nullptr)
+					if ((*current)->value < (*current)->left->value)
 					{
-						current = current->left;
+						std::swap((*current)->value, ((*current)->left)->value);
+						break;//in a heap, the child, of a parent with one node, must be a leaf node
 					}
-					else
+					break;
+				}
+				
+				if ((*current)->value < (*current)->left->value || (*current)->value < (*current)->right->value)//at least one of the children is greater
+				{
+					if((*current)->left->value > (*current)->right->value)//left is the greatest of children
 					{
-						current->left = new c_node<int>{ val };
-						++size;
-						break;
+						std::swap((*current)->value, (*current)->left->value);
+						current = &(*current)->left;
 					}
+					else//right is the greatest of children
+					{
+						std::swap((*current)->value, (*current)->right->value);
+						current = &(*current)->right;
+					}
+				}
+				else//if the node has two children and neither of their values are greater
+					break;
+			}
+		}
+	}
+
+	void add_item(int const& val) override
+	{
+		int const open_spot{ 1 + amount_last_level(size) };//know the destination, find how many are in the last level + 1
+		int const max_of_last_level{ amount_in_level(amount_complete_levels(size)) };//know which direcion to head
+
+		c_node<int> * * current{ &root };
+		std::vector<c_node<int> * *> ancestors{ current };//for navigation up to root, after adding an item, in trickle_up
+
+		for (int current_level{ 0 }, previous_calc{ 0 }; true; ++current_level)
+			if(open_spot <= previous_calc + max_of_last_level / amount_in_level(current_level + 1))//if the goal is leftward
+				if((*current)->left != nullptr)//go left
+				{
+					current = &(*current)->left;
+					ancestors.push_back(current);
 				}
 				else
 				{
-					previous_calc += max_of_last_level / amount_in_level(current_level + 1);
-
-					if(current->right != nullptr)
-					{
-						current = current->right;
-					}
-					else
-					{
-						current->right = new c_node<int>{ val };
-						++size;
-						break;
-					}
+					(*current)->left = new c_node<int>{ val };
+					ancestors.push_back(&(*current)->left);//add the newest node to ancestors
+					trickle_up(ancestors);//trickle up moving the new value up as high as it needs to go
+					++size;
+					break;
 				}
-				++current_level;
-				
-				
-				//root max/2
-				//next max/4
-			}
-		//}
+			else//if the goal is rightward
+			{
+				previous_calc += max_of_last_level / amount_in_level(current_level + 1);//to be sure to decide where to go based on right half
 
-		
-		//I think I do need to store a size. Many places seem to store the tree as an array too, but I'd like to avoid that in this class
-		//I may make another class that purely uses arrays for max and min heaps
+				if((*current)->right != nullptr)//go right
+				{
+					current = &(*current)->right;
+					ancestors.push_back(current);
+				}
+				else
+				{
+					(*current)->right = new c_node<int>{ val };
+					ancestors.push_back(&(*current)->right);//add the newest node to ancestors
+					trickle_up(ancestors);//trickle up moving the new value up as high as it needs to go
+					++size;
+					break;
+				}
+			}
 	}
 
 	void add_items(std::vector<int> const& vals) override
@@ -126,78 +112,46 @@ public:
 
 	void remove_item() override//this would be the same except the > check in a min heap
 	{
-		c_node<int> * current = root;
-		while(true)
-		{
-			if(current->left != nullptr && current->right != nullptr)//if node has two children, set current value to the largest of the two which becomes current
-			{
-				current->value = current->left->value > current->right->value ? current->left->value : current->right->value;
-				current = current->left->value > current->right->value ? current->left : current->right;
-			}
-			else if(current->left == nullptr && current->right == nullptr)//a previous node has taken current's value and it's the end of the tree
-			{
-				delete current;
-				--size;
-				break;
-			}
-			else//if current has only one child, take that value and delete the child since heaps should only have one child in the last generation
-			{
-				current->value = current->left != nullptr ? current->left->value : current->right->value;
-				//current = current->left != nullptr ? current->left : current->right;
-				delete (current->left != nullptr ? current->left : current->right);
-				--size;
-				break;
-			}
-		}
-	}
+		int last_spot;
+		if (amount_full_tree(amount_complete_levels(size)) == size)//if this is a full tree, last spot in last level
+			last_spot = amount_in_level(amount_complete_levels(size));
+		else//otherwise, go onto last node in level
+			last_spot = amount_last_level(size);
+		
+		int const max_of_last_level{ amount_in_level(amount_complete_levels(size)) };//know which direcion to head
 
-	
-
-	/*void remove_item() override
-	{
-		if (root->left == nullptr && root->right == nullptr)
-			delete root;
-		else
-		{
-			//for the first one
-			//compare the two siblings and take the largest of the two
-		}
-	}
-
-	void fix_violations() const//not sure if I need this yet or not
-	{
-		c_node<int> * current = root;
-		while (true)
-		{
-			if (current->value < current->left->value && current->left != nullptr)
-			{
-				if (current->right->value > current->left->value && current->value < current->right->value)
-				{
-					//swap current and right values
-					int const temp = current->value;
-					current->value = current->right->value;
-					current->right->value = temp;
-					current = current->right;
-				}
+		c_node<int> * * current{ &root };//to navigate, pointer to pointer to assign nullptr and delete correctly
+		
+		for (int current_level{ 0 }, previous_calc{ 0 }; true; ++current_level)
+			if (last_spot <= previous_calc + max_of_last_level / amount_in_level(current_level + 1))//if the goal is leftward
+				if ((*current)->left != nullptr)//go left
+					current = &(*current)->left;
 				else
 				{
-					//swap current and left values
-					int const temp = current->value;
-					current->value = current->left->value;
-					current->left->value = temp;
-					current = current->left;
+					std::swap(root->value, (*current)->value);//swap last item's and root's value only
+					delete *current;
+					*current = nullptr;
+					if(root != nullptr)//no need to call if no root
+						trickle_down();
+					--size;
+					break;
+				}
+			else//if the goal is rightward
+			{
+				previous_calc += max_of_last_level / amount_in_level(current_level + 1);//to be sure to decide where to go based on right half
+
+				if ((*current)->right != nullptr)//go right
+					current = &(*current)->right;
+				else
+				{
+					std::swap(root->value, (*current)->value);//swap last item's and root's value only
+					delete *current;
+					*current = nullptr;
+					if (root != nullptr)//no need to call if no root
+						trickle_down();
+					--size;
+					break;
 				}
 			}
-			else if (current->value < current->right->value && current->right != nullptr)
-			{
-				//swap current and right values
-				int const temp = current->value;
-				current->value = current->right->value;
-				current->right->value = temp;
-				current = current->right;
-			}
-			else
-				break;
-		}
-	}*/
+	}
 };

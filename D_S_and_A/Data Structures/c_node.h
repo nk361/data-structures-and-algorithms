@@ -24,12 +24,4 @@ public:
 		delete left, right;
 		left = right = nullptr;
 	}
-
-	/*c_node<MyType>& operator=(c_node<MyType> r_node)
-	{
-		value = r_node.value;
-		left = r_node.left;
-		right = r_node.right;
-		return *this;
-	}*/
 };

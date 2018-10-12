@@ -22,8 +22,8 @@ public:
 	{
 		if (this->root != nullptr)//incase root was all that was left and it got removed
 		{
-			NodeType<ValType> * * current = &(this->root);//made to navigate without changing tree pointer values unless intended
-			std::vector<NodeType<ValType> * *> ancestors = { current };//using this vector like a stack
+			NodeType<ValType> * * current{ &(this->root) };//made to navigate without changing tree pointer values unless intended
+			std::vector<NodeType<ValType> * *> ancestors{ { current } };//using this vector like a stack
 			while (true)
 			{
 				if ((*current)->left != nullptr)
@@ -56,11 +56,11 @@ public:
 
 	virtual void add_items(std::vector<ValType> const& vals) override = 0;//probably just a for each calling their add_item function
 
-	virtual void remove_item(ValType const& val) = 0;
+	virtual void remove_item(ValType const& val) {};//not pure virtual because heaps don't take a param so they don't override this
 
 	NodeType<ValType> * rotate_left(NodeType<ValType> * grandparent)//these only work for nodes that don't have other pointer references to change
 	{
-		NodeType<ValType> * temp = grandparent->right;
+		NodeType<ValType> * temp{ grandparent->right };
 		grandparent->right = temp->left;
 		temp->left = grandparent;
 		return temp;//the new grandparent
@@ -68,7 +68,7 @@ public:
 
 	NodeType<ValType> * rotate_right(NodeType<ValType> * grandparent)
 	{
-		NodeType<ValType> * temp = grandparent->left;
+		NodeType<ValType> * temp{ grandparent->left };
 		grandparent->left = temp->right;
 		temp->right = grandparent;
 		return temp;

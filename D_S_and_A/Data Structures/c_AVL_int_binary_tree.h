@@ -12,13 +12,13 @@ public:
 
 	explicit c_AVL_int_binary_tree(std::vector<int> const& vals) : c_AVL_binary_tree<int, NodeType>(vals[0])
 	{
-		for (size_t i = 1; i < vals.size(); ++i)
+		for (size_t i{ 1 }; i < vals.size(); ++i)
 			this->c_AVL_int_binary_tree::add_item(vals[i]);
 	}
 
 	void add_item(int const& val) override
 	{
-		NodeType<int> * * current = &root;//pointer to pointer so that pointer references can change originals
+		NodeType<int> * * current{ &root };//pointer to pointer so that pointer references can change originals
 		std::vector<NodeType<int> * *> ancestors;
 
 		while(true)
@@ -27,7 +27,7 @@ public:
 				if ((*current)->left == nullptr)
 				{
 					(*current)->left = new NodeType<int>{ val };
-					for (int i = ancestors.size() - 1; i >= 0; --i)//starting with the first possible grandparent, - 1 instead of - 2 because current wasn't added
+					for (int i{ static_cast<int>(ancestors.size()) - 1 }; i >= 0; --i)//starting with the first possible grandparent, - 1 instead of - 2 because current wasn't added
 						rebalance(ancestors[i]);
 					break;
 				}
@@ -39,7 +39,7 @@ public:
 				if ((*current)->right == nullptr)
 				{
 					(*current)->right = new NodeType<int>{ val };
-					for (int i = ancestors.size() - 1; i >= 0; --i)//i must be int in these because when size_t/unsigned int goes below 0 it becomes a very high number
+					for (int i{ static_cast<int>(ancestors.size()) - 1 }; i >= 0; --i)//i must be int in these because when size_t/unsigned int goes below 0 it becomes a very high number
 						rebalance(ancestors[i]);
 					break;
 				}
@@ -63,24 +63,24 @@ public:
 			{
 				delete *ancestors[ancestors.size() - 1];
 				*ancestors[ancestors.size() - 1] = nullptr;
-				for (int i = ancestors.size() - 1 - 1; i >= 0; --i)//i must be int type, size_t cannot go less than zero, - 2 to start at first possible grandparent
+				for (int i{ static_cast<int>(ancestors.size()) - 1 - 1 }; i >= 0; --i)//i must be int type, size_t cannot go less than zero, - 2 to start at first possible grandparent
 					rebalance(ancestors[i]);
 			}
 			else if ((*ancestors[ancestors.size() - 1])->right == nullptr)//only one child node exists, so just overwrite *found with that child
 			{
 				*ancestors[ancestors.size() - 1] = (*ancestors[ancestors.size() - 1])->left;
-				for (int i = ancestors.size() - 1; i >= 0; --i)//i must be int type, size_t cannot go less than zero, - 1 to start at first possible grandparent, current
+				for (int i{ static_cast<int>(ancestors.size()) - 1 }; i >= 0; --i)//i must be int type, size_t cannot go less than zero, - 1 to start at first possible grandparent, current
 					rebalance(ancestors[i]);
 			}
 			else if ((*ancestors[ancestors.size() - 1])->left == nullptr)
 			{
 				*ancestors[ancestors.size() - 1] = (*ancestors[ancestors.size() - 1])->right;
-				for (int i = ancestors.size() - 1; i >= 0; --i)//i must be int type, size_t cannot go less than zero, - 1 to start at first possible grandparent, current
+				for (int i{ static_cast<int>(ancestors.size()) - 1 }; i >= 0; --i)//i must be int type, size_t cannot go less than zero, - 1 to start at first possible grandparent, current
 					rebalance(ancestors[i]);
 			}
 			else//both child nodes exist
 			{
-				NodeType<int> * * current = &(*ancestors[ancestors.size() - 1])->right;//search for the leftmost node of right child
+				NodeType<int> * * current{ &(*ancestors[ancestors.size() - 1])->right };//search for the leftmost node of right child
 				while (true)
 					if ((*current)->left != nullptr)
 					{
@@ -99,7 +99,7 @@ public:
 				}
 				else//move right nodes up if it was purely the right node
 					*current = (*current)->right;
-				for (int i = ancestors.size() - 1 - 1; i >= 0; --i)//i must be int type, size_t cannot go less than zero, - 2 to start at first possible grandparent
+				for (int i{ static_cast<int>(ancestors.size()) - 1 - 1 }; i >= 0; --i)//i must be int type, size_t cannot go less than zero, - 2 to start at first possible grandparent
 					rebalance(ancestors[i]);
 			}
 	}

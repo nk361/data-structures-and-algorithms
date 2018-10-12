@@ -7,6 +7,7 @@
 #include "../D_S_and_A/Data Structures/c_AVL_int_binary_tree.h"
 #include "../D_S_and_A/Algorithms/c_bubble_sort.h"
 #include "../D_S_and_A/Algorithms/c_counting_sort.h"
+#include "../D_S_and_A/Data Structures/c_int_binary_tree.h"
 
 TEST(GeneralAlgorithmsHeader, SmallGeneralAlgorithms)
 {
@@ -19,33 +20,33 @@ TEST(GeneralAlgorithmsHeader, SmallGeneralAlgorithms)
 	EXPECT_FALSE(sorted_strings[0] == "Amy" && sorted_strings[1] == "Briana" && sorted_strings[2] == "Cathy" && sorted_strings[3] == "Darcy" && sorted_strings[4] == "Emily" && sorted_strings[5] == "Fatima" && sorted_strings[6] == "Gretchen" && sorted_strings[7] == "Hannah");
 
 	int values_to_sum[]{ 5, 2, 9, 8, 4, 10, 15 };
-	std::pair<int, int> twelve = c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 12);
+	std::pair<int, int> twelve{ c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 12) };
 	EXPECT_EQ(twelve.first, 8);
 	EXPECT_EQ(twelve.second, 4);
-	std::pair<int, int> nineteen = c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 19);
+	std::pair<int, int> nineteen{ c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 19) };
 	EXPECT_EQ(nineteen.first, 9);
 	EXPECT_EQ(nineteen.second, 10);
-	std::pair<int, int> twenty = c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 20);
+	std::pair<int, int> twenty{ c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 20) };
 	EXPECT_EQ(twenty.first, 5);
 	EXPECT_EQ(twenty.second, 15);
-	std::pair<int, int> const fifty = c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 50);
+	std::pair<int, int> const fifty{ c_general_algorithms::pair_equal_to_sum(values_to_sum, sizeof(values_to_sum) / sizeof(values_to_sum[0]), 50) };
 	EXPECT_TRUE(!fifty.first && !fifty.second);//Sum values not found
 	
 	//neither lamda function uses the index here, but still need to accept it to be called
-	int(*multiply_sum)(int const&, int const&, int const&) = [](int const& index, int const& a, int const& b) { return a * b; };
+	int(*multiply_sum)(int const&, int const&, int const&) { [](int const& index, int const& a, int const& b) { return a * b; } };
 	EXPECT_EQ(c_general_algorithms::capital_sigma(1, 5, multiply_sum, 10, 2), 100);
 
-	double(*add_three)(int const&, double const&, double const&, double const&) = [](int const& index, double const& a, double const& b, double const& c) { return a + b + c; };
+	double(*add_three)(int const&, double const&, double const&, double const&) { [](int const& index, double const& a, double const& b, double const& c) { return a + b + c; } };
 	EXPECT_DOUBLE_EQ(c_general_algorithms::capital_sigma(1, 9, add_three, 5.5, 8.2, 10.7), 219.6);
 
 	//lambda using the index
-	double(*index_formula)(int const&, int const&) = [](int const& index, int const& x) { return pow(x, index + 2); };//x^(n + 2)
+	double(*index_formula)(int const&, int const&) { [](int const& index, int const& x) { return pow(x, index + 2); } };//x^(n + 2)
 	EXPECT_DOUBLE_EQ(c_general_algorithms::capital_sigma(-3, 5, index_formula, 4), 21845.25);
 
-	int(*sum_arrays)(int const&, std::vector<int> const&, std::vector<int> const&) = [](int const& index, std::vector<int> const& a, std::vector<int> const& b) { return a[index] * b[index]; };
+	int(*sum_arrays)(int const&, std::vector<int> const&, std::vector<int> const&) { [](int const& index, std::vector<int> const& a, std::vector<int> const& b) { return a[index] * b[index]; } };
 	EXPECT_EQ(c_general_algorithms::capital_sigma(0, 2, sum_arrays, std::vector<int>{ 1, 2, 3 }, std::vector<int>{ 4, 5, 6 }), 32);
 
-	double(*multiply_this)(int const&, double const&, double const&, double const&) = [](int const& index, double const& a, double const& b, double const& c) { return a * index + b * index + c * index; };
+	double(*multiply_this)(int const&, double const&, double const&, double const&) { [](int const& index, double const& a, double const& b, double const& c) { return a * index + b * index + c * index; } };
 	EXPECT_DOUBLE_EQ(c_general_algorithms::capital_pi(1, 3, multiply_this, 5.0, 2.0, 3.0), 6000.0);
 }
 
@@ -363,76 +364,181 @@ TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
 
 TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 {
-	EXPECT_EQ(c_heap::amount_in_level(0), 1);
-	EXPECT_EQ(c_heap::amount_in_level(1), 2);
-	EXPECT_EQ(c_heap::amount_in_level(2), 4);
-	EXPECT_EQ(c_heap::amount_in_level(3), 8);
+	EXPECT_EQ(c_heap<int>::amount_in_level(0), 1);
+	EXPECT_EQ(c_heap<int>::amount_in_level(1), 2);
+	EXPECT_EQ(c_heap<int>::amount_in_level(2), 4);
+	EXPECT_EQ(c_heap<int>::amount_in_level(3), 8);
 
-	EXPECT_EQ(c_heap::amount_full_tree(1), 1);
-	EXPECT_EQ(c_heap::amount_full_tree(2), 3);
-	EXPECT_EQ(c_heap::amount_full_tree(3), 7);
-	EXPECT_EQ(c_heap::amount_full_tree(4), 15);
+	EXPECT_EQ(c_heap<int>::amount_full_tree(1), 1);
+	EXPECT_EQ(c_heap<int>::amount_full_tree(2), 3);
+	EXPECT_EQ(c_heap<int>::amount_full_tree(3), 7);
+	EXPECT_EQ(c_heap<int>::amount_full_tree(4), 15);
 
-	EXPECT_EQ(c_heap::amount_complete_levels(1), 1);
-	EXPECT_EQ(c_heap::amount_complete_levels(2), 1);
-	EXPECT_EQ(c_heap::amount_complete_levels(3), 2);
-	EXPECT_EQ(c_heap::amount_complete_levels(4), 2);
-	EXPECT_EQ(c_heap::amount_complete_levels(10), 3);
-	EXPECT_EQ(c_heap::amount_complete_levels(15), 4);
-	EXPECT_EQ(c_heap::amount_complete_levels(7), 3);
+	EXPECT_EQ(c_heap<int>::amount_complete_levels(1), 1);
+	EXPECT_EQ(c_heap<int>::amount_complete_levels(2), 1);
+	EXPECT_EQ(c_heap<int>::amount_complete_levels(3), 2);
+	EXPECT_EQ(c_heap<int>::amount_complete_levels(4), 2);
+	EXPECT_EQ(c_heap<int>::amount_complete_levels(10), 3);
+	EXPECT_EQ(c_heap<int>::amount_complete_levels(15), 4);
+	EXPECT_EQ(c_heap<int>::amount_complete_levels(7), 3);
 
-	EXPECT_EQ(c_heap::amount_last_level(0), 1);
-	EXPECT_EQ(c_heap::amount_last_level(1), 0);
-	EXPECT_EQ(c_heap::amount_last_level(2), 1);
-	EXPECT_EQ(c_heap::amount_last_level(3), 0);
-	EXPECT_EQ(c_heap::amount_last_level(4), 1);
-	EXPECT_EQ(c_heap::amount_last_level(5), 2);
-	EXPECT_EQ(c_heap::amount_last_level(6), 3);
+	EXPECT_EQ(c_heap<int>::amount_last_level(0), 1);
+	EXPECT_EQ(c_heap<int>::amount_last_level(1), 0);
+	EXPECT_EQ(c_heap<int>::amount_last_level(2), 1);
+	EXPECT_EQ(c_heap<int>::amount_last_level(3), 0);
+	EXPECT_EQ(c_heap<int>::amount_last_level(4), 1);
+	EXPECT_EQ(c_heap<int>::amount_last_level(5), 2);
+	EXPECT_EQ(c_heap<int>::amount_last_level(6), 3);
 
-	c_max_heap temp_tree{ 10 };
-	EXPECT_EQ(temp_tree.root->value, 10);
-	EXPECT_EQ(temp_tree.root->left, nullptr);
-	EXPECT_EQ(temp_tree.root->right, nullptr);
+	c_max_heap max_heap_add{ 10 };
+	EXPECT_EQ(max_heap_add.root->value, 10);
+	EXPECT_EQ(max_heap_add.root->left, nullptr);
+	EXPECT_EQ(max_heap_add.root->right, nullptr);
 
-	EXPECT_EQ(temp_tree.size, 1);
-	EXPECT_EQ(temp_tree.amount_in_level(0), 1);
-	EXPECT_EQ(temp_tree.amount_complete_levels(temp_tree.size), 1);
+	max_heap_add.add_item(15);//swap 10 and 15
+	EXPECT_EQ(max_heap_add.root->value, 15);
+	EXPECT_EQ(max_heap_add.root->left->value, 10);
 
-	temp_tree.add_item(15);
-	EXPECT_EQ(temp_tree.root->value, 10);
-	EXPECT_FALSE(temp_tree.root->left == nullptr);
-	EXPECT_EQ(temp_tree.root->left->value, 15);
-	EXPECT_EQ(temp_tree.root->right, nullptr);
+	max_heap_add.add_item(19);//swap 15 and 19
+	EXPECT_EQ(max_heap_add.root->value, 19);
+	EXPECT_EQ(max_heap_add.root->left->value, 10);
+	EXPECT_EQ(max_heap_add.root->right->value, 15);
 
-	temp_tree.add_item(19);
-	EXPECT_EQ(temp_tree.root->value, 10);
-	EXPECT_EQ(temp_tree.root->left->value, 15);
-	EXPECT_FALSE(temp_tree.root->right == nullptr);
-	EXPECT_EQ(temp_tree.root->right->value, 19);
-
-	temp_tree.add_item(32);
-	EXPECT_EQ(temp_tree.root->value, 10);
-	EXPECT_EQ(temp_tree.root->left->value, 15);
-	EXPECT_EQ(temp_tree.root->right->value, 19);
-	EXPECT_FALSE(temp_tree.root->left->left == nullptr);
-	EXPECT_EQ(temp_tree.root->left->left->value, 32);
+	max_heap_add.add_item(32);//swap 10 and 32 then swap 19 and 32
+	EXPECT_EQ(max_heap_add.root->value, 32);
+	EXPECT_EQ(max_heap_add.root->left->value, 19);
+	EXPECT_EQ(max_heap_add.root->right->value, 15);
+	EXPECT_EQ(max_heap_add.root->left->left->value, 10);
 
 	/*
-		  10
+		  32
 		  /\
-		 15 19
+		 19 15
 		 /
-		32
+		10
 	*/
 
-	c_max_heap larger_tree{ 10 };
-	larger_tree.add_items({ 20, 50, 72, 19, 67, 5, 32, 48, 95, 140, 34, 18 });
+	c_max_heap larger_max_heap_remove{ { 10, 20, 50, 72, 19, 67, 5, 32, 48, 95, 140, 34, 18 } };
+	EXPECT_EQ(larger_max_heap_remove.size, 13);
+	EXPECT_EQ(larger_max_heap_remove.root->value, 140);
+	EXPECT_EQ(larger_max_heap_remove.root->left->value, 95);
+	EXPECT_EQ(larger_max_heap_remove.root->right->value, 67);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->value, 48);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->value, 72);
+	EXPECT_EQ(larger_max_heap_remove.root->right->left->value, 34);
+	EXPECT_EQ(larger_max_heap_remove.root->right->right->value, 5);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->left->value, 10);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->right->value, 32);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->left->value, 19);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->right->value, 50);
+	EXPECT_EQ(larger_max_heap_remove.root->right->left->left->value, 20);
+	EXPECT_EQ(larger_max_heap_remove.root->right->left->right->value, 18);
+	EXPECT_EQ(larger_max_heap_remove.root->right->right->left, nullptr);
 
-	EXPECT_EQ(larger_tree.root->value, 10);//all these checks are before moving items up the tree
-	EXPECT_EQ(larger_tree.root->left->left->left->value, 32);
-	EXPECT_EQ(larger_tree.root->right->right->left, nullptr);
-	EXPECT_EQ(larger_tree.root->right->right->right, nullptr);
-	EXPECT_EQ(larger_tree.root->right->left->left->value, 34);
+	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.root->value, 95);
+	EXPECT_EQ(larger_max_heap_remove.root->left->value, 72);
+	EXPECT_EQ(larger_max_heap_remove.root->right->value, 67);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->value, 48);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->value, 50);
+	EXPECT_EQ(larger_max_heap_remove.root->right->left->value, 34);
+	EXPECT_EQ(larger_max_heap_remove.root->right->right->value, 5);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->left->value, 10);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->right->value, 32);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->left->value, 19);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->right->value, 18);
+	EXPECT_EQ(larger_max_heap_remove.root->right->left->left->value, 20);
+
+	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.root->value, 72);
+	EXPECT_EQ(larger_max_heap_remove.root->left->value, 50);
+	EXPECT_EQ(larger_max_heap_remove.root->right->value, 67);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->value, 48);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->value, 20);
+	EXPECT_EQ(larger_max_heap_remove.root->right->left->value, 34);
+	EXPECT_EQ(larger_max_heap_remove.root->right->right->value, 5);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->left->value, 10);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->right->value, 32);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->left->value, 19);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->right->value, 18);
+
+	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.root->value, 67);
+	EXPECT_EQ(larger_max_heap_remove.root->left->value, 50);
+	EXPECT_EQ(larger_max_heap_remove.root->right->value, 34);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->value, 48);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->value, 20);
+	EXPECT_EQ(larger_max_heap_remove.root->right->left->value, 18);
+	EXPECT_EQ(larger_max_heap_remove.root->right->right->value, 5);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->left->value, 10);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->right->value, 32);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->left->value, 19);
+
+	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.root->value, 50);
+	EXPECT_EQ(larger_max_heap_remove.root->left->value, 48);
+	EXPECT_EQ(larger_max_heap_remove.root->right->value, 34);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->value, 32);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->value, 20);
+	EXPECT_EQ(larger_max_heap_remove.root->right->left->value, 18);
+	EXPECT_EQ(larger_max_heap_remove.root->right->right->value, 5);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->left->value, 10);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->right->value, 19);
+
+	larger_max_heap_remove.remove_item();//causes trickle down case where right node is null and left node is less than parent where 19 is parent and 10 is left node
+	EXPECT_EQ(larger_max_heap_remove.root->value, 48);
+	EXPECT_EQ(larger_max_heap_remove.root->left->value, 32);
+	EXPECT_EQ(larger_max_heap_remove.root->right->value, 34);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->value, 19);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->value, 20);
+	EXPECT_EQ(larger_max_heap_remove.root->right->left->value, 18);
+	EXPECT_EQ(larger_max_heap_remove.root->right->right->value, 5);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->left->value, 10);
+
+	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.root->value, 34);
+	EXPECT_EQ(larger_max_heap_remove.root->left->value, 32);
+	EXPECT_EQ(larger_max_heap_remove.root->right->value, 18);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->value, 19);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->value, 20);
+	EXPECT_EQ(larger_max_heap_remove.root->right->left->value, 10);
+	EXPECT_EQ(larger_max_heap_remove.root->right->right->value, 5);
+
+	larger_max_heap_remove.remove_item();//remove item with full last level
+	EXPECT_EQ(larger_max_heap_remove.root->value, 32);
+	EXPECT_EQ(larger_max_heap_remove.root->left->value, 20);
+	EXPECT_EQ(larger_max_heap_remove.root->right->value, 18);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->value, 19);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->value, 5);
+	EXPECT_EQ(larger_max_heap_remove.root->right->left->value, 10);
+
+	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.root->value, 20);
+	EXPECT_EQ(larger_max_heap_remove.root->left->value, 19);
+	EXPECT_EQ(larger_max_heap_remove.root->right->value, 18);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->value, 10);
+	EXPECT_EQ(larger_max_heap_remove.root->left->right->value, 5);
+
+	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.root->value, 19);
+	EXPECT_EQ(larger_max_heap_remove.root->left->value, 10);
+	EXPECT_EQ(larger_max_heap_remove.root->right->value, 18);
+	EXPECT_EQ(larger_max_heap_remove.root->left->left->value, 5);
+
+	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.root->value, 18);
+	EXPECT_EQ(larger_max_heap_remove.root->left->value, 10);
+	EXPECT_EQ(larger_max_heap_remove.root->right->value, 5);
+
+	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.root->value, 10);
+	EXPECT_EQ(larger_max_heap_remove.root->left->value, 5);
+
+	larger_max_heap_remove.remove_item();//remove item when only root and left child
+	EXPECT_EQ(larger_max_heap_remove.root->value, 5);
+
+	larger_max_heap_remove.remove_item();//remove just root
+	EXPECT_EQ(larger_max_heap_remove.root, nullptr);
 }
 
 TEST(c_sorts, c_sort_header_tests)
@@ -445,9 +551,9 @@ TEST(c_sorts, c_sort_header_tests)
 	c_bubble_sort<unsigned int>::sort(small, 10);
 	c_bubble_sort<unsigned int>::sort(small_duplicates, 10);
 
-	for (int i = 0; i < 10 - 1; ++i)
+	for (int i{ 0 }; i < 10 - 1; ++i)
 		EXPECT_TRUE(small[i] <= small[i + 1]);
-	for (int i = 0; i < 10 - 1; ++i)
+	for (int i{ 0 }; i < 10 - 1; ++i)
 		EXPECT_TRUE(small_duplicates[i] <= small_duplicates[i + 1]);
 
 	c_general_algorithms::scramble_array(small, 10);
@@ -456,9 +562,9 @@ TEST(c_sorts, c_sort_header_tests)
 	c_counting_sort::sort(small, 10);
 	c_counting_sort::sort(small_duplicates, 10);
 
-	for (int i = 0; i < 10 - 1; ++i)
+	for (int i{ 0 }; i < 10 - 1; ++i)
 		EXPECT_TRUE(small[i] <= small[i + 1]);
-	for (int i = 0; i < 10 - 1; ++i)
+	for (int i{ 0 }; i < 10 - 1; ++i)
 		EXPECT_TRUE(small_duplicates[i] <= small_duplicates[i + 1]);
 }
 

@@ -12,14 +12,11 @@ namespace c_general_algorithms
 	template<class MyType>
 	void static scramble_array(MyType vals[], size_t const& size)
 	{	
-		srand(time(nullptr));
+		srand(static_cast<unsigned int>(time(nullptr)));
 		for (size_t i{ size - 1 }; i > 0; --i)
 		{
 			size_t ran{ static_cast<size_t>(floor(rand() % i)) };
-			
-			MyType temp{ vals[i] };
-			vals[i] = vals[ran];
-			vals[ran] = temp;
+			std::swap(vals[i], vals[ran]);
 		}
 	}
 
