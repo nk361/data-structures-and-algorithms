@@ -16,4 +16,5 @@ public:
 
 	virtual void add_item(ValType const& val) = 0;
 	virtual void add_items(std::vector<ValType> const& vals) = 0;
+	virtual void remove_item(ValType const& val) = 0;
 };

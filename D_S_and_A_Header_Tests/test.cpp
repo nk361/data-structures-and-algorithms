@@ -8,6 +8,7 @@
 #include "../D_S_and_A/Algorithms/c_bubble_sort.h"
 #include "../D_S_and_A/Algorithms/c_counting_sort.h"
 #include "../D_S_and_A/Data Structures/c_int_binary_tree.h"
+#include "../D_S_and_A/Data Structures/c_min_heap.h"
 
 TEST(GeneralAlgorithmsHeader, SmallGeneralAlgorithms)
 {
@@ -362,7 +363,7 @@ TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
 	EXPECT_EQ(avl_remove_rebalance.root->left->left->value, 11);
 }
 
-TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
+TEST(c_heap_tests, c_max_and_min_heap_tests)
 {
 	EXPECT_EQ(c_heap<int>::amount_in_level(0), 1);
 	EXPECT_EQ(c_heap<int>::amount_in_level(1), 2);
@@ -390,7 +391,7 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(c_heap<int>::amount_last_level(5), 2);
 	EXPECT_EQ(c_heap<int>::amount_last_level(6), 3);
 
-	c_max_heap max_heap_add{ 10 };
+	c_max_heap<int> max_heap_add{ 10 };
 	EXPECT_EQ(max_heap_add.root->value, 10);
 	EXPECT_EQ(max_heap_add.root->left, nullptr);
 	EXPECT_EQ(max_heap_add.root->right, nullptr);
@@ -418,7 +419,7 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 		10
 	*/
 
-	c_max_heap larger_max_heap_remove{ { 10, 20, 50, 72, 19, 67, 5, 32, 48, 95, 140, 34, 18 } };
+	c_max_heap<int> larger_max_heap_remove{ { 10, 20, 50, 72, 19, 67, 5, 32, 48, 95, 140, 34, 18 } };
 	EXPECT_EQ(larger_max_heap_remove.size, 13);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 140);
 	EXPECT_EQ(larger_max_heap_remove.root->left->value, 95);
@@ -436,6 +437,7 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(larger_max_heap_remove.root->right->right->left, nullptr);
 
 	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.size, 12);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 95);
 	EXPECT_EQ(larger_max_heap_remove.root->left->value, 72);
 	EXPECT_EQ(larger_max_heap_remove.root->right->value, 67);
@@ -450,6 +452,7 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(larger_max_heap_remove.root->right->left->left->value, 20);
 
 	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.size, 11);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 72);
 	EXPECT_EQ(larger_max_heap_remove.root->left->value, 50);
 	EXPECT_EQ(larger_max_heap_remove.root->right->value, 67);
@@ -463,6 +466,7 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(larger_max_heap_remove.root->left->right->right->value, 18);
 
 	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.size, 10);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 67);
 	EXPECT_EQ(larger_max_heap_remove.root->left->value, 50);
 	EXPECT_EQ(larger_max_heap_remove.root->right->value, 34);
@@ -475,6 +479,7 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(larger_max_heap_remove.root->left->right->left->value, 19);
 
 	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.size, 9);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 50);
 	EXPECT_EQ(larger_max_heap_remove.root->left->value, 48);
 	EXPECT_EQ(larger_max_heap_remove.root->right->value, 34);
@@ -486,6 +491,7 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(larger_max_heap_remove.root->left->left->right->value, 19);
 
 	larger_max_heap_remove.remove_item();//causes trickle down case where right node is null and left node is less than parent where 19 is parent and 10 is left node
+	EXPECT_EQ(larger_max_heap_remove.size, 8);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 48);
 	EXPECT_EQ(larger_max_heap_remove.root->left->value, 32);
 	EXPECT_EQ(larger_max_heap_remove.root->right->value, 34);
@@ -496,6 +502,7 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(larger_max_heap_remove.root->left->left->left->value, 10);
 
 	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.size, 7);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 34);
 	EXPECT_EQ(larger_max_heap_remove.root->left->value, 32);
 	EXPECT_EQ(larger_max_heap_remove.root->right->value, 18);
@@ -505,6 +512,7 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(larger_max_heap_remove.root->right->right->value, 5);
 
 	larger_max_heap_remove.remove_item();//remove item with full last level
+	EXPECT_EQ(larger_max_heap_remove.size, 6);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 32);
 	EXPECT_EQ(larger_max_heap_remove.root->left->value, 20);
 	EXPECT_EQ(larger_max_heap_remove.root->right->value, 18);
@@ -513,6 +521,7 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(larger_max_heap_remove.root->right->left->value, 10);
 
 	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.size, 5);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 20);
 	EXPECT_EQ(larger_max_heap_remove.root->left->value, 19);
 	EXPECT_EQ(larger_max_heap_remove.root->right->value, 18);
@@ -520,25 +529,54 @@ TEST(c_max_heap_tests, c_max_heap_temp_function_tests)
 	EXPECT_EQ(larger_max_heap_remove.root->left->right->value, 5);
 
 	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.size, 4);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 19);
 	EXPECT_EQ(larger_max_heap_remove.root->left->value, 10);
 	EXPECT_EQ(larger_max_heap_remove.root->right->value, 18);
 	EXPECT_EQ(larger_max_heap_remove.root->left->left->value, 5);
 
 	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.size, 3);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 18);
 	EXPECT_EQ(larger_max_heap_remove.root->left->value, 10);
 	EXPECT_EQ(larger_max_heap_remove.root->right->value, 5);
 
 	larger_max_heap_remove.remove_item();
+	EXPECT_EQ(larger_max_heap_remove.size, 2);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 10);
 	EXPECT_EQ(larger_max_heap_remove.root->left->value, 5);
 
 	larger_max_heap_remove.remove_item();//remove item when only root and left child
+	EXPECT_EQ(larger_max_heap_remove.size, 1);
 	EXPECT_EQ(larger_max_heap_remove.root->value, 5);
 
 	larger_max_heap_remove.remove_item();//remove just root
+	EXPECT_EQ(larger_max_heap_remove.size, 0);
 	EXPECT_EQ(larger_max_heap_remove.root, nullptr);
+
+	//functions for min heap are the same as max with only the operator > or < changed
+	c_min_heap<int> larger_min_heap_remove{ { 54, 11, 20, 82, 11, 73, 6, 38, 1, 48 } };//tests add, add_items, and trickle_up
+	EXPECT_EQ(larger_min_heap_remove.root->value, 1);
+	larger_min_heap_remove.remove_item();//tests trickle_down and remove_item
+	EXPECT_EQ(larger_min_heap_remove.root->value, 6);
+	larger_min_heap_remove.remove_item();
+	EXPECT_EQ(larger_min_heap_remove.root->value, 11);
+	larger_min_heap_remove.remove_item();
+	EXPECT_EQ(larger_min_heap_remove.root->value, 11);
+	larger_min_heap_remove.remove_item();
+	EXPECT_EQ(larger_min_heap_remove.root->value, 20);
+	larger_min_heap_remove.remove_item();
+	EXPECT_EQ(larger_min_heap_remove.root->value, 38);
+	larger_min_heap_remove.remove_item();
+	EXPECT_EQ(larger_min_heap_remove.root->value, 48);
+	larger_min_heap_remove.remove_item();
+	EXPECT_EQ(larger_min_heap_remove.root->value, 54);
+	larger_min_heap_remove.remove_item();
+	EXPECT_EQ(larger_min_heap_remove.root->value, 73);
+	larger_min_heap_remove.remove_item();
+	EXPECT_EQ(larger_min_heap_remove.root->value, 82);
+	larger_min_heap_remove.remove_item();
+	EXPECT_EQ(larger_min_heap_remove.root, nullptr);
 }
 
 TEST(c_sorts, c_sort_header_tests)

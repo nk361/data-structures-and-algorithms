@@ -52,11 +52,11 @@ public:
 		}
 	}
 
-	virtual void add_item(ValType const& val) override = 0;//needs defined in derived classes for them to decide where to place that type
+	virtual void add_item(ValType const& val) override {};//needs defined in derived classes for them to decide where to place that type
 
-	virtual void add_items(std::vector<ValType> const& vals) override = 0;//probably just a for each calling their add_item function
+	virtual void add_items(std::vector<ValType> const& vals) override {};//probably just a for each calling their add_item function
 
-	virtual void remove_item(ValType const& val) {};//not pure virtual because heaps don't take a param so they don't override this
+	virtual void remove_item(ValType const& val) override {};//not pure virtual because heaps don't take a param so they don't override this
 
 	NodeType<ValType> * rotate_left(NodeType<ValType> * grandparent)//these only work for nodes that don't have other pointer references to change
 	{

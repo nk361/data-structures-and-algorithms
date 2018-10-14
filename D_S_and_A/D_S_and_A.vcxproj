@@ -159,6 +159,7 @@
     <ClInclude Include="Data Structures\c_int_binary_tree.h" />
     <ClInclude Include="Data Structures\c_linked_list.h" />
     <ClInclude Include="Data Structures\c_max_heap.h" />
+    <ClInclude Include="Data Structures\c_min_heap.h" />
     <ClInclude Include="Data Structures\c_red_black_tree_node.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
