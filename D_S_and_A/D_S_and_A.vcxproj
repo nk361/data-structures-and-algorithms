@@ -149,6 +149,8 @@
   <ItemGroup>
     <ClInclude Include="Algorithms\c_bubble_sort.h" />
     <ClInclude Include="Algorithms\c_counting_sort.h" />
+    <ClInclude Include="Algorithms\c_max_heap_sort.h" />
+    <ClInclude Include="Algorithms\c_min_heap_sort.h" />
     <ClInclude Include="Data Structures\c_AVL_binary_tree.h" />
     <ClInclude Include="Data Structures\c_AVL_int_binary_tree.h" />
     <ClInclude Include="Data Structures\c_AVL_node.h" />
