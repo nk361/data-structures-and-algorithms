@@ -6,33 +6,33 @@
 namespace c_general_algorithms
 {
 	//Kanade's array scramble algorithm in O(n) running the loop only n - 1 times
-	//This algorithm takes an array of any type, loops through it starting from the last element
+	//This algorithm takes a vector of any type, loops through it starting from the last element
 	//and swaps the last element with a random element from the range of numbers that precede it
 	//It does not loop on the first element becuase it has no range ahead of it
 	template<class MyType>
-	void static scramble_array(MyType vals[], size_t const& size)
-	{	
+	void static scramble_vals(std::vector<MyType>& vals)
+	{
 		srand(static_cast<unsigned int>(time(nullptr)));
-		for (size_t i{ size - 1 }; i > 0; --i)
+		for (size_t i{ vals.size() - 1 }; i > 0; --i)
 		{
 			size_t ran{ static_cast<size_t>(floor(rand() % i)) };
 			std::swap(vals[i], vals[ran]);
 		}
 	}
 
-	//This algorithm takes an array, the size of that array, and the sum of two numbers from the array that you want it to find
+	//This algorithm takes a vector and the sum of two numbers from the vector that you want it to find
 	//You must make sure that the values can have a sum, differece
-	//It loops through the array in O(n) looking for the supplement value to equal the sum
+	//It loops through the vector in O(n) looking for the supplement value to equal the sum
 	//If it doesn't find it, it adds the current value to an unordered_map to be looked for later
-	//If it does find it, the function returns THE FIRST pair of values in order that they are in in the array that sum to the desired value
+	//If it does find it, the function returns THE FIRST pair of values in order that they are in in the vector that sum to the desired value
 	//When no pair sum to the desired sum, a pair of two zeros is returned to be used in a check condition
-	template<class ArrayType, class SumType>
-	std::pair<ArrayType, ArrayType> static pair_equal_to_sum(ArrayType const vals[], size_t const& size, SumType const& desired_sum)
+	template<class ValsType, class SumType>
+	std::pair<ValsType, ValsType> static pair_equal_to_sum(std::vector<ValsType> const& vals, SumType const& desired_sum)
 	{
-		std::unordered_map<ArrayType, ArrayType> encountered{};
-		for(int i{ 0 }; i < size; ++i)
+		std::unordered_map<ValsType, ValsType> encountered{};
+		for(int i{ 0 }; i < vals.size(); ++i)
 		{
-			typename std::unordered_map<ArrayType, ArrayType>::iterator found = encountered.find(desired_sum - vals[i]);
+			typename std::unordered_map<ValsType, ValsType>::iterator found = encountered.find(desired_sum - vals[i]);
 			if (found == encountered.end())
 				encountered.insert({ vals[i], vals[i] });
 			else

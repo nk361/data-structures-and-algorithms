@@ -1,4 +1,5 @@
 #pragma once
+//Depreciated node type
 template <class ValType>
 class c_node
 {
