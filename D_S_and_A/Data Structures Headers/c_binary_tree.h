@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "c_tree.h"
 
 template <typename ValType, template<class> class NodeType>
@@ -37,3 +38,5 @@ public:
 
 	}*/
 };
+
+#include "c_binary_tree.inl"

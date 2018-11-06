@@ -9,21 +9,10 @@ public:
 	c_AVL_node<ValType> * parent, * left, * right;
 
 	c_AVL_node() = delete;
+	explicit c_AVL_node(ValType const& val);
+	c_AVL_node(ValType const& val, c_AVL_node * par);
 
-	c_AVL_node(ValType const& val) : value(val), parent(nullptr), left(nullptr), right(nullptr) {}
-	c_AVL_node(ValType const& val, c_AVL_node * par) : value(val)
-	{
-		parent = par;
-		left = right = nullptr;
-	}
-
-	~c_AVL_node()
-	{
-		parent = nullptr;
-
-		delete left;
-		left = nullptr;
-		delete right;
-		right = nullptr;
-	}
+	~c_AVL_node();
 };
+
+#include "c_AVL_node.inl"

@@ -5,24 +5,12 @@ class c_node
 {
 public:
 	ValType value;
-	//c_node * children[];
 	c_node * left, * right;
 
 	c_node() = delete;
+	explicit c_node(ValType val);
 
-	explicit c_node(ValType val)//, int const& kids)
-	{
-		value = val;
-		//children[kids];
-		//for (c_node * node : children)
-			//node = nullptr;
-
-		left = right = nullptr;
-	}
-
-	virtual ~c_node()
-	{
-		delete left, right;
-		left = right = nullptr;
-	}
+	virtual ~c_node();
 };
+
+#include "c_node.inl"

@@ -77,14 +77,52 @@
     <ClCompile Include="D_S_and_A.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="c_tree.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="c_binary_tree.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="c_poly_node.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data Structures Headers\c_tree.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_binary_tree.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_poly_node.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_AVL_binary_tree.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_AVL_node.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_heap.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_linked_list.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_max_heap.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_min_heap.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_node.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_red_black_tree_node.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Algorithms\c_bubble_sort.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Algorithms\c_counting_sort.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Algorithms\c_max_heap_sort.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Algorithms\c_min_heap_sort.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
-#include "stdafx.h"
-#include "Data Structures Headers/c_binary_tree.h"
+#pragma once
+#include "c_binary_tree.h"
 
 template <typename ValType, template<class> class NodeType>
 c_binary_tree<ValType, NodeType>::c_binary_tree(ValType const& val) : c_tree<ValType, NodeType>(val) {}//explicit is only allowed inside class and other constructor calls don't show in class

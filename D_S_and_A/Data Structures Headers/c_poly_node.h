@@ -13,3 +13,5 @@ public:
 
 	virtual ~c_poly_node();
 };
+
+#include "c_poly_node.inl"

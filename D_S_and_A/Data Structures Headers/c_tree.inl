@@ -1,5 +1,5 @@
-#include "stdafx.h"
-#include "Data Structures Headers/c_tree.h"
+#pragma once
+#include "c_tree.h"
 
 template <typename ValType, template<class> class NodeType>
 c_tree<ValType, NodeType>::c_tree(ValType const& val)

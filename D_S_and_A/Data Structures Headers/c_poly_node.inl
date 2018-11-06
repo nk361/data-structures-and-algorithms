@@ -1,5 +1,5 @@
-#include "stdafx.h"
-#include "Data Structures Headers/c_poly_node.h"
+#pragma once
+#include "c_poly_node.h"
 
 template <class ValType>
 c_poly_node<ValType>::c_poly_node(ValType val, int const& chldrn_size)
