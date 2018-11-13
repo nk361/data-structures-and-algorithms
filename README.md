@@ -9,13 +9,13 @@ I'm using google test to test my headers
     - [x] Max Heap
     - [x] Min Heap
     - [x] Linked List
-    - [] Red-Black Tree
+    - [ ] Red-Black Tree
   - Algorithms
     - [x] Bubble Sort -> O(n^2)
     - [x] Counting Sort -> O(nlogn)
     - [x] Max Heap Sort -> O(nlogn)
     - [x] Min Heap Sort -> O(nlogn)
-    - [] Merge Sort -> O(nlogn)
-    - [] Quick Sort -> O(nlogn)
+    - [ ] Merge Sort -> O(nlogn)
+    - [ ] Quick Sort -> O(nlogn)
     - [x] Capital Sigma (summation) -> O(n)
     - [x] Capital Pi -> O(n)
