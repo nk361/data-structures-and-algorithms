@@ -4,16 +4,16 @@ I'm using google test to test my headers
 
 # Features:
 	-Data Structures
-		- [x]AVL BST
-		- [x]BST
-		- [x]Max Heap
-		- [x]Min Heap
-		- [x]Linked List
-		- []Red-Black Tree
+		- AVL BST
+		- BST
+		- Max Heap
+		- Min Heap
+		- Linked List
+		- Red-Black Tree
 	-Algorithms
-		- [x]Bubble Sort
-		- [x]Counting Sort
-		- [x]Max Heap Sort
-		- [x]Min Heap Sort
-		- [x]Capital Sigma (summation)
-		- [x]Capital Pi
+		- Bubble Sort
+		- Counting Sort
+		- Max Heap Sort
+		- Min Heap Sort
+		- Capital Sigma (summation)
+		- Capital Pi
