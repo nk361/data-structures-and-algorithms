@@ -3,17 +3,17 @@ This project is purely for learning and possible future use. If you'd like me to
 I'm using google test to test my headers
 
 # Features:
-	-Data Structures
-		- AVL BST
-		- BST
-		- Max Heap
-		- Min Heap
-		- Linked List
-		- Red-Black Tree
-	-Algorithms
-		- Bubble Sort
-		- Counting Sort
-		- Max Heap Sort
-		- Min Heap Sort
-		- Capital Sigma (summation)
-		- Capital Pi
+  - Data Structures
+    - AVL BST
+    - BST
+    - Max Heap
+    - Min Heap
+    - Linked List
+    - Red-Black Tree
+  - Algorithms
+    - Bubble Sort
+    - Counting Sort
+    - Max Heap Sort
+    - Min Heap Sort
+    - Capital Sigma (summation)
+    - Capital Pi
