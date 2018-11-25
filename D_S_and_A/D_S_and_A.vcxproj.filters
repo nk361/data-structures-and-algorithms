@@ -36,12 +36,6 @@
     <ClInclude Include="Algorithms\c_min_heap_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_AVL_binary_tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_AVL_node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Data Structures Headers\c_binary_tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -69,6 +63,18 @@
     <ClInclude Include="Data Structures Headers\c_tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Data Structures Headers\c_red_black_binary_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures Headers\c_avl_binary_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures Headers\c_avl_node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithms\c_bst_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -86,12 +92,6 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Data Structures Headers\c_poly_node.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="Data Structures Headers\c_AVL_binary_tree.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="Data Structures Headers\c_AVL_node.inl">
       <Filter>Header Files</Filter>
     </None>
     <None Include="Data Structures Headers\c_heap.inl">
@@ -122,6 +122,15 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Algorithms\c_min_heap_sort.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_avl_binary_tree.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_avl_node.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Algorithms\c_bst_sorts.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

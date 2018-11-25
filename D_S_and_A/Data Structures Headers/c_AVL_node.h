@@ -2,17 +2,17 @@
 
 //Depreciated node type
 template <typename  ValType>
-class c_AVL_node
+class c_avl_node
 {
 public:
 	ValType value;
-	c_AVL_node<ValType> * parent, * left, * right;
+	c_avl_node<ValType> * parent, * left, * right;
 
-	c_AVL_node() = delete;
-	explicit c_AVL_node(ValType const& val);
-	c_AVL_node(ValType const& val, c_AVL_node * par);
+	c_avl_node() = delete;
+	explicit c_avl_node(ValType const& val);
+	c_avl_node(ValType const& val, c_avl_node * par);
 
-	~c_AVL_node();
+	~c_avl_node();
 };
 
-#include "c_AVL_node.inl"
+#include "c_avl_node.inl"

@@ -4,7 +4,7 @@
 #include "../D_S_and_A/Data Structures Headers/c_poly_node.h"
 #include "../D_S_and_A/Data Structures Headers/c_tree.h"
 #include "../D_S_and_A/Data Structures Headers/c_binary_tree.h"
-#include "../D_S_and_A/Data Structures Headers/c_AVL_binary_tree.h"
+#include "../D_S_and_A/Data Structures Headers/c_avl_binary_tree.h"
 #include "../D_S_and_A/Data Structures Headers/c_heap.h"
 #include "../D_S_and_A/Data Structures Headers/c_max_heap.h"
 #include "../D_S_and_A/Data Structures Headers/c_min_heap.h"
@@ -13,6 +13,8 @@
 #include "../D_S_and_A/Algorithms/c_max_heap_sort.h"
 #include "../D_S_and_A/Algorithms/c_min_heap_sort.h"
 #include "../D_S_and_A/Data Structures Headers/c_linked_list.h"
+#include "../D_S_and_A/Data Structures Headers/c_red_black_tree_node.h"
+#include "../D_S_and_A/Algorithms/c_bst_sort.h"
 
 TEST(GeneralAlgorithmsHeader, SmallGeneralAlgorithms)
 {
@@ -85,12 +87,13 @@ TEST(node_header_tests, TreeNodeConstructors)
 	EXPECT_EQ(decimal.children[5], nullptr);
 	EXPECT_EQ(decimal.children[6], nullptr);
 
-	//letter.children[1] = &letter2;//lol didn't consider that I need a tree destructor to get rid of this
-	//EXPECT_EQ(letter.children[0], nullptr);
-	//EXPECT_EQ(letter.children[1]->value, 'f');
-	//EXPECT_EQ(letter.children[2], nullptr);
-	//EXPECT_EQ(letter.children[3], nullptr);
-	//EXPECT_EQ(letter.children[4], nullptr);
+	c_red_black_tree_node<int> redblack{ 5, false };
+	EXPECT_EQ(redblack.value, 5);
+	EXPECT_EQ(redblack.children[0], nullptr);
+	EXPECT_EQ(redblack.children[1], nullptr);
+	EXPECT_FALSE(redblack.red);
+	redblack.red = true;
+	EXPECT_TRUE(redblack.red);
 }
 
 TEST(c_binary_treeTests, c_binary_treeFunctionTests)
@@ -243,16 +246,16 @@ TEST(c_binary_treeTests, c_binary_treeFunctionTests)
 	EXPECT_EQ(b_tree_remove_complex.root->children[1], nullptr);
 }
 
-TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
+TEST(c_avl_in_binary_tree_tests, c_avl_function_tests)
 {
-	c_AVL_binary_tree<int, c_poly_node> avl_height{ { 18, 5, 20 } };
+	c_avl_binary_tree<int, c_poly_node> avl_height{ { 18, 5, 20 } };
 	EXPECT_EQ(avl_height.height(avl_height.root), 2);
 	EXPECT_EQ(avl_height.height(avl_height.root->children[0]), 1);
 	EXPECT_EQ(avl_height.height(avl_height.root->children[1]), 1);
 	EXPECT_EQ(avl_height.height(avl_height.root->children[0]->children[0]), 0);//nullptr height is 0
 
 	//rotation diagram below
-	c_AVL_binary_tree<int, c_poly_node> avl_int_tree_add_item_and_rebal{ 10 };
+	c_avl_binary_tree<int, c_poly_node> avl_int_tree_add_item_and_rebal{ 10 };
 	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->value, 10);
 	avl_int_tree_add_item_and_rebal.add_item(5);
 	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->children[0]->value, 5);
@@ -329,7 +332,7 @@ TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
 				17
 	 */
 
-	c_AVL_binary_tree<int, c_poly_node> avl_int_sorted_list{ { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 } };
+	c_avl_binary_tree<int, c_poly_node> avl_int_sorted_list{ { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 } };
 	EXPECT_EQ(avl_int_sorted_list.root->value, 4);
 	EXPECT_EQ(avl_int_sorted_list.root->children[0]->value, 2);
 	EXPECT_EQ(avl_int_sorted_list.root->children[1]->value, 8);
@@ -351,10 +354,10 @@ TEST(c_AVL_in_binary_tree_tests, c_AVL_function_tests)
 		   5  7 10
 	 */
 
-	//c_AVL_int_binary_tree functions are tested in c_int_binary_tree already ^
+	//c_avl_int_binary_tree functions are tested in c_int_binary_tree already ^
 
 	//same layout, with 10 added ^
-	c_AVL_binary_tree<int, c_poly_node> avl_remove_rebalance{ { 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 } };
+	c_avl_binary_tree<int, c_poly_node> avl_remove_rebalance{ { 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 } };
 	avl_remove_rebalance.remove_item(20);//remove leaf
 	EXPECT_EQ(avl_remove_rebalance.root->children[1]->children[1]->children[1], nullptr);
 	avl_remove_rebalance.remove_item(19);//remove leaf, imbalance in 18, cause left right rotation on 18
@@ -673,13 +676,13 @@ TEST(c_linked_list, c_linked_list_funcs_and_tests)
 	c_linked_list<int, c_poly_node> reverse_nodes{ { 5, 4, 3 } };
 	reverse_nodes.reverse();
 	EXPECT_EQ(reverse_nodes.head->value, 3);
-	EXPECT_EQ(reverse_nodes.head->children[0]->value, 4);
+	EXPECT_EQ(reverse_nodes.head->children[0]->value, 4);//test's that reverse worked once in middle section
 	EXPECT_EQ(reverse_nodes.head->children[0]->children[0]->value, 5);
 	EXPECT_EQ(reverse_nodes.head->children[0]->children[0]->children[0], nullptr);
 	reverse_nodes.add_item(6);//add item to end that will become the new head after another reverse
 	reverse_nodes.reverse();
 	EXPECT_EQ(reverse_nodes.head->value, 6);
-	EXPECT_EQ(reverse_nodes.head->children[0]->value, 5);
+	EXPECT_EQ(reverse_nodes.head->children[0]->value, 5);//test's that reverse worked twice in middle section
 	EXPECT_EQ(reverse_nodes.head->children[0]->children[0]->value, 4);
 	EXPECT_EQ(reverse_nodes.head->children[0]->children[0]->children[0]->value, 3);
 	EXPECT_EQ(reverse_nodes.head->children[0]->children[0]->children[0]->children[0], nullptr);
@@ -693,17 +696,62 @@ TEST(c_sorts, c_sort_header_tests)
 		c_bubble_sort<int>::sort,
 		c_counting_sort<int>::sort,
 		c_max_heap_sort<int>::sort,
-		c_min_heap_sort<int>::sort
+		c_min_heap_sort<int>::sort,
+		c_bst_sorts<int, c_binary_tree, c_poly_node>::sort,
+		c_bst_sorts<int, c_avl_binary_tree, c_poly_node>::sort//,
+		//c_bst_sorts<int, c_red_black_tree, c_poly_node>::sort
 	};
 
 	for(std::vector<int>& (*srt)(std::vector<int>&) : sorts)//for each sort function pointer
 	{
 		c_general_algorithms::scramble_vals(small_duplicates_negatives);
 		srt(small_duplicates_negatives);
+		//testing::internal::SleepMilliseconds(1000);//you can add this line to let the random seed for scramble be different each second
 		for (int i{ 0 }; i < small_duplicates_negatives.size() - 1; ++i)//check that it's sorted
 			EXPECT_TRUE(small_duplicates_negatives[i] <= small_duplicates_negatives[i + 1]);
 	}
 }
+
+/*
+	*rules of a red black tree
+{
+Every node is either red or black no alternative
+The root is always black
+New insertions are always red including root?
+Every path from root to leaf has the same number of black nodes
+No path can have two consecutive red nodes
+Nulls are considered to be black
+}
+//paths can have different amounts of red nodes
+//a path can have two consecutive black nodes
+
+how to fix red black tree
+rebalance based on if we have
+black aunt rotate
+red aunt color flip
+after rotation OR color flip, resolve colors on tree
+after rotation, nodes
+black
+/   \
+red red
+after color flip nodes
+	red
+   /   \
+black black
+
+merge sort
+you only keep one copy of data
+well
+maybe
+split the list into lists of just one item each
+sort them down the line by merging correctly
+
+quick sort
+I think quick sort can work in place?
+well really I kinda think merge sort can work in place too?
+
+*
+*/
 
 int main(int argc, char * argv[])//char **argv
 {

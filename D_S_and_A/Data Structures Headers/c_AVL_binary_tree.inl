@@ -1,18 +1,18 @@
 #pragma once
-#include "c_AVL_binary_tree.h"
+#include "c_avl_binary_tree.h"
 
 template<typename ValType, template<class> class NodeType>
-c_AVL_binary_tree<ValType, NodeType>::c_AVL_binary_tree(ValType const& val) : c_binary_tree<ValType, NodeType>(val) {}
+c_avl_binary_tree<ValType, NodeType>::c_avl_binary_tree(ValType const& val) : c_binary_tree<ValType, NodeType>(val) {}
 
 template<typename ValType, template<class> class NodeType>
-c_AVL_binary_tree<ValType, NodeType>::c_AVL_binary_tree(std::vector<ValType> const& vals) : c_binary_tree<ValType, NodeType>(vals[0])
+c_avl_binary_tree<ValType, NodeType>::c_avl_binary_tree(std::vector<ValType> const& vals) : c_binary_tree<ValType, NodeType>(vals[0])
 {
 	for (size_t i{ 1 }; i < vals.size(); ++i)
-		c_AVL_binary_tree::add_item(vals[i]);
+		c_avl_binary_tree<ValType, NodeType>::add_item(vals[i]);
 }
 
 template<typename ValType, template<class> class NodeType>
-void c_AVL_binary_tree<ValType, NodeType>::add_item(ValType const& val)
+void c_avl_binary_tree<ValType, NodeType>::add_item(ValType const& val)
 {
 	NodeType<ValType> * * current{ &(c_tree<ValType, NodeType>::root) };//pointer to pointer so that pointer references can change originals
 	std::vector<NodeType<ValType> * *> ancestors;
@@ -45,14 +45,14 @@ void c_AVL_binary_tree<ValType, NodeType>::add_item(ValType const& val)
 }
 
 template<typename ValType, template<class> class NodeType>
-void c_AVL_binary_tree<ValType, NodeType>::add_items(std::vector<ValType> const& vals)
+void c_avl_binary_tree<ValType, NodeType>::add_items(std::vector<ValType> const& vals)
 {
 	for (ValType val : vals)
-		c_AVL_binary_tree<ValType, NodeType>::add_item(val);
+		c_avl_binary_tree<ValType, NodeType>::add_item(val);
 }
 
 template<typename ValType, template<class> class NodeType>
-void c_AVL_binary_tree<ValType, NodeType>::remove_item(ValType const& val)
+void c_avl_binary_tree<ValType, NodeType>::remove_item(ValType const& val)
 {
 	std::vector<NodeType<ValType> * *> ancestors{ find_node_with_path(&(c_tree<ValType, NodeType>::root), val) };
 
@@ -103,7 +103,7 @@ void c_AVL_binary_tree<ValType, NodeType>::remove_item(ValType const& val)
 }
 
 template<typename ValType, template<class> class NodeType>
-size_t c_AVL_binary_tree<ValType, NodeType>::height(NodeType<ValType> * r_avl_node)
+size_t c_avl_binary_tree<ValType, NodeType>::height(NodeType<ValType> * r_avl_node)
 {
 	if (r_avl_node == nullptr)
 		return 0;
@@ -145,7 +145,7 @@ size_t c_AVL_binary_tree<ValType, NodeType>::height(NodeType<ValType> * r_avl_no
 }
 
 template<typename ValType, template<class> class NodeType>
-void c_AVL_binary_tree<ValType, NodeType>::rebalance(NodeType<ValType> * * chain_node)//call this with a reference to the grandparent
+void c_avl_binary_tree<ValType, NodeType>::rebalance(NodeType<ValType> * * chain_node)//call this with a reference to the grandparent
 {
 	if (static_cast<int>(height((*chain_node)->children[0]) - height((*chain_node)->children[1])) > 1)//violation on left
 		if (height((*chain_node)->children[0]->children[0]) > height((*chain_node)->children[0]->children[1]))//right rotation needed

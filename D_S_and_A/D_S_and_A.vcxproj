@@ -108,6 +108,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\lolnk\Downloads\cudnn-10.0-windows10-x64-v7.4.1.5\cuda\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,12 +148,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Algorithms\c_bst_sort.h" />
     <ClInclude Include="Algorithms\c_bubble_sort.h" />
     <ClInclude Include="Algorithms\c_counting_sort.h" />
     <ClInclude Include="Algorithms\c_max_heap_sort.h" />
     <ClInclude Include="Algorithms\c_min_heap_sort.h" />
-    <ClInclude Include="Data Structures Headers\c_AVL_binary_tree.h" />
-    <ClInclude Include="Data Structures Headers\c_AVL_node.h" />
+    <ClInclude Include="Data Structures Headers\c_avl_binary_tree.h" />
+    <ClInclude Include="Data Structures Headers\c_avl_node.h" />
     <ClInclude Include="Data Structures Headers\c_binary_tree.h" />
     <ClInclude Include="Algorithms\c_general_algorithms.h" />
     <ClInclude Include="Data Structures Headers\c_heap.h" />
@@ -160,6 +162,7 @@
     <ClInclude Include="Data Structures Headers\c_max_heap.h" />
     <ClInclude Include="Data Structures Headers\c_min_heap.h" />
     <ClInclude Include="Data Structures Headers\c_poly_node.h" />
+    <ClInclude Include="Data Structures Headers\c_red_black_binary_tree.h" />
     <ClInclude Include="Data Structures Headers\c_red_black_tree_node.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -176,12 +179,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Algorithms\c_bst_sorts.inl" />
     <None Include="Algorithms\c_bubble_sort.inl" />
     <None Include="Algorithms\c_counting_sort.inl" />
     <None Include="Algorithms\c_max_heap_sort.inl" />
     <None Include="Algorithms\c_min_heap_sort.inl" />
-    <None Include="Data Structures Headers\c_AVL_binary_tree.inl" />
-    <None Include="Data Structures Headers\c_AVL_node.inl" />
+    <None Include="Data Structures Headers\c_avl_binary_tree.inl" />
+    <None Include="Data Structures Headers\c_avl_node.inl" />
     <None Include="Data Structures Headers\c_binary_tree.inl" />
     <None Include="Data Structures Headers\c_heap.inl" />
     <None Include="Data Structures Headers\c_linked_list.inl" />

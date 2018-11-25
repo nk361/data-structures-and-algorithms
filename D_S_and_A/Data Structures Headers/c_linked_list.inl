@@ -246,7 +246,7 @@ size_t c_linked_list<ValType, NodeType>::length_of_loop()
 //5->4->3->nullptr
 //   g  p  c
 //5<-4  3->nullptr
-//nullptr<-5 <-4 <-3
+//nullptr<-5<-4<-3
 template <typename ValType, template <class> class NodeType>
 void c_linked_list<ValType, NodeType>::reverse()
 {
