@@ -18,7 +18,7 @@ I'm using google test to test my headers
     - [x] BST Sort -> O(n)
     - [x] AVL BST Sort -> O(nlogn)
     - [ ] Red Black BST Sort -> O(nlogn)
-    - [ ] Merge Sort -> O(nlogn)
+    - [x] Merge Sort -> O(nlogn)
     - [ ] Quick Sort -> O(nlogn)
     - [x] Capital Sigma (summation) -> O(n)
     - [x] Capital Pi -> O(n)
