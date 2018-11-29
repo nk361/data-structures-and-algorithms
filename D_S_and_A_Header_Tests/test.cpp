@@ -1,5 +1,6 @@
 #include "pch.h"
 #include <array>
+
 #include "../D_S_and_A/Algorithms/c_general_algorithms.h"
 #include "../D_S_and_A/Data Structures Headers/c_poly_node.h"
 #include "../D_S_and_A/Data Structures Headers/c_tree.h"

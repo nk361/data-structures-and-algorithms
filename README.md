@@ -4,7 +4,7 @@ I'm using google test to test my headers
 
 # Features:
   - Data Structures
-    - [x] AVL BST
+    - [x] [AVL BST](https://github.com/nk361/data-structures-and-algorithms/blob/master/D_S_and_A/Data%20Structures%20Headers/c_AVL_binary_tree.inl)
     - [x] BST
     - [x] Max Heap
     - [x] Min Heap
