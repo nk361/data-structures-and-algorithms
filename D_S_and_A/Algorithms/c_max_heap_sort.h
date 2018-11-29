@@ -1,7 +1,7 @@
 #pragma once
 #include "../Data Structures Headers/c_max_heap.h"
 
-template<class MyType>
+template<class MyType, template <class> class NodeType>
 class c_max_heap_sort
 {
 public:

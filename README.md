@@ -17,7 +17,7 @@ I'm using google test to test my headers
     - [x] Min Heap Sort -> O(nlogn)
     - [x] BST Sort -> O(n)
     - [x] AVL BST Sort -> O(nlogn)
-    - [ ] Red Black BST Sort -> O(nlogn) (better than avl)
+    - [ ] Red Black BST Sort -> O(nlogn)
     - [ ] Merge Sort -> O(nlogn)
     - [ ] Quick Sort -> O(nlogn)
     - [x] Capital Sigma (summation) -> O(n)

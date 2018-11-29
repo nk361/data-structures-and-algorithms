@@ -2,10 +2,10 @@
 #include <vector>
 #include "c_min_heap_sort.h"
 
-template<class MyType>
-std::vector<MyType>& c_min_heap_sort<MyType>::sort(std::vector<MyType>& arr)
+template<class MyType, template <class> class NodeType>
+std::vector<MyType>& c_min_heap_sort<MyType, NodeType>::sort(std::vector<MyType>& arr)
 {
-	c_min_heap<MyType, c_poly_node> heap{ arr[0] };
+	c_min_heap<MyType, NodeType> heap{ arr[0] };
 	for (int i{ 1 }; i < arr.size(); ++i)
 		heap.add_item(arr[i]);
 	for (int i{ 0 }; i < arr.size(); ++i)//go forward through array adding smallest

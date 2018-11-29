@@ -2,7 +2,7 @@
 #include "c_poly_node.h"
 
 template <class ValType>
-c_poly_node<ValType>::c_poly_node(ValType val, int const& chldrn_size)
+c_poly_node<ValType>::c_poly_node(ValType const& val, int const& chldrn_size)
 {
 	value = val;
 

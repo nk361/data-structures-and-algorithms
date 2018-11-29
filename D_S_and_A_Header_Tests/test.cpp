@@ -15,14 +15,15 @@
 #include "../D_S_and_A/Data Structures Headers/c_linked_list.h"
 #include "../D_S_and_A/Data Structures Headers/c_red_black_tree_node.h"
 #include "../D_S_and_A/Algorithms/c_bst_sort.h"
+#include "../D_S_and_A/Algorithms/c_merge_sort.h"
 
-TEST(GeneralAlgorithmsHeader, SmallGeneralAlgorithms)
+TEST(c_general_algorithms_header, c_small_general_algorithms)
 {
 	std::vector<int> sorted_vector{ 1, 2, 3, 4, 5 };
 	c_general_algorithms::scramble_vals(sorted_vector);
 	EXPECT_FALSE(sorted_vector[0] == 1 && sorted_vector[1] == 2 && sorted_vector[2] == 3 && sorted_vector[3] == 4 && sorted_vector[4] == 5);
 
-	std::vector<std::string> sorted_strings{ "Amy", "Briana", "Cathy", "Darcy", "Emily", "Fatima", "Gretchen", "Hannah" };
+	std::vector<std::string> sorted_strings{ "Amy", "Briana", "Cathy", "Darcy", "Emily", "Fatima", "Gracie", "Hannah" };
 	c_general_algorithms::scramble_vals(sorted_strings);
 	EXPECT_FALSE(sorted_strings[0] == "Amy" && sorted_strings[1] == "Briana" && sorted_strings[2] == "Cathy" && sorted_strings[3] == "Darcy" && sorted_strings[4] == "Emily" && sorted_strings[5] == "Fatima" && sorted_strings[6] == "Gretchen" && sorted_strings[7] == "Hannah");
 
@@ -57,7 +58,7 @@ TEST(GeneralAlgorithmsHeader, SmallGeneralAlgorithms)
 	EXPECT_DOUBLE_EQ(c_general_algorithms::capital_pi(1, 3, multiply_this, 5.0, 2.0, 3.0), 6000.0);
 }
 
-TEST(node_header_tests, TreeNodeConstructors)
+TEST(c_node_header_tests, c_tree_node_constructors)
 {
 	c_poly_node<int> number{ 5, 2 };
 	EXPECT_EQ(number.value, 5);
@@ -695,11 +696,12 @@ TEST(c_sorts, c_sort_header_tests)
 	std::vector<std::vector<int>& (*)(std::vector<int>&)> sorts{ //vector of function pointers, same return type and same parameters
 		c_bubble_sort<int>::sort,
 		c_counting_sort<int>::sort,
-		c_max_heap_sort<int>::sort,
-		c_min_heap_sort<int>::sort,
+		c_max_heap_sort<int, c_poly_node>::sort,
+		c_min_heap_sort<int, c_poly_node>::sort,
 		c_bst_sorts<int, c_binary_tree, c_poly_node>::sort,
-		c_bst_sorts<int, c_avl_binary_tree, c_poly_node>::sort//,
+		c_bst_sorts<int, c_avl_binary_tree, c_poly_node>::sort,
 		//c_bst_sorts<int, c_red_black_tree, c_poly_node>::sort
+		c_merge_sort<int>::sort
 	};
 
 	for(std::vector<int>& (*srt)(std::vector<int>&) : sorts)//for each sort function pointer
@@ -708,7 +710,7 @@ TEST(c_sorts, c_sort_header_tests)
 		srt(small_duplicates_negatives);
 		//testing::internal::SleepMilliseconds(1000);//you can add this line to let the random seed for scramble be different each second
 		for (int i{ 0 }; i < small_duplicates_negatives.size() - 1; ++i)//check that it's sorted
-			EXPECT_TRUE(small_duplicates_negatives[i] <= small_duplicates_negatives[i + 1]);
+			EXPECT_LE(small_duplicates_negatives[i], small_duplicates_negatives[i + 1]);
 	}
 }
 

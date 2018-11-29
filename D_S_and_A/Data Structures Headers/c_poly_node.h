@@ -9,7 +9,7 @@ public:
 	std::vector<c_poly_node *> children;
 
 	c_poly_node() = delete;
-	explicit c_poly_node(ValType val, int const& chldrn_size);
+	explicit c_poly_node(ValType const& val, int const& chldrn_size);
 
 	virtual ~c_poly_node();
 };

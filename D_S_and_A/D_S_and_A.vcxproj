@@ -152,6 +152,7 @@
     <ClInclude Include="Algorithms\c_bubble_sort.h" />
     <ClInclude Include="Algorithms\c_counting_sort.h" />
     <ClInclude Include="Algorithms\c_max_heap_sort.h" />
+    <ClInclude Include="Algorithms\c_merge_sort.h" />
     <ClInclude Include="Algorithms\c_min_heap_sort.h" />
     <ClInclude Include="Data Structures Headers\c_avl_binary_tree.h" />
     <ClInclude Include="Data Structures Headers\c_avl_node.h" />
@@ -183,6 +184,7 @@
     <None Include="Algorithms\c_bubble_sort.inl" />
     <None Include="Algorithms\c_counting_sort.inl" />
     <None Include="Algorithms\c_max_heap_sort.inl" />
+    <None Include="Algorithms\c_merge_sort.inl" />
     <None Include="Algorithms\c_min_heap_sort.inl" />
     <None Include="Data Structures Headers\c_avl_binary_tree.inl" />
     <None Include="Data Structures Headers\c_avl_node.inl" />
