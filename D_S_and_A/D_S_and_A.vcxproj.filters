@@ -72,10 +72,10 @@
     <ClInclude Include="Data Structures Headers\c_avl_node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Algorithms\c_bst_sort.h">
+    <ClInclude Include="Algorithms\c_merge_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Algorithms\c_merge_sort.h">
+    <ClInclude Include="Algorithms\c_bst_sorts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

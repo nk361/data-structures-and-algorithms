@@ -1,5 +1,5 @@
 #pragma once
-#include "c_bst_sort.h"
+#include "c_bst_sorts.h"
 
 template <class MyType, template <class ValType, template <class> class NodeType> class BstType, template <class> class NodeType>//accounting for template needs of the tree classes
 std::vector<MyType>& c_bst_sorts<MyType, BstType, NodeType>::sort(std::vector<MyType>& arr)

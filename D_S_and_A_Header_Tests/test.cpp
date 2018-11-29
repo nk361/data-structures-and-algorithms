@@ -15,7 +15,7 @@
 #include "../D_S_and_A/Algorithms/c_min_heap_sort.h"
 #include "../D_S_and_A/Data Structures Headers/c_linked_list.h"
 #include "../D_S_and_A/Data Structures Headers/c_red_black_tree_node.h"
-#include "../D_S_and_A/Algorithms/c_bst_sort.h"
+#include "../D_S_and_A/Algorithms/c_bst_sorts.h"
 #include "../D_S_and_A/Algorithms/c_merge_sort.h"
 
 TEST(c_general_algorithms_header, c_small_general_algorithms)

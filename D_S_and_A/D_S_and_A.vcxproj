@@ -148,7 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Algorithms\c_bst_sort.h" />
+    <ClInclude Include="Algorithms\c_bst_sorts.h" />
     <ClInclude Include="Algorithms\c_bubble_sort.h" />
     <ClInclude Include="Algorithms\c_counting_sort.h" />
     <ClInclude Include="Algorithms\c_max_heap_sort.h" />
