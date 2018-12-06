@@ -21,4 +21,4 @@ I'm using google test to test my headers
     - [x] [Merge Sort](https://github.com/nk361/data-structures-and-algorithms/blob/master/D_S_and_A/Algorithms/c_merge_sort.inl) -> O(nlogn)
     - [ ] Quick Sort -> O(nlogn)
     - [x] [Capital Sigma (summation)](https://github.com/nk361/data-structures-and-algorithms/blob/master/D_S_and_A/Algorithms/c_general_algorithms.h) -> O(n)
-    - [x] [Capital Pi](../blob/master/D_S_and_A/Algorithms/c_general_algorithms.h) -> O(n)
+    - [x] [Capital Pi](blob/master/D_S_and_A/Algorithms/c_general_algorithms.h) -> O(n)
