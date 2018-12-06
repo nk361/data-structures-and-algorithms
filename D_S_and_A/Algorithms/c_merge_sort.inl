@@ -3,6 +3,7 @@
 
 #include "c_merge_sort.h"
 
+//O(nlogn)
 template<class MyType>
 std::vector<MyType>& c_merge_sort<MyType>::sort(std::vector<MyType>& arr)
 {
@@ -11,7 +12,8 @@ std::vector<MyType>& c_merge_sort<MyType>::sort(std::vector<MyType>& arr)
 		std::vector<std::vector<MyType>> split_parts;//to hold vectors to merge
 		bool const odd{ (arr.size() % 2 != 0) };//true if odd amount of values
 
-		for (int i{ 0 }; i < static_cast<int>(arr.size()) - 1 + !odd; ++i)//loops one less time if odd to make group of two, loops n times if even
+		//divide
+		for (int i{ 0 }; i < static_cast<int>(arr.size()) - odd; ++i)//loops one less time if odd to make group of two, loops n times if even
 			if (odd && i == static_cast<int>(arr.size()) - 1 - 1)//if there's an odd amount, add the last two items into one vector for even amount of vectors
 				if (arr[arr.size() - 1 - 1] > arr[arr.size() - 1])//add last two in sorted order
 					split_parts.push_back({ arr[arr.size() - 1], arr[arr.size() - 1 - 1] });
@@ -20,6 +22,7 @@ std::vector<MyType>& c_merge_sort<MyType>::sort(std::vector<MyType>& arr)
 			else//add all other single items
 				split_parts.push_back({ arr[i] });
 
+		//merge
 		while (static_cast<int>(split_parts.size()) > 1)//merge until there is only one vector result
 			for (int i{ 0 }; i < static_cast<int>(split_parts.size()) - 1; ++i)
 			{

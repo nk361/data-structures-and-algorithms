@@ -1,5 +1,6 @@
 #include "pch.h"
 #include <array>
+#include <vector>
 
 #include "../D_S_and_A/Algorithms/c_general_algorithms.h"
 #include "../D_S_and_A/Data Structures Headers/c_poly_node.h"
@@ -701,7 +702,7 @@ TEST(c_sorts, c_sort_header_tests)
 		c_min_heap_sort<int, c_poly_node>::sort,
 		c_bst_sorts<int, c_binary_tree, c_poly_node>::sort,
 		c_bst_sorts<int, c_avl_binary_tree, c_poly_node>::sort,
-		//c_bst_sorts<int, c_red_black_tree, c_poly_node>::sort
+		//c_bst_sorts<int, c_red_black_tree, c_poly_node>::sort,
 		c_merge_sort<int>::sort
 	};
 
@@ -709,51 +710,51 @@ TEST(c_sorts, c_sort_header_tests)
 	{
 		c_general_algorithms::scramble_vals(small_duplicates_negatives);
 		srt(small_duplicates_negatives);
-		//testing::internal::SleepMilliseconds(1000);//you can add this line to let the random seed for scramble be different each second
 		for (int i{ 0 }; i < small_duplicates_negatives.size() - 1; ++i)//check that it's sorted
 			EXPECT_LE(small_duplicates_negatives[i], small_duplicates_negatives[i + 1]);
+		//testing::internal::SleepMilliseconds(1000);//you can add this line to let the random seed for scramble be different each second
 	}
 }
 
 /*
 	*rules of a red black tree
-{
-Every node is either red or black no alternative
-The root is always black
-New insertions are always red including root?
-Every path from root to leaf has the same number of black nodes
-No path can have two consecutive red nodes
-Nulls are considered to be black
-}
-//paths can have different amounts of red nodes
-//a path can have two consecutive black nodes
+	{
+	Every node is either red or black no alternative
+	The root is always black
+	New insertions are always red including root?
+	Every path from root to leaf has the same number of black nodes
+	No path can have two consecutive red nodes
+	Nulls are considered to be black
+	}
+	//paths can have different amounts of red nodes
+	//a path can have two consecutive black nodes
 
-how to fix red black tree
-rebalance based on if we have
-black aunt rotate
-red aunt color flip
-after rotation OR color flip, resolve colors on tree
-after rotation, nodes
-black
-/   \
-red red
-after color flip nodes
-	red
-   /   \
-black black
+	how to fix red black tree
+	rebalance based on if we have
+	black aunt rotate
+	red aunt color flip
+	after rotation OR color flip, resolve colors on tree
+	after rotation, nodes
+	black
+	/   \
+	red red
+	after color flip nodes
+		red
+	   /   \
+	black black
 
-merge sort
-you only keep one copy of data
-well
-maybe
-split the list into lists of just one item each
-sort them down the line by merging correctly
+	merge sort
+	you only keep one copy of data
+	well
+	maybe
+	split the list into lists of just one item each
+	sort them down the line by merging correctly
 
-quick sort
-I think quick sort can work in place?
-well really I kinda think merge sort can work in place too?
+	quick sort
+	I think quick sort can work in place?
+	well really I kinda think merge sort can work in place too?
 
-*
+	*
 */
 
 int main(int argc, char * argv[])//char **argv
