@@ -9,7 +9,7 @@ I'm using google test to test my headers
     - [x] [Max Heap](../master/D_S_and_A/Data%20Structures%20Headers/c_max_heap.inl)
     - [x] [Min Heap](../master/D_S_and_A/Data%20Structures%20Headers/c_min_heap.inl)
     - [x] [Linked List](../master/D_S_and_A/Data%20Structures%20Headers/c_linked_list.inl)
-    - [ ] Red Black Binary Search Tree
+    - [x] [Red Black Binary Search Tree](../master/D_S_and_A/Data%20Structures%20Headers/c_red_black_binary_tree.inl)
   - Algorithms
     - [x] [Bubble Sort](../master/D_S_and_A/Algorithms/c_bubble_sort.inl) -> O(n^2)
     - [x] [Counting Sort](../master/D_S_and_A/Algorithms/c_counting_sort.inl) -> O(nlogn)
@@ -17,7 +17,7 @@ I'm using google test to test my headers
     - [x] [Min Heap Sort](../master/D_S_and_A/Algorithms/c_min_heap_sort.inl) -> O(nlogn)
     - [x] [Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(n^2)
     - [x] [AVL Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(nlogn)
-    - [ ] [Red Black Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(nlogn)
+    - [x] [Red Black Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(nlogn)
     - [x] [Merge Sort](../master/D_S_and_A/Algorithms/c_merge_sort.inl) -> O(nlogn)
     - [ ] Quick Sort -> O(nlogn)
     - [x] [Capital Sigma (summation)](../master/D_S_and_A/Algorithms/c_general_algorithms.h) -> O(n)
