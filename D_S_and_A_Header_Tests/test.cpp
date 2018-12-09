@@ -102,7 +102,7 @@ TEST(c_node_header_tests, c_tree_node_constructors)
 	EXPECT_TRUE(redblack.red);
 }
 
-TEST(c_binary_treeTests, c_binary_treeFunctionTests)
+TEST(c_binary_tree_tests, c_binary_tree_function_tests)
 {
 	c_binary_tree<int, c_poly_node> b_tree{ 30 };
 	b_tree.add_items({ 12, 72, 109, 23, 83, 22, 43, 28, 67, 43, 30 });
@@ -403,31 +403,31 @@ TEST(c_avl_in_binary_tree_tests, c_avl_function_tests)
 
 TEST(c_heap_tests, c_max_and_min_heap_tests)
 {
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_in_level(0)), 1);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_in_level(1)), 2);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_in_level(2)), 4);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_in_level(3)), 8);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_in_level(0)), 1);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_in_level(1)), 2);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_in_level(2)), 4);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_in_level(3)), 8);
 
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_full_tree(1)), 1);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_full_tree(2)), 3);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_full_tree(3)), 7);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_full_tree(4)), 15);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_full_tree(1)), 1);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_full_tree(2)), 3);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_full_tree(3)), 7);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_full_tree(4)), 15);
 
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_complete_levels(1)), 1);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_complete_levels(2)), 1);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_complete_levels(3)), 2);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_complete_levels(4)), 2);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_complete_levels(10)), 3);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_complete_levels(15)), 4);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_complete_levels(7)), 3);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_complete_levels(1)), 1);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_complete_levels(2)), 1);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_complete_levels(3)), 2);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_complete_levels(4)), 2);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_complete_levels(10)), 3);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_complete_levels(15)), 4);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_complete_levels(7)), 3);
 
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_last_level(0)), 1);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_last_level(1)), 0);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_last_level(2)), 1);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_last_level(3)), 0);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_last_level(4)), 1);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_last_level(5)), 2);
-	EXPECT_EQ((c_heap<int, c_poly_node>::amount_last_level(6)), 3);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_last_level(0)), 1);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_last_level(1)), 0);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_last_level(2)), 1);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_last_level(3)), 0);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_last_level(4)), 1);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_last_level(5)), 2);
+	EXPECT_EQ((c_heap<int, c_poly_node, std::less<>>::amount_last_level(6)), 3);
 
 	c_max_heap<int, c_poly_node> max_heap_add{ 10 };
 	EXPECT_EQ(max_heap_add.root->value, 10);
@@ -681,7 +681,7 @@ TEST(c_red_black_bst, c_red_black_bst_funcs_and_rebalancing)
 		 2  6
 		/\  /\
 		1 3 5 8
-			  /\
+		      /\
 		     7  9
 	             \
 	              10
@@ -793,39 +793,6 @@ TEST(c_sorts, c_sort_header_tests)
 		//testing::internal::SleepMilliseconds(1000);//you can add this line to let the random seed for scramble be different each second
 	}
 }
-
-/*
-	*rules of a red black tree
-	{
-	Every node is either red or black no alternative
-	The root is always black
-	New insertions are always red including root?
-	Every path from root to leaf has the same number of black nodes
-	No path can have two consecutive red nodes
-	Nulls are considered to be black
-	}
-	//paths can have different amounts of red nodes
-	//a path can have two consecutive black nodes
-
-	how to fix red black tree
-	rebalance based on if we have
-	black aunt rotate
-	red aunt color flip
-	after rotation OR color flip, resolve colors on tree
-	after rotation, nodes
-	black
-	/   \
-	red red
-	after color flip nodes
-		red
-	   /   \
-	black black
-
-	quick sort
-	I think quick sort can work in place?
-
-	*
-*/
 
 int main(int argc, char * argv[])//char **argv
 {

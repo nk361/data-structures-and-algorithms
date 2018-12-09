@@ -1,26 +1,26 @@
 #pragma once
 #include "c_max_heap.h"
 
-template <typename ValType, template<class> class NodeType>
-c_max_heap<ValType, NodeType>::c_max_heap(ValType const& val) : c_heap<ValType, NodeType>(val) {}
+template <class ValType, template<class> class NodeType, typename Operation>
+c_max_heap<ValType, NodeType, Operation>::c_max_heap(ValType const& val) : c_heap<ValType, NodeType, Operation>(val) {}
 
-template <typename ValType, template<class> class NodeType>
-c_max_heap<ValType, NodeType>::c_max_heap(std::vector<ValType> const& vals, bool(*greater_than)(ValType const&, ValType const&)) : c_heap<ValType, NodeType>(vals, greater_than) {}
+template <class ValType, template<class> class NodeType, typename Operation>
+c_max_heap<ValType, NodeType, Operation>::c_max_heap(std::vector<ValType> const& vals) : c_heap<ValType, NodeType, Operation>(vals) {}
 
-template <typename ValType, template<class> class NodeType>
-void c_max_heap<ValType, NodeType>::add_item(ValType const& val)
+template <class ValType, template<class> class NodeType, typename Operation>
+void c_max_heap<ValType, NodeType, Operation>::add_item(ValType const& val)
 {
-	c_heap<ValType, NodeType>::add_item(val, greater_than);
+	c_heap<ValType, NodeType, Operation>::add_item(val);
 }
 
-template <typename ValType, template<class> class NodeType>
-void c_max_heap<ValType, NodeType>::add_items(std::vector<ValType> const& vals)
+template <class ValType, template<class> class NodeType, typename Operation>
+void c_max_heap<ValType, NodeType, Operation>::add_items(std::vector<ValType> const& vals)
 {
-	c_heap<ValType, NodeType>::add_items(vals, greater_than);
+	c_heap<ValType, NodeType, Operation>::add_items(vals);
 }
 
-template <typename ValType, template<class> class NodeType>
-void c_max_heap<ValType, NodeType>::remove_item()
+template <class ValType, template<class> class NodeType, typename Operation>
+void c_max_heap<ValType, NodeType, Operation>::remove_item()
 {
-	c_heap<ValType, NodeType>::remove_item(greater_than);
+	c_heap<ValType, NodeType, Operation>::remove_item();
 }

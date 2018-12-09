@@ -1,7 +1,7 @@
 #pragma once
 
 //Depreciated node type
-template <typename  ValType>
+template <class ValType>
 class c_avl_node
 {
 public:

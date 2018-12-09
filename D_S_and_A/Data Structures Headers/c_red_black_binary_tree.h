@@ -1,7 +1,7 @@
 #pragma once
 #include "c_binary_tree.h"
 
-template<typename ValType, template<class> class NodeType>
+template<class ValType, template<class> class NodeType>
 class c_red_black_binary_tree : public c_binary_tree<ValType, NodeType>
 {
 public:

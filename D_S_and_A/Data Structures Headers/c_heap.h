@@ -2,7 +2,7 @@
 #include <cmath>
 #include "c_binary_tree.h"
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType, typename Operation>
 class c_heap : public c_binary_tree<ValType, NodeType>
 {
 public:
@@ -10,16 +10,16 @@ public:
 
 	c_heap() = delete;
 	explicit c_heap(ValType const& val);
-	explicit c_heap(std::vector<ValType> const& vals, bool(*op)(ValType const& left, ValType const& right));
+	explicit c_heap(std::vector<ValType> const& vals);
 
 	//uses c_binary_tree's destructor
 
-	void trickle_up(std::vector<NodeType<ValType> * *> ancstrs, bool(*op)(ValType const& left, ValType const& right)) const;
-	void trickle_down(bool(*op)(ValType const& left, ValType const& right));
+	void trickle_up(std::vector<NodeType<ValType> * *> ancstrs) const;
+	void trickle_down();
 
-	void add_item(ValType const& val, bool(*op)(ValType const& left, ValType const& right));
-	void add_items(std::vector<ValType> const& vals, bool(*op)(ValType const& left, ValType const& right));
-	void remove_item(bool(*op)(ValType const& left, ValType const& right));
+	void add_item(ValType const& val) override;
+	void add_items(std::vector<ValType> const& vals) override;
+	void remove_item();
 	
 	int static amount_in_level(int const& level);
 	int static amount_full_tree(int const& levels);

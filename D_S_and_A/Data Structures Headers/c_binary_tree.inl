@@ -1,10 +1,10 @@
 #pragma once
 #include "c_binary_tree.h"
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 c_binary_tree<ValType, NodeType>::c_binary_tree(ValType const& val) : c_tree<ValType, NodeType>(val) {}//explicit is only allowed inside class and other constructor calls don't show in class
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 c_binary_tree<ValType, NodeType>::c_binary_tree(std::vector<ValType> const& vals) : c_tree<ValType, NodeType>(vals[0])
 {
 	for (size_t i{ 1 }; i < vals.size(); ++i)//start at one, send first val off to be root
@@ -20,7 +20,7 @@ c_binary_tree<ValType, NodeType>::c_binary_tree(std::vector<ValType> const& vals
  *Because this is an iterative method instead of recursive, there is no stack issue with larger size, only the size of the vector of ancestors
  *When the tree is properly balanced, ancestors can reach a max length of nlogn, if the tree is not balanced, it can reach a max length of n
  */
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 c_binary_tree<ValType, NodeType>::~c_binary_tree()//not virtual because of unique tree navigation
 {
 	if (c_tree<ValType, NodeType>::root != nullptr)//incase root was all that was left and it was removed
@@ -55,7 +55,7 @@ c_binary_tree<ValType, NodeType>::~c_binary_tree()//not virtual because of uniqu
 	}
 }
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 void c_binary_tree<ValType, NodeType>::add_item(ValType const& val)
 {
 	NodeType<ValType> * current{ c_tree<ValType, NodeType>::root };
@@ -80,14 +80,14 @@ void c_binary_tree<ValType, NodeType>::add_item(ValType const& val)
 		}
 }
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 void c_binary_tree<ValType, NodeType>::add_items(std::vector<ValType> const& vals)
 {
 	for (ValType val : vals)
 		c_binary_tree<ValType, NodeType>::add_item(val);
 }
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 void c_binary_tree<ValType, NodeType>::remove_item(ValType const& val)
 {
 	NodeType<ValType> * * found{ find_node(&(c_tree<ValType, NodeType>::root), val) };
@@ -123,7 +123,7 @@ void c_binary_tree<ValType, NodeType>::remove_item(ValType const& val)
 }
 
 //these only work for nodes that don't have other pointer references to change other than just grandparent, left, and right
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 NodeType<ValType> * c_binary_tree<ValType, NodeType>::rotate_left(NodeType<ValType> * grandparent)
 {
 	NodeType<ValType> * temp{ grandparent->children[1] };//store grandparent's right child
@@ -132,7 +132,7 @@ NodeType<ValType> * c_binary_tree<ValType, NodeType>::rotate_left(NodeType<ValTy
 	return temp;//the new grandparent for the old to be assigned to
 }
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 NodeType<ValType> * c_binary_tree<ValType, NodeType>::rotate_right(NodeType<ValType> * grandparent)
 {
 	NodeType<ValType> * temp{ grandparent->children[0] };
@@ -141,21 +141,21 @@ NodeType<ValType> * c_binary_tree<ValType, NodeType>::rotate_right(NodeType<ValT
 	return temp;
 }
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 NodeType<ValType> * c_binary_tree<ValType, NodeType>::rotate_left_right(NodeType<ValType> * grandparent)
 {
 	grandparent->children[0] = rotate_left(grandparent->children[0]);//perform left rotate on grandparent's left child
 	return rotate_right(grandparent);//return the new grandparent after right rotate on grandparent
 }
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 NodeType<ValType> * c_binary_tree<ValType, NodeType>::rotate_right_left(NodeType<ValType> * grandparent)
 {
 	grandparent->children[1] = rotate_right(grandparent->children[1]);
 	return rotate_left(grandparent);
 }
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 NodeType<ValType> * * c_binary_tree<ValType, NodeType>::find_node(NodeType<ValType> * * rt, ValType const& val)//take and return pointer to pointer so the node in the tree can be changed
 {
 	NodeType<ValType> * * current{ rt };
@@ -180,7 +180,7 @@ NodeType<ValType> * * c_binary_tree<ValType, NodeType>::find_node(NodeType<ValTy
 
 //This function works the same as find_node, except it keeps track of ancestors along the way
 //It returns a vector with pointers to pointers of the ancestors with the last element being the found node
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 std::vector<NodeType<ValType> * *> c_binary_tree<ValType, NodeType>::find_node_with_path(NodeType<ValType> * * rt, ValType const& val)
 {
 	NodeType<ValType> * * current{ rt };
@@ -210,7 +210,7 @@ std::vector<NodeType<ValType> * *> c_binary_tree<ValType, NodeType>::find_node_w
 //It loops through looking for the FIRST node that would make the two values split paths in the tree
 //If one or both values could not be located in the tree, this returns a pointer to nullptr
 //It returns a pointer to the lca node so that it can be changed
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 NodeType<ValType> * * c_binary_tree<ValType, NodeType>::lca(NodeType<ValType> * * rt, ValType const& val1, ValType const& val2)
 {
 	NodeType<ValType> * * current{ rt };
@@ -225,7 +225,7 @@ NodeType<ValType> * * c_binary_tree<ValType, NodeType>::lca(NodeType<ValType> * 
 	return *find_node(rt, val1) == nullptr ? find_node(rt, val1) : find_node(rt, val2);//return pointer to nullptr, would like a better way
 }
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 size_t c_binary_tree<ValType, NodeType>::depth(NodeType<ValType> * rt, ValType const& val)
 {
 	int count{ 1 };

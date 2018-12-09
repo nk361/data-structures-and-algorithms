@@ -3,7 +3,7 @@
 
 #include "c_linked_list.h"
 
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 c_linked_list<ValType, NodeType>::c_linked_list(ValType const& val)
 {
 	if (head == nullptr)
@@ -23,7 +23,7 @@ c_linked_list<ValType, NodeType>::c_linked_list(ValType const& val)
 	}
 }
 
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 c_linked_list<ValType, NodeType>::c_linked_list(std::vector<ValType> const& vals)
 {
 	head = new NodeType<ValType>{ vals[0], 1 };
@@ -31,7 +31,7 @@ c_linked_list<ValType, NodeType>::c_linked_list(std::vector<ValType> const& vals
 		c_linked_list<ValType, NodeType>::add_item(vals[i]);
 }
 
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 c_linked_list<ValType, NodeType>::~c_linked_list()
 {
 	if (head != nullptr)
@@ -61,7 +61,7 @@ c_linked_list<ValType, NodeType>::~c_linked_list()
 		}
 }
 
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 NodeType<ValType> * * c_linked_list<ValType, NodeType>::operator[](int index)
 {
 	NodeType<ValType> * * current{ &head };
@@ -78,7 +78,7 @@ NodeType<ValType> * * c_linked_list<ValType, NodeType>::operator[](int index)
 	throw std::out_of_range{ "c_linked_list [] operator index out of range, index given: " + std::to_string(index) };
 }
 
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 void c_linked_list<ValType, NodeType>::add_item(ValType const& val)
 {
 	if (head == nullptr)
@@ -98,14 +98,14 @@ void c_linked_list<ValType, NodeType>::add_item(ValType const& val)
 	}
 }
 
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 void c_linked_list<ValType, NodeType>::add_items(ValType const& vals)
 {
 	for (ValType val : vals)
 		c_linked_list<ValType, NodeType>::add_item(val);
 }
 
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 void c_linked_list<ValType, NodeType>::remove_item(ValType const& val)
 {
 	if (head->value == val)
@@ -134,7 +134,7 @@ void c_linked_list<ValType, NodeType>::remove_item(ValType const& val)
 	}
 }
 
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 void c_linked_list<ValType, NodeType>::remove_item_by_index(int const& index)
 {
 	if (index == 0)
@@ -150,7 +150,7 @@ void c_linked_list<ValType, NodeType>::remove_item_by_index(int const& index)
 	}
 }
 
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 size_t c_linked_list<ValType, NodeType>::length()
 {
 	size_t len = 0;
@@ -170,7 +170,7 @@ size_t c_linked_list<ValType, NodeType>::length()
 	return len;
 }
 
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 int c_linked_list<ValType, NodeType>::amount_reoccurs(ValType const& val)
 {
 	int count = 0;
@@ -190,7 +190,7 @@ int c_linked_list<ValType, NodeType>::amount_reoccurs(ValType const& val)
 	return count;
 }
 
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 bool c_linked_list<ValType, NodeType>::detect_loop()
 {
 	if (head != nullptr)
@@ -210,7 +210,7 @@ bool c_linked_list<ValType, NodeType>::detect_loop()
 	return false;
 }
 
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 size_t c_linked_list<ValType, NodeType>::length_of_loop()
 {
 	if (head != nullptr)
@@ -249,7 +249,7 @@ size_t c_linked_list<ValType, NodeType>::length_of_loop()
 //   g  p  c
 //5<-4  3->nullptr
 //nullptr<-5<-4<-3
-template <typename ValType, template <class> class NodeType>
+template <class ValType, template <class> class NodeType>
 void c_linked_list<ValType, NodeType>::reverse()
 {
 	if (head != nullptr && head->children[0] != nullptr)//has at least two list elements

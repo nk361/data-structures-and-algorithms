@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-template <typename ValType>
+template <class ValType>
 class c_red_black_poly_node
 {
 public:

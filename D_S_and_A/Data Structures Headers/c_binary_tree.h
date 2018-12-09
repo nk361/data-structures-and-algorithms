@@ -2,7 +2,7 @@
 #include <vector>
 #include "c_tree.h"
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 class c_binary_tree : public c_tree<ValType, NodeType>
 {
 public:

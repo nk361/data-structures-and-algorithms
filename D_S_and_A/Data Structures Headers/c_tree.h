@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 class c_tree
 {
 public:

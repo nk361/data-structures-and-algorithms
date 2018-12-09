@@ -1,13 +1,13 @@
 #pragma once
 #include "c_tree.h"
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 c_tree<ValType, NodeType>::c_tree(ValType const& val)
 {
 	root = new NodeType<ValType>{ val, 2 };
 }
 
-template <typename ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType>
 c_tree<ValType, NodeType>::~c_tree()//not virtual because of unique tree navigation
 {
 	if (root != nullptr)//incase root was all that was left and it was removed

@@ -1,10 +1,10 @@
 #pragma once
 #include "c_red_black_binary_tree.h"
 
-template<typename ValType, template<class> class NodeType>
+template<class ValType, template<class> class NodeType>
 c_red_black_binary_tree<ValType, NodeType>::c_red_black_binary_tree(ValType const& val) : c_binary_tree<ValType, NodeType>(val) {}
 
-template<typename ValType, template<class> class NodeType>
+template<class ValType, template<class> class NodeType>
 c_red_black_binary_tree<ValType, NodeType>::c_red_black_binary_tree(std::vector<ValType> const& vals) : c_binary_tree<ValType, NodeType>(vals[0])
 {
 	c_tree<ValType, NodeType>::root->red = false;
@@ -12,7 +12,7 @@ c_red_black_binary_tree<ValType, NodeType>::c_red_black_binary_tree(std::vector<
 		c_red_black_binary_tree<ValType, NodeType>::add_item(vals[i]);
 }
 
-template<typename ValType, template<class> class NodeType>
+template<class ValType, template<class> class NodeType>
 void c_red_black_binary_tree<ValType, NodeType>::add_item(ValType const& val)
 {
 	NodeType<ValType> * * current{ &(c_tree<ValType, NodeType>::root) };//pointer to pointer so that pointer references can change originals
@@ -49,14 +49,14 @@ void c_red_black_binary_tree<ValType, NodeType>::add_item(ValType const& val)
 		}
 }
 
-template<typename ValType, template<class> class NodeType>
+template<class ValType, template<class> class NodeType>
 void c_red_black_binary_tree<ValType, NodeType>::add_items(std::vector<ValType> const& vals)
 {
 	for (ValType val : vals)
 		c_red_black_binary_tree<ValType, NodeType>::add_item(val);
 }
 
-template<typename ValType, template<class> class NodeType>
+template<class ValType, template<class> class NodeType>
 void c_red_black_binary_tree<ValType, NodeType>::remove_item(ValType const& val)
 {
 	std::vector<NodeType<ValType> * *> ancestors{ c_binary_tree<ValType, NodeType>::find_node_with_path(&(c_tree<ValType, NodeType>::root), val) };
@@ -107,7 +107,7 @@ void c_red_black_binary_tree<ValType, NodeType>::remove_item(ValType const& val)
 		}
 }
 
-template<typename ValType, template<class> class NodeType>
+template<class ValType, template<class> class NodeType>
 void c_red_black_binary_tree<ValType, NodeType>::color_flip(NodeType<ValType> * * grandparent)
 {
 	(*grandparent)->red = true;
@@ -115,7 +115,7 @@ void c_red_black_binary_tree<ValType, NodeType>::color_flip(NodeType<ValType> * 
 	(*grandparent)->children[1]->red = false;
 }
 
-template<typename ValType, template<class> class NodeType>
+template<class ValType, template<class> class NodeType>
 void c_red_black_binary_tree<ValType, NodeType>::rebalance(NodeType<ValType> * * grandparent)
 {
 	if ((*grandparent)->children[0] != nullptr && (*grandparent)->children[0]->red)//check left
