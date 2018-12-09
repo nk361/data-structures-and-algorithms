@@ -13,7 +13,7 @@ template<class MyType>
 std::vector<MyType>& c_counting_sort<MyType>::sort(std::vector<MyType>& arr)
 {
 	std::map<MyType, MyType> index_and_count;//map instead of unordered to keep indexes in order like an array
-	for (int i{ 0 }; i < arr.size(); ++i)
+	for (int i{ 0 }; i < static_cast<int>(arr.size()); ++i)
 	{
 		typename std::map<MyType, MyType>::iterator found{ index_and_count.find(arr[i]) };
 		if (found == index_and_count.end())//not found

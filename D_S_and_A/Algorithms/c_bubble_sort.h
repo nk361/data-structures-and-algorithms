@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 
 template<class MyType>
 class c_bubble_sort

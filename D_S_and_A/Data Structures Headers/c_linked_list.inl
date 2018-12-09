@@ -1,4 +1,6 @@
 #pragma once
+#include <set>
+
 #include "c_linked_list.h"
 
 template <typename ValType, template <class> class NodeType>

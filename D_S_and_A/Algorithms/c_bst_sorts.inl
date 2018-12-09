@@ -5,7 +5,7 @@ template <class MyType, template <class ValType, template <class> class NodeType
 std::vector<MyType>& c_bst_sorts<MyType, BstType, NodeType>::sort(std::vector<MyType>& arr)
 {
 	BstType<MyType, NodeType> bst{ arr[0] };//add all items to bst
-	for (int i{ 1 }; i < arr.size(); ++i)//start at 1 since the first item was made root
+	for (int i{ 1 }; i < static_cast<int>(arr.size()); ++i)//start at 1 since the first item was made root
 		bst.add_item(arr[i]);
 
 	//in order traversal left root right
@@ -31,7 +31,7 @@ std::vector<MyType>& c_bst_sorts<MyType, BstType, NodeType>::sort(std::vector<My
 					current = ancestors[i].first;
 					break;
 				}
-				if (index < arr.size() && ancestors.back().second)
+				if (index < static_cast<int>(arr.size()) && ancestors.back().second)
 				{
 					arr[index] = ancestors.back().first->value;//add node on the way back up if it has been encountered only the first time
 					++index;

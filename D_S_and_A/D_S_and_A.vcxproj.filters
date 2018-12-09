@@ -51,9 +51,6 @@
     <ClInclude Include="Data Structures Headers\c_poly_node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_red_black_tree_node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Data Structures Headers\c_heap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -76,6 +73,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Algorithms\c_bst_sorts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures Headers\c_red_black_poly_node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -112,9 +112,6 @@
     <None Include="Data Structures Headers\c_node.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Data Structures Headers\c_red_black_tree_node.inl">
-      <Filter>Header Files</Filter>
-    </None>
     <None Include="Algorithms\c_bubble_sort.inl">
       <Filter>Header Files</Filter>
     </None>
@@ -137,6 +134,12 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Algorithms\c_merge_sort.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_red_black_poly_node.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\c_red_black_binary_tree.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

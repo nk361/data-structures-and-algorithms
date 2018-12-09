@@ -164,7 +164,7 @@
     <ClInclude Include="Data Structures Headers\c_min_heap.h" />
     <ClInclude Include="Data Structures Headers\c_poly_node.h" />
     <ClInclude Include="Data Structures Headers\c_red_black_binary_tree.h" />
-    <ClInclude Include="Data Structures Headers\c_red_black_tree_node.h" />
+    <ClInclude Include="Data Structures Headers\c_red_black_poly_node.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Data Structures Headers\c_tree.h" />
@@ -195,7 +195,8 @@
     <None Include="Data Structures Headers\c_min_heap.inl" />
     <None Include="Data Structures Headers\c_node.inl" />
     <None Include="Data Structures Headers\c_poly_node.inl" />
-    <None Include="Data Structures Headers\c_red_black_tree_node.inl" />
+    <None Include="Data Structures Headers\c_red_black_binary_tree.inl" />
+    <None Include="Data Structures Headers\c_red_black_poly_node.inl" />
     <None Include="Data Structures Headers\c_tree.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

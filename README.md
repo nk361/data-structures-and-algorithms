@@ -15,7 +15,7 @@ I'm using google test to test my headers
     - [x] [Counting Sort](../master/D_S_and_A/Algorithms/c_counting_sort.inl) -> O(nlogn)
     - [x] [Max Heap Sort](../master/D_S_and_A/Algorithms/c_max_heap_sort.inl) -> O(nlogn)
     - [x] [Min Heap Sort](../master/D_S_and_A/Algorithms/c_min_heap_sort.inl) -> O(nlogn)
-    - [x] [Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(n)
+    - [x] [Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(n^2)
     - [x] [AVL Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(nlogn)
     - [ ] [Red Black Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(nlogn)
     - [x] [Merge Sort](../master/D_S_and_A/Algorithms/c_merge_sort.inl) -> O(nlogn)

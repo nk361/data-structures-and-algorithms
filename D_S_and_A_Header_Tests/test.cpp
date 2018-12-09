@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "../D_S_and_A/Algorithms/c_general_algorithms.h"
+
 #include "../D_S_and_A/Data Structures Headers/c_poly_node.h"
 #include "../D_S_and_A/Data Structures Headers/c_tree.h"
 #include "../D_S_and_A/Data Structures Headers/c_binary_tree.h"
@@ -10,12 +11,14 @@
 #include "../D_S_and_A/Data Structures Headers/c_heap.h"
 #include "../D_S_and_A/Data Structures Headers/c_max_heap.h"
 #include "../D_S_and_A/Data Structures Headers/c_min_heap.h"
+#include "../D_S_and_A/Data Structures Headers/c_linked_list.h"
+#include "../D_S_and_A/Data Structures Headers/c_red_black_poly_node.h"
+#include "../D_S_and_A/Data Structures Headers/c_red_black_binary_tree.h"
+
 #include "../D_S_and_A/Algorithms/c_bubble_sort.h"
 #include "../D_S_and_A/Algorithms/c_counting_sort.h"
 #include "../D_S_and_A/Algorithms/c_max_heap_sort.h"
 #include "../D_S_and_A/Algorithms/c_min_heap_sort.h"
-#include "../D_S_and_A/Data Structures Headers/c_linked_list.h"
-#include "../D_S_and_A/Data Structures Headers/c_red_black_tree_node.h"
 #include "../D_S_and_A/Algorithms/c_bst_sorts.h"
 #include "../D_S_and_A/Algorithms/c_merge_sort.h"
 
@@ -90,7 +93,7 @@ TEST(c_node_header_tests, c_tree_node_constructors)
 	EXPECT_EQ(decimal.children[5], nullptr);
 	EXPECT_EQ(decimal.children[6], nullptr);
 
-	c_red_black_tree_node<int> redblack{ 5, false };
+	c_red_black_poly_node<int> redblack{ 5, 2, false };
 	EXPECT_EQ(redblack.value, 5);
 	EXPECT_EQ(redblack.children[0], nullptr);
 	EXPECT_EQ(redblack.children[1], nullptr);
@@ -357,7 +360,7 @@ TEST(c_avl_in_binary_tree_tests, c_avl_function_tests)
 		   5  7 10
 	 */
 
-	//c_avl_int_binary_tree functions are tested in c_int_binary_tree already ^
+	//c_avl_int_binary_tree functions are tested in c_binary_tree already ^
 
 	//same layout, with 10 added ^
 	c_avl_binary_tree<int, c_poly_node> avl_remove_rebalance{ { 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 } };
@@ -614,6 +617,81 @@ TEST(c_heap_tests, c_max_and_min_heap_tests)
 	EXPECT_EQ(larger_min_heap_remove.root, nullptr);
 }
 
+TEST(c_red_black_bst, c_red_black_bst_funcs_and_rebalancing)
+{
+	c_red_black_binary_tree<int, c_red_black_poly_node> red_aunt_left_left{ { 15, 20, 10, 5 } };
+	EXPECT_FALSE(red_aunt_left_left.root->children[1]->red);//check aunt
+	EXPECT_FALSE(red_aunt_left_left.root->red);//root stays black
+	EXPECT_FALSE(red_aunt_left_left.root->children[0]->red);
+	EXPECT_TRUE(red_aunt_left_left.root->children[0]->children[0]->red);
+	
+	c_red_black_binary_tree<int, c_red_black_poly_node> black_aunt_left_left{ { 15, 10, 5 } };
+	EXPECT_FALSE(black_aunt_left_left.root->red);
+	EXPECT_TRUE(black_aunt_left_left.root->children[0]->red);
+	EXPECT_TRUE(black_aunt_left_left.root->children[1]->red);
+
+	c_red_black_binary_tree<int, c_red_black_poly_node> red_aunt_left_right{ { 15, 20, 5, 10 } };
+	EXPECT_FALSE(red_aunt_left_right.root->children[1]->red);//check aunt
+	EXPECT_FALSE(red_aunt_left_right.root->red);//root stays black
+	EXPECT_FALSE(red_aunt_left_right.root->children[0]->red);
+	EXPECT_TRUE(red_aunt_left_right.root->children[0]->children[1]->red);
+
+	c_red_black_binary_tree<int, c_red_black_poly_node> black_aunt_left_right{ { 15, 5, 10 } };
+	EXPECT_FALSE(black_aunt_left_right.root->red);
+	EXPECT_TRUE(black_aunt_left_right.root->children[0]->red);
+	EXPECT_TRUE(black_aunt_left_right.root->children[1]->red);
+
+	c_red_black_binary_tree<int, c_red_black_poly_node> red_aunt_right_left{ { 10, 5, 20, 15 } };
+	EXPECT_FALSE(red_aunt_right_left.root->children[0]->red);//check aunt
+	EXPECT_FALSE(red_aunt_right_left.root->red);//root stays black
+	EXPECT_FALSE(red_aunt_right_left.root->children[1]->red);
+	EXPECT_TRUE(red_aunt_right_left.root->children[1]->children[0]->red);
+
+	c_red_black_binary_tree<int, c_red_black_poly_node> black_aunt_right_left{ { 10, 20, 15 } };
+	EXPECT_FALSE(black_aunt_right_left.root->red);
+	EXPECT_TRUE(black_aunt_right_left.root->children[0]->red);
+	EXPECT_TRUE(black_aunt_right_left.root->children[1]->red);
+
+	c_red_black_binary_tree<int, c_red_black_poly_node> red_aunt_right_right{ { 10, 5, 15, 20 } };
+	EXPECT_FALSE(red_aunt_right_right.root->children[0]->red);//check aunt
+	EXPECT_FALSE(red_aunt_right_right.root->red);
+	EXPECT_FALSE(red_aunt_right_right.root->children[1]->red);
+	EXPECT_TRUE(red_aunt_right_right.root->children[1]->children[1]->red);
+
+	c_red_black_binary_tree<int, c_red_black_poly_node> black_aunt_right_right{ { 10, 15, 20 } };
+	EXPECT_FALSE(black_aunt_right_right.root->red);//root stays black
+	EXPECT_TRUE(black_aunt_right_right.root->children[0]->red);
+	EXPECT_TRUE(black_aunt_right_right.root->children[1]->red);
+
+	c_red_black_binary_tree<int, c_red_black_poly_node> red_black_int_sorted_list{ { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 } };
+	EXPECT_EQ(red_black_int_sorted_list.root->value, 4);
+	EXPECT_EQ(red_black_int_sorted_list.root->children[0]->value, 2);
+	EXPECT_EQ(red_black_int_sorted_list.root->children[1]->value, 6);
+	EXPECT_EQ(red_black_int_sorted_list.root->children[0]->children[0]->value, 1);
+	EXPECT_EQ(red_black_int_sorted_list.root->children[0]->children[1]->value, 3);
+	EXPECT_EQ(red_black_int_sorted_list.root->children[1]->children[0]->value, 5);
+	EXPECT_EQ(red_black_int_sorted_list.root->children[1]->children[1]->value, 8);
+	EXPECT_EQ(red_black_int_sorted_list.root->children[1]->children[1]->children[0]->value, 7);
+	EXPECT_EQ(red_black_int_sorted_list.root->children[1]->children[1]->children[1]->value, 9);
+	EXPECT_EQ(red_black_int_sorted_list.root->children[1]->children[1]->children[1]->children[1]->value, 10);
+
+	/*
+		  4
+		  /\
+		 2  6
+		/\  /\
+		1 3 5 8
+			  /\
+		     7  9
+	             \
+	              10
+
+	*Though it is not the same as the balanced avl tree, it is balanced correctly for a red black tree
+	 */
+
+	//rotations and rebalancing remove_item tested in avl tests
+}
+
 TEST(c_linked_list, c_linked_list_funcs_and_tests)
 {
 	c_linked_list<int, c_poly_node> one_param_constructor{ 5 };
@@ -702,7 +780,7 @@ TEST(c_sorts, c_sort_header_tests)
 		c_min_heap_sort<int, c_poly_node>::sort,
 		c_bst_sorts<int, c_binary_tree, c_poly_node>::sort,
 		c_bst_sorts<int, c_avl_binary_tree, c_poly_node>::sort,
-		//c_bst_sorts<int, c_red_black_tree, c_poly_node>::sort,
+		c_bst_sorts<int, c_red_black_binary_tree, c_red_black_poly_node>::sort,
 		c_merge_sort<int>::sort
 	};
 
@@ -743,16 +821,8 @@ TEST(c_sorts, c_sort_header_tests)
 	   /   \
 	black black
 
-	merge sort
-	you only keep one copy of data
-	well
-	maybe
-	split the list into lists of just one item each
-	sort them down the line by merging correctly
-
 	quick sort
 	I think quick sort can work in place?
-	well really I kinda think merge sort can work in place too?
 
 	*
 */

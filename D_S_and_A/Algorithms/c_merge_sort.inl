@@ -7,7 +7,7 @@
 template<class MyType>
 std::vector<MyType>& c_merge_sort<MyType>::sort(std::vector<MyType>& arr)
 {
-	if (arr.size() > 1)
+	if (static_cast<int>(arr.size()) > 1)
 	{
 		std::vector<std::vector<MyType>> split_parts;//to hold vectors to merge
 		bool const odd{ (arr.size() % 2 != 0) };//true if odd amount of values
@@ -41,7 +41,7 @@ std::vector<MyType>& c_merge_sort<MyType>::sort(std::vector<MyType>& arr)
 					++right;
 				}
 
-				split_parts.erase(split_parts.begin() + i + 1);//remove right merged vector
+				split_parts.erase(split_parts.begin() + i + 1);//remove right vector after values merged to left
 			}
 
 		arr = split_parts[0];//set the final merged vector with O(n) space to the original vector

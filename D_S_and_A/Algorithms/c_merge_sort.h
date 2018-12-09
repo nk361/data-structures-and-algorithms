@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-
+//from data-structures-and-algorithms repo by Neil Kline, tested there
 template<class MyType>
 class c_merge_sort
 {

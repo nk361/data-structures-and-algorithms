@@ -1,18 +1,19 @@
 #pragma once
-#include "c_avl_binary_tree.h"
+#include "c_red_black_binary_tree.h"
 
 template<typename ValType, template<class> class NodeType>
-c_avl_binary_tree<ValType, NodeType>::c_avl_binary_tree(ValType const& val) : c_binary_tree<ValType, NodeType>(val) {}
+c_red_black_binary_tree<ValType, NodeType>::c_red_black_binary_tree(ValType const& val) : c_binary_tree<ValType, NodeType>(val) {}
 
 template<typename ValType, template<class> class NodeType>
-c_avl_binary_tree<ValType, NodeType>::c_avl_binary_tree(std::vector<ValType> const& vals) : c_binary_tree<ValType, NodeType>(vals[0])
+c_red_black_binary_tree<ValType, NodeType>::c_red_black_binary_tree(std::vector<ValType> const& vals) : c_binary_tree<ValType, NodeType>(vals[0])
 {
+	c_tree<ValType, NodeType>::root->red = false;
 	for (size_t i{ 1 }; i < vals.size(); ++i)
-		c_avl_binary_tree<ValType, NodeType>::add_item(vals[i]);
+		c_red_black_binary_tree<ValType, NodeType>::add_item(vals[i]);
 }
 
 template<typename ValType, template<class> class NodeType>
-void c_avl_binary_tree<ValType, NodeType>::add_item(ValType const& val)
+void c_red_black_binary_tree<ValType, NodeType>::add_item(ValType const& val)
 {
 	NodeType<ValType> * * current{ &(c_tree<ValType, NodeType>::root) };//pointer to pointer so that pointer references can change originals
 	std::vector<NodeType<ValType> * *> ancestors;
@@ -25,6 +26,8 @@ void c_avl_binary_tree<ValType, NodeType>::add_item(ValType const& val)
 				(*current)->children[0] = new NodeType<ValType>{ val, 2 };
 				for (int i{ static_cast<int>(ancestors.size()) - 1 }; i >= 0; --i)//starting with the first possible grandparent, - 1 instead of - 2 because current wasn't added
 					rebalance(ancestors[i]);
+				if (c_tree<ValType, NodeType>::root->red)//root is always black
+					c_tree<ValType, NodeType>::root->red = false;
 				break;
 			}
 			ancestors.push_back(current);
@@ -37,6 +40,8 @@ void c_avl_binary_tree<ValType, NodeType>::add_item(ValType const& val)
 				(*current)->children[1] = new NodeType<ValType>{ val, 2 };
 				for (int i{ static_cast<int>(ancestors.size()) - 1 }; i >= 0; --i)//i must be int in these because when size_t/unsigned int goes below 0 it becomes a very high number
 					rebalance(ancestors[i]);
+				if (c_tree<ValType, NodeType>::root->red)//root is always black
+					c_tree<ValType, NodeType>::root->red = false;
 				break;
 			}
 			ancestors.push_back(current);
@@ -45,14 +50,14 @@ void c_avl_binary_tree<ValType, NodeType>::add_item(ValType const& val)
 }
 
 template<typename ValType, template<class> class NodeType>
-void c_avl_binary_tree<ValType, NodeType>::add_items(std::vector<ValType> const& vals)
+void c_red_black_binary_tree<ValType, NodeType>::add_items(std::vector<ValType> const& vals)
 {
 	for (ValType val : vals)
-		c_avl_binary_tree<ValType, NodeType>::add_item(val);
+		c_red_black_binary_tree<ValType, NodeType>::add_item(val);
 }
 
 template<typename ValType, template<class> class NodeType>
-void c_avl_binary_tree<ValType, NodeType>::remove_item(ValType const& val)
+void c_red_black_binary_tree<ValType, NodeType>::remove_item(ValType const& val)
 {
 	std::vector<NodeType<ValType> * *> ancestors{ c_binary_tree<ValType, NodeType>::find_node_with_path(&(c_tree<ValType, NodeType>::root), val) };
 
@@ -103,58 +108,56 @@ void c_avl_binary_tree<ValType, NodeType>::remove_item(ValType const& val)
 }
 
 template<typename ValType, template<class> class NodeType>
-size_t c_avl_binary_tree<ValType, NodeType>::height(NodeType<ValType> * r_avl_node)
+void c_red_black_binary_tree<ValType, NodeType>::color_flip(NodeType<ValType> * * grandparent)
 {
-	if (r_avl_node == nullptr)
-		return 0;
-
-	size_t max_height = 1;
-	NodeType<ValType> * current{ r_avl_node };
-	std::vector<std::pair<NodeType<ValType> *, bool>> ancestors;//store the previous nodes and the direction it went from it
-	ancestors.push_back({ current, current->children[0] != nullptr ? true : false });//true shows it went left, false shows it went right
-	while (true)
-	{
-		if (current->children[0] == nullptr && current->children[1] == nullptr)//do this first incase the bool says go right, but there's nothing right either
-		{
-			if (ancestors.size() > max_height)//check for new record height
-				max_height = ancestors.size();
-
-			ancestors.pop_back();//you know the current node is a leaf node, so you can pop it with no worries
-
-			for (size_t i = ancestors.size() - 1; true; --i)//loop to look for the next path or exit if reached the end
-			{
-				if (ancestors.empty())//went all the way up to root without another path
-					return max_height;
-				if (ancestors[i].second && ancestors[i].first->children[1] != nullptr)//found an ancestor with an unexplored right node
-				{
-					ancestors[i].second = false;//go right on this node
-					current = ancestors[i].first;
-					break;
-				}
-				ancestors.pop_back();
-			}
-		}
-
-		if (ancestors.back().second)//go left
-			current = current->children[0];
-		else//go right
-			current = current->children[1];
-
-		ancestors.push_back({ current, current->children[0] != nullptr ? true : false });//this after checks because of initial value
-	}
+	(*grandparent)->red = true;
+	(*grandparent)->children[0]->red = false;
+	(*grandparent)->children[1]->red = false;
 }
 
 template<typename ValType, template<class> class NodeType>
-void c_avl_binary_tree<ValType, NodeType>::rebalance(NodeType<ValType> * * chain_node)//call this with a reference to the grandparent
+void c_red_black_binary_tree<ValType, NodeType>::rebalance(NodeType<ValType> * * grandparent)
 {
-	if (static_cast<int>(height((*chain_node)->children[0]) - height((*chain_node)->children[1])) > 1)//violation on left
-		if (height((*chain_node)->children[0]->children[0]) > height((*chain_node)->children[0]->children[1]))//right rotation needed
-			*chain_node = c_binary_tree<ValType, NodeType>::rotate_right((*chain_node));
-		else//left right rotation needed
-			*chain_node = c_binary_tree<ValType, NodeType>::rotate_left_right((*chain_node));
-	else if (static_cast<int>(height((*chain_node)->children[0]) - height((*chain_node)->children[1])) < -1)//violation on right, check needed for calls on balanced nodes instead of just else
-		if (height((*chain_node)->children[1]->children[0]) < height((*chain_node)->children[1]->children[1]))//left rotation needed
-			*chain_node = c_binary_tree<ValType, NodeType>::rotate_left((*chain_node));
-		else//right left rotation needed
-			*chain_node = c_binary_tree<ValType, NodeType>::rotate_right_left((*chain_node));
+	if ((*grandparent)->children[0] != nullptr && (*grandparent)->children[0]->red)//check left
+		if ((*grandparent)->children[0]->children[0] != nullptr && (*grandparent)->children[0]->children[0]->red)//check left's left
+			if ((*grandparent)->children[1] != nullptr && (*grandparent)->children[1]->red)//check aunt
+				color_flip(grandparent);
+			else
+			{
+				*grandparent = c_binary_tree<ValType, NodeType>::rotate_right(*grandparent);
+				(*grandparent)->red = false;
+				//left child is already red
+				(*grandparent)->children[1]->red = true;
+			}
+		else if ((*grandparent)->children[0]->children[1] != nullptr && (*grandparent)->children[0]->children[1]->red)//check left's right
+			if ((*grandparent)->children[1] != nullptr && (*grandparent)->children[1]->red)//check aunt
+				color_flip(grandparent);
+			else
+			{
+				*grandparent = c_binary_tree<ValType, NodeType>::rotate_left_right(*grandparent);
+				(*grandparent)->red = false;
+				//left child is already red
+				(*grandparent)->children[1]->red = true;
+			}
+	if ((*grandparent)->children[1] != nullptr && (*grandparent)->children[1]->red)//check right //not if else because red aunts can go into first if
+		if ((*grandparent)->children[1]->children[0] != nullptr && (*grandparent)->children[1]->children[0]->red)//check right's left
+			if ((*grandparent)->children[0] != nullptr && (*grandparent)->children[0]->red)//check aunt
+				color_flip(grandparent);
+			else
+			{
+				*grandparent = c_binary_tree<ValType, NodeType>::rotate_right_left(*grandparent);
+				(*grandparent)->red = false;
+				(*grandparent)->children[0]->red = true;
+				//right child is already red
+			}
+		else if ((*grandparent)->children[1]->children[1] != nullptr && (*grandparent)->children[1]->children[1]->red)//check right's right
+			if ((*grandparent)->children[0] != nullptr && (*grandparent)->children[0]->red)//check aunt
+				color_flip(grandparent);
+			else
+			{
+				*grandparent = c_binary_tree<ValType, NodeType>::rotate_left(*grandparent);
+				(*grandparent)->red = false;
+				(*grandparent)->children[0]->red = true;
+				//right child is already red
+			}
 }
