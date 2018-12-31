@@ -150,7 +150,9 @@
   <ItemGroup>
     <ClInclude Include="Algorithms\c_bst_sorts.h" />
     <ClInclude Include="Algorithms\c_bubble_sort.h" />
+    <ClInclude Include="Algorithms\c_comb_sort.h" />
     <ClInclude Include="Algorithms\c_counting_sort.h" />
+    <ClInclude Include="Algorithms\c_heap_sort.h" />
     <ClInclude Include="Algorithms\c_max_heap_sort.h" />
     <ClInclude Include="Algorithms\c_merge_sort.h" />
     <ClInclude Include="Algorithms\c_min_heap_sort.h" />
@@ -165,6 +167,8 @@
     <ClInclude Include="Data Structures Headers\c_poly_node.h" />
     <ClInclude Include="Data Structures Headers\c_red_black_binary_tree.h" />
     <ClInclude Include="Data Structures Headers\c_red_black_poly_node.h" />
+    <ClInclude Include="Data Structures Headers\Iterators\c_bst_iterator_in_order.h" />
+    <ClInclude Include="Data Structures Headers\Iterators\c_linked_list_iterator.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Data Structures Headers\c_tree.h" />
@@ -182,7 +186,9 @@
   <ItemGroup>
     <None Include="Algorithms\c_bst_sorts.inl" />
     <None Include="Algorithms\c_bubble_sort.inl" />
+    <None Include="Algorithms\c_comb_sort.inl" />
     <None Include="Algorithms\c_counting_sort.inl" />
+    <None Include="Algorithms\c_heap_sort.inl" />
     <None Include="Algorithms\c_max_heap_sort.inl" />
     <None Include="Algorithms\c_merge_sort.inl" />
     <None Include="Algorithms\c_min_heap_sort.inl" />
@@ -198,6 +204,7 @@
     <None Include="Data Structures Headers\c_red_black_binary_tree.inl" />
     <None Include="Data Structures Headers\c_red_black_poly_node.inl" />
     <None Include="Data Structures Headers\c_tree.inl" />
+    <None Include="Data Structures Headers\Iterators\c_linked_list_iterator.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

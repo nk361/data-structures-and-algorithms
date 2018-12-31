@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-template<class MyType>
+template<class MyType, typename Operation = std::less<>>
 class c_bubble_sort
 {
 public:

@@ -2,16 +2,12 @@
 #include <vector>
 #include "c_heap.h"
 
-template <class ValType, template<class> class NodeType, typename Operation = std::less<>>
-class c_min_heap : public c_heap<ValType, NodeType, Operation>
+template <class ValType, template<class> class NodeType>
+class c_min_heap : public c_heap<ValType, NodeType, std::less<>>
 {
 public:
-	//this is the only difference to max heap and the one in the vector param constructor
-	//bool (*less_than)(ValType const&, ValType const&) { [](ValType const& left, ValType const& right) { return left < right; } };
-
 	c_min_heap() = delete;
 	explicit c_min_heap(ValType const& val);
-	//must give default param value here of the lambda because otherwise greater_than is not initialized when c_heap's constructor needs it (this also means greater than can be changed with a second param)
 	explicit c_min_heap(std::vector<ValType> const& vals);
 
 	void add_item(ValType const& val) override;

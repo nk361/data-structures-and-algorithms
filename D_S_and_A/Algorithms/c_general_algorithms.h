@@ -30,7 +30,7 @@ namespace c_general_algorithms
 	std::pair<ValsType, ValsType> static pair_equal_to_sum(std::vector<ValsType> const& vals, SumType const& desired_sum)
 	{
 		std::unordered_map<ValsType, ValsType> encountered{};
-		for(int i{ 0 }; i < vals.size(); ++i)
+		for (int i{ 0 }; i < static_cast<int>( vals.size() ); ++i)
 		{
 			typename std::unordered_map<ValsType, ValsType>::iterator found = encountered.find(desired_sum - vals[i]);
 			if (found == encountered.end())
@@ -44,7 +44,7 @@ namespace c_general_algorithms
 	//This function is meant to mimic the Capital Sigma symbol in math for summation
 	//The first parameter of the function you pass is the index for what changes per iteration
 	//It takes a start index, an end index, for the amount of times it will sum
-	//After that it takes a function and the functions paramters that it will call and sum the returned value of
+	//After that it takes a function and the function's parameters that it will call and sum the returned value of
 	template<class ReturnType, class ... Types>
 	ReturnType capital_sigma(int const& start, int const& end, ReturnType (*f)(int const& index, Types const& ... args), Types const& ... args)
 	{

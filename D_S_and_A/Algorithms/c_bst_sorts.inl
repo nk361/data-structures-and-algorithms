@@ -1,10 +1,12 @@
 #pragma once
 #include "c_bst_sorts.h"
 
-template <class MyType, template <class ValType, template <class> class NodeType> class BstType, template <class> class NodeType>//accounting for template needs of the tree classes
-std::vector<MyType>& c_bst_sorts<MyType, BstType, NodeType>::sort(std::vector<MyType>& arr)
+template <class MyType, template <class ValType, template <class> class NodeType, typename Operation> class BstType, template <class> class NodeType, typename Operation>//accounting for template needs of the tree classes
+std::vector<MyType>& c_bst_sorts<MyType, BstType, NodeType, Operation>::sort(std::vector<MyType>& arr)
 {
-	BstType<MyType, NodeType> bst{ arr[0] };//add all items to bst
+	//Operation const op = Operation();//TODO maybe not even make it yet and just pass it to the tree, navigate the same way
+
+	BstType<MyType, NodeType, Operation> bst{ arr[0] };//add all items to bst
 	for (int i{ 1 }; i < static_cast<int>(arr.size()); ++i)//start at 1 since the first item was made root
 		bst.add_item(arr[i]);
 

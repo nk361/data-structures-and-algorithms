@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-template<class MyType, template<class ValType, template<class> class NodeType> class BstType, template <class> class NodeType>
+template <class MyType, template <class ValType, template <class> class NodeType, typename Operation> class BstType, template <class> class NodeType, typename Operation = std::less<>>
 class c_bst_sorts
 {
 public:

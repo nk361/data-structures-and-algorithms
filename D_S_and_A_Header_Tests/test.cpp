@@ -21,6 +21,8 @@
 #include "../D_S_and_A/Algorithms/c_min_heap_sort.h"
 #include "../D_S_and_A/Algorithms/c_bst_sorts.h"
 #include "../D_S_and_A/Algorithms/c_merge_sort.h"
+#include "../D_S_and_A/Algorithms/c_comb_sort.h"
+#include "../D_S_and_A/Algorithms/c_heap_sort.h"
 
 TEST(c_general_algorithms_header, c_small_general_algorithms)
 {
@@ -61,6 +63,13 @@ TEST(c_general_algorithms_header, c_small_general_algorithms)
 
 	double(*multiply_this)(int const&, double const&, double const&, double const&) { [](int const& index, double const& a, double const& b, double const& c) { return a * index + b * index + c * index; } };
 	EXPECT_DOUBLE_EQ(c_general_algorithms::capital_pi(1, 3, multiply_this, 5.0, 2.0, 3.0), 6000.0);
+
+	double(*multiple_types)(int const&, int const&, double const&) { [](int const& index, int const& x, double const& y) { return y * x; } };
+	EXPECT_EQ(c_general_algorithms::capital_sigma(1, 10, multiple_types, 5, 8.2), 8.2*5*10);
+
+	//int(*val_to_sum)(int const&) { [](int const& index) { return index * 10; } };
+	//int(*sum_to_sum)(int const&, int const&, int const&, int(*)(int const&)) { [](int const& index, int const& strt, int const& nd, int(*v_t_s)(int const&)) { return c_general_algorithms::capital_sigma(strt, nd, v_t_s); } };
+	//EXPECT_EQ(c_general_algorithms::capital_sigma(1, 10, sum_to_sum, 1, 10, val_to_sum), 5400);
 }
 
 TEST(c_node_header_tests, c_tree_node_constructors)
@@ -252,7 +261,7 @@ TEST(c_binary_tree_tests, c_binary_tree_function_tests)
 	EXPECT_EQ(b_tree_remove_complex.root->children[1], nullptr);
 }
 
-TEST(c_avl_in_binary_tree_tests, c_avl_function_tests)
+TEST(c_avl_binary_tree_tests, c_avl_function_tests)
 {
 	c_avl_binary_tree<int, c_poly_node> avl_height{ { 18, 5, 20 } };
 	EXPECT_EQ(avl_height.height(avl_height.root), 2);
@@ -692,15 +701,57 @@ TEST(c_red_black_bst, c_red_black_bst_funcs_and_rebalancing)
 	//rotations and rebalancing remove_item tested in avl tests
 }
 
+TEST(c_linked_list_iterator, c_linked_list_iterator_operations)
+{
+	c_poly_node<int> * test_node = new c_poly_node<int>{ 10, 1 };//fake linked list head node for testing iterator navigation with a child node
+	c_linked_list_iterator<int, c_poly_node> iter_constructor{ &test_node };//making an iterator point to the poly node
+	c_poly_node<int> test_node_child{ 1213, 1 };
+	test_node->children[0] = &test_node_child;//fake linked list is now made
+
+	EXPECT_EQ((**iter_constructor)->value, 10);
+	++iter_constructor;//navigate to next node in fake linked list
+	EXPECT_EQ((**iter_constructor)->value, 1213);
+	iter_constructor = c_linked_list_iterator<int, c_poly_node>{ &test_node };//set it back to the top
+	EXPECT_EQ((**iter_constructor)->value, 10);
+	iter_constructor++;//testing postfix
+	EXPECT_EQ((**iter_constructor)->value, 1213);
+
+	c_linked_list_iterator<int, c_poly_node> iter_equal_left{ &test_node };//testing equality operators
+	c_linked_list_iterator<int, c_poly_node> const iter_equal_right{ &test_node };
+	EXPECT_EQ(iter_equal_left, iter_equal_right);
+	++iter_equal_left;
+	EXPECT_NE(iter_equal_left, iter_equal_right);
+
+	test_node->children[0] = nullptr;//making it so these nodes can be properly destroyed after testing
+}
+
 TEST(c_linked_list, c_linked_list_funcs_and_tests)
 {
+	c_linked_list<int, c_poly_node> one_item_begin_and_end{ 8 };
+	EXPECT_EQ((**one_item_begin_and_end.begin())->value, 8);
+	EXPECT_EQ((**one_item_begin_and_end.end()), nullptr);
+	
+	c_linked_list<int, c_poly_node> begin_and_end{ { 10, 15, 2, 44, 2, 13 } };
+	EXPECT_EQ((**begin_and_end.begin())->value, 10);
+	EXPECT_EQ((**begin_and_end.end()), nullptr);
+
+	EXPECT_NE(begin_and_end.begin(), begin_and_end.end());
+
+	int vect_index{ 0 };
+	std::vector<int> check_vals{ 10, 15, 2, 44, 2, 13 };
+	for(c_poly_node<int> * * node : begin_and_end)//test that the linked list is iterable to the likings of a for each loop
+	{
+		EXPECT_EQ((**node).value, check_vals[vect_index]);
+		++vect_index;
+	}
+	
 	c_linked_list<int, c_poly_node> one_param_constructor{ 5 };
 	EXPECT_EQ(one_param_constructor.length(), 1);//only head to count
 	EXPECT_EQ((*one_param_constructor[0])->value, 5);
 	(*one_param_constructor[0])->value = 10;
 	EXPECT_EQ(one_param_constructor.head->value, 10);//original changed
 	EXPECT_THROW(one_param_constructor[1], std::out_of_range);
-
+	
 	c_linked_list<int, c_poly_node> many_param_constructor_delete{ { 4, 10, 8, 2, 16 } };
 	EXPECT_EQ(many_param_constructor_delete.length(), 5);//many items to count
 	EXPECT_EQ(many_param_constructor_delete.head->value, 4);
@@ -754,6 +805,14 @@ TEST(c_linked_list, c_linked_list_funcs_and_tests)
 	EXPECT_EQ(check_loop.length_of_loop(), 3);//loop with 3 elements inside
 	(*check_loop[2])->children[0] = nullptr;//so that the destructor can delete this list correctly
 
+	c_linked_list<int, c_poly_node> check_loop_not_on_head{ { 1, 2, 3, 4, 5 } };
+	EXPECT_FALSE(check_loop_not_on_head.detect_loop());
+	EXPECT_EQ(check_loop_not_on_head.length_of_loop(), 0);//no loop
+	(*check_loop_not_on_head[4])->children[0] = (*check_loop_not_on_head[2]);//create loop by making last node's child = first element
+	EXPECT_TRUE(check_loop_not_on_head.detect_loop());
+	EXPECT_EQ(check_loop_not_on_head.length_of_loop(), 3);//loop with 3 elements inside
+	(*check_loop_not_on_head[4])->children[0] = nullptr;//so that the destructor can delete this list correctly*/
+
 	c_linked_list<int, c_poly_node> reverse_nodes{ { 5, 4, 3 } };
 	reverse_nodes.reverse();
 	EXPECT_EQ(reverse_nodes.head->value, 3);
@@ -769,12 +828,22 @@ TEST(c_linked_list, c_linked_list_funcs_and_tests)
 	EXPECT_EQ(reverse_nodes.head->children[0]->children[0]->children[0]->children[0], nullptr);
 }
 
+/*
+ * unique pointers can't be shared
+ * shared pointers have a reference count and delete when it reaches 0
+ * weak pointers don't increase the reference count of shared pointers
+ * if any don't point to anything anymore, they return nullptr?
+ *
+ * smart pointers are appearently not thread safe I think, which worries me a little
+ */
+
 TEST(c_sorts, c_sort_header_tests)
 {
 	std::vector<int> small_duplicates_negatives{ 1, 2, 4, 4, -4, 6, 7, -10, 10, 9, 10 };
 
-	std::vector<std::vector<int>& (*)(std::vector<int>&)> sorts{ //vector of function pointers, same return type and same parameters
+	std::vector<std::vector<int>& (*)(std::vector<int>&)> sorts{//vector of function pointers, same return type and same parameters
 		c_bubble_sort<int>::sort,
+		c_comb_sort<int>::sort,
 		c_counting_sort<int>::sort,
 		c_max_heap_sort<int, c_poly_node>::sort,
 		c_min_heap_sort<int, c_poly_node>::sort,
@@ -788,8 +857,29 @@ TEST(c_sorts, c_sort_header_tests)
 	{
 		c_general_algorithms::scramble_vals(small_duplicates_negatives);
 		srt(small_duplicates_negatives);
-		for (int i{ 0 }; i < small_duplicates_negatives.size() - 1; ++i)//check that it's sorted
+		for (int i{ 0 }; i < static_cast<int>(small_duplicates_negatives.size()) - 1; ++i)//check that it's sorted
 			EXPECT_LE(small_duplicates_negatives[i], small_duplicates_negatives[i + 1]);
+		//testing::internal::SleepMilliseconds(1000);//you can add this line to let the random seed for scramble be different each second
+	}
+
+	//Now lets sort in reverse order
+	std::vector<std::vector<int>& (*)(std::vector<int>&)> reverse_sorts{//vector of function pointers, same return type and same parameters
+		c_bubble_sort<int, std::greater<>>::sort,
+		c_comb_sort<int, std::greater<>>::sort,
+		c_counting_sort<int, std::greater<>>::sort,
+		c_bst_sorts<int, c_binary_tree, c_poly_node, std::greater<>>::sort,
+		c_bst_sorts<int, c_avl_binary_tree, c_poly_node, std::greater<>>::sort,
+		c_bst_sorts<int, c_red_black_binary_tree, c_red_black_poly_node, std::greater<>>::sort,
+		c_merge_sort<int, std::greater<>>::sort,
+		c_heap_sort<int, c_poly_node, std::greater<>>::sort
+	};
+
+	for (std::vector<int>& (*srt)(std::vector<int>&) : reverse_sorts)//for each sort function pointer
+	{
+		c_general_algorithms::scramble_vals(small_duplicates_negatives);
+		srt(small_duplicates_negatives);
+		for (int i{ 0 }; i < static_cast<int>(small_duplicates_negatives.size()) - 1; ++i)//check that it's sorted in reverse
+			EXPECT_GE(small_duplicates_negatives[i], small_duplicates_negatives[i + 1]);
 		//testing::internal::SleepMilliseconds(1000);//you can add this line to let the random seed for scramble be different each second
 	}
 }

@@ -78,6 +78,18 @@
     <ClInclude Include="Data Structures Headers\c_red_black_poly_node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithms\c_comb_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures Headers\Iterators\c_bst_iterator_in_order.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures Headers\Iterators\c_linked_list_iterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithms\c_heap_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -140,6 +152,15 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Data Structures Headers\c_red_black_binary_tree.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Algorithms\c_comb_sort.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures Headers\Iterators\c_linked_list_iterator.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Algorithms\c_heap_sort.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

@@ -2,7 +2,7 @@
 #include <vector>
 #include "c_tree.h"
 
-template <class ValType, template<class> class NodeType>
+template <class ValType, template<class> class NodeType, typename Operation = std::less<>>
 class c_binary_tree : public c_tree<ValType, NodeType>
 {
 public:

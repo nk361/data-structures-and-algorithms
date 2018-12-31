@@ -15,7 +15,7 @@ c_heap<ValType, NodeType, Operation>::c_heap(std::vector<ValType> const& vals) :
 template <class ValType, template<class> class NodeType, typename Operation>
 void c_heap<ValType, NodeType, Operation>::trickle_up(std::vector<NodeType<ValType> * *> ancstrs) const
 {
-	Operation op = Operation();
+	Operation const op = Operation();
 	for (int i{ static_cast<int>(ancstrs.size()) - 1 }; i >= 1; --i)//go up the ancestors list stopping at ancestor 1 not last
 		if (op((*ancstrs[i])->value, (*ancstrs[i - 1])->value))//check if current item is greater/less than it's parent
 			std::swap((*ancstrs[i])->value, (*ancstrs[i - 1])->value);
@@ -26,10 +26,10 @@ void c_heap<ValType, NodeType, Operation>::trickle_up(std::vector<NodeType<ValTy
 template <class ValType, template<class> class NodeType, typename Operation>
 void c_heap<ValType, NodeType, Operation>::trickle_down()
 {
-	Operation op = Operation();
-	if (c_tree<ValType, NodeType>::root->children[0] != nullptr)//if root has at least one child that may need swapped
+	Operation const op = Operation();
+	if (c_heap<ValType, NodeType, Operation>::root->children[0] != nullptr)//if root has at least one child that may need swapped
 	{
-		NodeType<ValType> * * current{ &(c_tree<ValType, NodeType>::root) };
+		NodeType<ValType> * * current{ &(c_heap<ValType, NodeType, Operation>::root) };
 		while (true)
 		{
 			if ((*current)->children[0] == nullptr && (*current)->children[1] == nullptr)//reached leaf node
@@ -67,7 +67,7 @@ void c_heap<ValType, NodeType, Operation>::add_item(ValType const& val)//virtual
 	int const open_spot{ 1 + amount_last_level(size) };//know the destination, find how many are in the last level + 1
 	int const max_of_last_level{ amount_in_level(amount_complete_levels(size)) };//know which direcion to head
 
-	NodeType<ValType> * * current{ &(c_tree<ValType, NodeType>::root) };
+	NodeType<ValType> * * current{ &(c_heap<ValType, NodeType, Operation>::root) };
 	std::vector<NodeType<ValType> * *> ancestors{ current };//for navigation up to root, after adding an item, in trickle_up
 
 	for (int current_level{ 0 }, previous_calc{ 0 }; true; ++current_level)
@@ -124,7 +124,7 @@ void c_heap<ValType, NodeType, Operation>::remove_item()
 
 	int const max_of_last_level{ amount_in_level(amount_complete_levels(size)) };//know which direcion to head
 
-	NodeType<ValType> * * current{ &(c_tree<ValType, NodeType>::root) };//to navigate, pointer to pointer to assign nullptr and delete correctly
+	NodeType<ValType> * * current{ &(c_heap<ValType, NodeType, Operation>::root) };//to navigate, pointer to pointer to assign nullptr and delete correctly
 
 	for (int current_level{ 0 }, previous_calc{ 0 }; true; ++current_level)
 		if (last_spot <= previous_calc + max_of_last_level / amount_in_level(current_level + 1))//if the goal is leftward
@@ -132,10 +132,10 @@ void c_heap<ValType, NodeType, Operation>::remove_item()
 				current = &(*current)->children[0];
 			else
 			{
-				std::swap(c_tree<ValType, NodeType>::root->value, (*current)->value);//swap last item's and root's value only
+				std::swap(c_heap<ValType, NodeType, Operation>::root->value, (*current)->value);//swap last item's and root's value only
 				delete *current;
 				*current = nullptr;
-				if (c_tree<ValType, NodeType>::root != nullptr)//no need to call if no root
+				if (c_heap<ValType, NodeType, Operation>::root != nullptr)//no need to call if no root
 					trickle_down();
 				--size;
 				break;
@@ -148,10 +148,10 @@ void c_heap<ValType, NodeType, Operation>::remove_item()
 				current = &(*current)->children[1];
 			else
 			{
-				std::swap(c_tree<ValType, NodeType>::root->value, (*current)->value);//swap last item's and root's value only
+				std::swap(c_heap<ValType, NodeType, Operation>::root->value, (*current)->value);//swap last item's and root's value only
 				delete *current;
 				*current = nullptr;
-				if (c_tree<ValType, NodeType>::root != nullptr)//no need to call if no root
+				if (c_heap<ValType, NodeType, Operation>::root != nullptr)//no need to call if no root
 					trickle_down();
 				--size;
 				break;

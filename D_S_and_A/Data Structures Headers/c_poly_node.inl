@@ -13,7 +13,7 @@ c_poly_node<ValType>::c_poly_node(ValType const& val, int const& chldrn_size)
 template <class ValType>
 c_poly_node<ValType>::~c_poly_node()
 {
-	for (int i{ 0 }; i < children.size(); ++i)
+	for (int i{ 0 }; i < static_cast<int>(children.size()); ++i)
 	{
 		delete children[i];
 		children[i] = nullptr;

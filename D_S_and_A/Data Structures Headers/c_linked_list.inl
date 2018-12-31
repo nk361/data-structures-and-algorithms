@@ -6,21 +6,7 @@
 template <class ValType, template <class> class NodeType>
 c_linked_list<ValType, NodeType>::c_linked_list(ValType const& val)
 {
-	if (head == nullptr)
-		head = new NodeType<ValType>{ val, 1 };
-	else
-	{
-		NodeType<ValType> * * current{ &head };
-		while (true)
-		{
-			if ((*current)->children[0] == nullptr)
-			{
-				(*current)->children[0] = new NodeType<ValType>{ val, 1 };
-				break;
-			}
-			current = &(*current)->children[0];
-		}
-	}
+	head = new NodeType<ValType>{ val, 1 };
 }
 
 template <class ValType, template <class> class NodeType>
@@ -42,18 +28,11 @@ c_linked_list<ValType, NodeType>::~c_linked_list()
 		}
 		else
 		{
-			NodeType<ValType> * * current{ &head->children[0] };
-			std::vector<NodeType<ValType> * *> ancestors{ &head };
-
-			while (true)//add pointers to ancestors list
-			{
+			std::vector<NodeType<ValType> * *> ancestors;
+			for(NodeType<ValType> * * current : *this)
 				ancestors.push_back(current);
-				if ((*current)->children[0] == nullptr)
-					break;
-				current = &(*current)->children[0];
-			}
 
-			for (int i{ static_cast<int>(ancestors.size()) - 1 }; i >= 0; --i)//delete all nodes from back to front
+			for (int i{ static_cast<int>(ancestors.size()) - 1 }; i >= 0; --i)//delete all nodes from back to front to avoid navigating on deleted children pointers
 			{
 				delete *ancestors[i];
 				*ancestors[i] = nullptr;
@@ -79,23 +58,31 @@ NodeType<ValType> * * c_linked_list<ValType, NodeType>::operator[](int index)
 }
 
 template <class ValType, template <class> class NodeType>
+c_linked_list_iterator<ValType, NodeType> c_linked_list<ValType, NodeType>::begin()
+{
+	return c_linked_list_iterator<ValType, NodeType>(&head);
+}
+
+template <class ValType, template <class> class NodeType>
+c_linked_list_iterator<ValType, NodeType> c_linked_list<ValType, NodeType>::end()//worst case is O(n) when first called, after the first call it changes to O(1)
+{
+	if (tail == nullptr)//first time end has ever been called, so tell it where to start
+		tail = head;
+
+	if (tail != nullptr)//check for null incase the end node was deleted
+		while (tail->children[0] != nullptr)//navigate down the list looking for the end
+			tail = tail->children[0];
+
+	return c_linked_list_iterator<ValType, NodeType>(&tail->children[0]);
+}
+
+template <class ValType, template <class> class NodeType>
 void c_linked_list<ValType, NodeType>::add_item(ValType const& val)
 {
 	if (head == nullptr)
 		head = new NodeType<ValType>{ val, 1 };
 	else
-	{
-		NodeType<ValType> * * current{ &head };
-		while (true)
-		{
-			if ((*current)->children[0] == nullptr)
-			{
-				(*current)->children[0] = new NodeType<ValType>{ val, 1 };
-				break;
-			}
-			current = &(*current)->children[0];
-		}
-	}
+		*(*this->end()) = new NodeType<ValType>{ val, 1 };//get the last node and create it's child with val
 }
 
 template <class ValType, template <class> class NodeType>
@@ -117,21 +104,9 @@ void c_linked_list<ValType, NodeType>::remove_item(ValType const& val)
 		else
 			head = nullptr;
 	else//I do head seperately to make use of having the previous node available for other deletions
-	{
-		NodeType<ValType> * * current{ &head };
-		while (true)
-		{
-			if ((*current)->children[0] == nullptr)//reached end of list
-				break;
-			if ((*current)->children[0]->value == val)
-			{
-				NodeType<ValType> * * temp_child{ &(*current)->children[0]->children[0] };//store child's child
-				(*current)->children[0] = (*temp_child);//assign child to old node's child
-			}
-			else
-				current = &(*current)->children[0];//navigate down one node
-		}
-	}
+		for (NodeType<ValType> * * current : *this)
+			if ((*current)->value == val)
+				(*current) = (*current)->children[0];
 }
 
 template <class ValType, template <class> class NodeType>
@@ -155,18 +130,8 @@ size_t c_linked_list<ValType, NodeType>::length()
 {
 	size_t len = 0;
 	if (head != nullptr)//no head, len stays 0
-	{
-		++len;//count head
-		NodeType<ValType> * * current{ &head };
-		while (true)
-			if ((*current)->children[0] != nullptr)//go to next node
-			{
-				current = &(*current)->children[0];
-				++len;//count all other nodes
-			}
-			else//end of list reached
-				break;
-	}
+		for(NodeType<ValType> * * current : *this)
+			++len;
 	return len;
 }
 
@@ -175,48 +140,42 @@ int c_linked_list<ValType, NodeType>::amount_reoccurs(ValType const& val)
 {
 	int count = 0;
 	if (head != nullptr)
-	{
-		NodeType<ValType> * * current{ &head };
-		while (true)
-		{
+		for(NodeType<ValType> * * current : *this)
 			if ((*current)->value == val)
 				++count;
-			if ((*current)->children[0] != nullptr)//go to next node
-				current = &(*current)->children[0];
-			else//end of list reached
-				break;
-		}
-	}
 	return count;
 }
 
 template <class ValType, template <class> class NodeType>
-bool c_linked_list<ValType, NodeType>::detect_loop()
+bool c_linked_list<ValType, NodeType>::detect_loop()//can't use a for each loop when the linked list may be a loop, end() becomes an infinite loop
 {
 	if (head != nullptr)
-	{
+	{	
 		NodeType<ValType> * * current{ &head };
-		std::set<NodeType<ValType> *> addresses_encountered{ (*current) };//add head
+		std::set<NodeType<ValType> *> addresses_encountered;//add head
 		while (true)
 		{
 			if ((*current)->children[0] != nullptr)//go to next node
 				current = &(*current)->children[0];
 			else//end of list reached
 				break;
+
 			if (addresses_encountered.find((*current)) != addresses_encountered.end())//node address already encountered
 				return true;
+
+			addresses_encountered.insert((*current));//add this node to what's been encountered
 		}
 	}
 	return false;
 }
 
 template <class ValType, template <class> class NodeType>
-size_t c_linked_list<ValType, NodeType>::length_of_loop()
+size_t c_linked_list<ValType, NodeType>::length_of_loop()//can't use a for each loop when the linked list may be a loop, end() becomes an infinite loop
 {
 	if (head != nullptr)
 	{
 		NodeType<ValType> * * current{ &head };
-		std::set<NodeType<ValType> *> addresses_encountered{ (*current) };//add head
+		std::set<NodeType<ValType> *> addresses_encountered;//add head
 		typename std::set<NodeType<ValType> *>::iterator first_found;
 		while (true)
 		{
@@ -238,6 +197,7 @@ size_t c_linked_list<ValType, NodeType>::length_of_loop()
 					else//end of loop/first element repeated found
 						return len;
 			}
+			addresses_encountered.insert((*current));//add this node to what's been encountered
 		}
 	}
 	return 0;

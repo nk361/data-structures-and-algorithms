@@ -1,12 +1,11 @@
 #pragma once
 #include <vector>
-#include <map>
 
 template<class MyType, typename Operation = std::less<>>
-class c_counting_sort
+class c_comb_sort
 {
 public:
 	std::vector<MyType> static& sort(std::vector<MyType>& arr);
 };
 
-#include "c_counting_sort.inl"
+#include "c_comb_sort.inl"

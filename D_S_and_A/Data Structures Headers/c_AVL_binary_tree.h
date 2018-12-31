@@ -1,8 +1,8 @@
 #pragma once
 #include "c_binary_tree.h"
 
-template<class ValType, template<class> class NodeType>
-class c_avl_binary_tree : public c_binary_tree<ValType, NodeType>
+template<class ValType, template<class> class NodeType, typename Operation = std::less<>>
+class c_avl_binary_tree : public c_binary_tree<ValType, NodeType, Operation>
 {
 public:
 	c_avl_binary_tree() = delete;
