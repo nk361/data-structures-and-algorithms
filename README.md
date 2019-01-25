@@ -36,7 +36,7 @@ I'm using google test to test my headers
       - [x] [Max Heap](../master/D_S_and_A_Header_Tests/test.cpp#L444)
       - [x] [Min Heap](../master/D_S_and_A_Header_Tests/test.cpp#L607)
       - [x] [Linked List](../master/D_S_and_A_Header_Tests/test.cpp#L852)
-    -Iterators
+    - Iterators
       - [x] [Linked List Iterator](../master/D_S_and_A_Header_Tests/test.cpp#L937)
       - [x] [Binary Search Tree In Order Traversal Iterator](../master/D_S_and_A_Header_Tests/test.cpp#L727)
     - Algorithms
