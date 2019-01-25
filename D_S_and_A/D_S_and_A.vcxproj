@@ -204,6 +204,7 @@
     <None Include="Data Structures Headers\c_red_black_binary_tree.inl" />
     <None Include="Data Structures Headers\c_red_black_poly_node.inl" />
     <None Include="Data Structures Headers\c_tree.inl" />
+    <None Include="Data Structures Headers\Iterators\c_bst_iterator_in_order.inl" />
     <None Include="Data Structures Headers\Iterators\c_linked_list_iterator.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

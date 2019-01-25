@@ -163,5 +163,8 @@
     <None Include="Algorithms\c_heap_sort.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="Data Structures Headers\Iterators\c_bst_iterator_in_order.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

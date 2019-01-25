@@ -1,4 +1,4 @@
-#include "pch.h"
+ #include "pch.h"
 #include <array>
 #include <vector>
 
@@ -14,6 +14,9 @@
 #include "../D_S_and_A/Data Structures Headers/c_linked_list.h"
 #include "../D_S_and_A/Data Structures Headers/c_red_black_poly_node.h"
 #include "../D_S_and_A/Data Structures Headers/c_red_black_binary_tree.h"
+
+#include "../D_S_and_A/Data Structures Headers/Iterators/c_linked_list_iterator.h"
+#include "../D_S_and_A/Data Structures Headers/Iterators/c_bst_iterator_in_order.h"
 
 #include "../D_S_and_A/Algorithms/c_bubble_sort.h"
 #include "../D_S_and_A/Algorithms/c_counting_sort.h"
@@ -313,7 +316,7 @@ TEST(c_avl_binary_tree_tests, c_avl_function_tests)
 	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->children[1]->children[1]->children[1]->value, 18);
 
 	/*
-			Tab sizes are different in VS than github
+			Tab sizes are different in VS compared to github
 	      10			   5			right rotate on 10
 		  /				  /\
 		 5			->	 2 10
@@ -701,50 +704,153 @@ TEST(c_red_black_bst, c_red_black_bst_funcs_and_rebalancing)
 	//rotations and rebalancing remove_item tested in avl tests
 }
 
-TEST(c_linked_list_iterator, c_linked_list_iterator_operations)
+/*
+ * these are considered depth first search
+ * in order traversal navigates all nodes in a normal bst in ascending order
+ * left root right
+ *
+ * post order traversal
+ * left right root
+ *
+ * preorder traversal
+ * root left right
+ *
+ * level order traversal or breadth first search
+ * left to right each level
+ *
+ * I'm kinda thinking that converting the tree into a 1D form to be traversed sounds easiest
+ * but that's kinda incorrect
+ * I should traverse the way that the structure is
+ * THESE CANNOT RELY ON VALUES FOR NAVIGATION
+ */
+
+TEST(c_bsts_iterators, c_bst_iterator_constructor_and_iterator_tests)
 {
-	c_poly_node<int> * test_node = new c_poly_node<int>{ 10, 1 };//fake linked list head node for testing iterator navigation with a child node
-	c_linked_list_iterator<int, c_poly_node> iter_constructor{ &test_node };//making an iterator point to the poly node
-	c_poly_node<int> test_node_child{ 1213, 1 };
-	test_node->children[0] = &test_node_child;//fake linked list is now made
+	c_binary_tree<int, c_poly_node> only_root{ 10 };
+	c_bst_iterator_in_order<int, c_poly_node> only_root_then_end{ &only_root.root };
+	EXPECT_EQ((**only_root_then_end)->value, 10);
+	++only_root_then_end;
+	EXPECT_EQ(**only_root_then_end, nullptr);
 
-	EXPECT_EQ((**iter_constructor)->value, 10);
-	++iter_constructor;//navigate to next node in fake linked list
-	EXPECT_EQ((**iter_constructor)->value, 1213);
-	iter_constructor = c_linked_list_iterator<int, c_poly_node>{ &test_node };//set it back to the top
-	EXPECT_EQ((**iter_constructor)->value, 10);
-	iter_constructor++;//testing postfix
-	EXPECT_EQ((**iter_constructor)->value, 1213);
+	c_binary_tree<int, c_poly_node> lots_to_navigate{ { 10, 5, 15, 2, 7, 12, 18, 1, 6, 13, 20, 0, 25 } };
 
-	c_linked_list_iterator<int, c_poly_node> iter_equal_left{ &test_node };//testing equality operators
-	c_linked_list_iterator<int, c_poly_node> const iter_equal_right{ &test_node };
-	EXPECT_EQ(iter_equal_left, iter_equal_right);
-	++iter_equal_left;
-	EXPECT_NE(iter_equal_left, iter_equal_right);
+	/* 
+	 * I think this is sufficient for testing traversals
+	 *
+	 *	    10
+	 *	    /\
+	 *	   5  15
+	 *	  /\  / \
+	 *	  2 7 12 18
+	 *	 / /  \   \
+	 *	 1 6  13  20  //one dangling child each way
+	 *	/          \
+	 *	0           25  //two dangling nodes each way
+	 *
+	 */
 
-	test_node->children[0] = nullptr;//making it so these nodes can be properly destroyed after testing
+	c_bst_iterator_in_order<int, c_poly_node> in_order_moves{ &lots_to_navigate.root };
+	EXPECT_EQ((**in_order_moves)->value, 0);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 1);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 2);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 5);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 6);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 7);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 10);//TODO add copy constructors, copy assignments, move, and move asignments for classes with pointer variables
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 12);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 13);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 15);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 18);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 20);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 25);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves), nullptr);
+
+	std::vector<int> values_to_check{ 0, 1, 2, 5, 6, 7, 10, 12, 13, 15, 18, 20, 25 };
+	int val_index{ 0 };
+	for (c_poly_node<int> * * current : lots_to_navigate)//checking for for each compatability, it uses begin(), end(), !=, *, and prefix of ++
+	{
+		EXPECT_EQ((*current)->value, values_to_check[val_index]);
+		++val_index;
+	}
+
+	c_binary_tree<int, c_poly_node> all_left{ { 10, 9, 8, 7, 6, 5, 4, 3, 2 } };
+	c_bst_iterator_in_order<int, c_poly_node> in_order_moves_all_left{ &all_left.root };
+	EXPECT_EQ((**in_order_moves_all_left)->value, 2);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 3);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 4);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 5);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 6);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 7);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 8);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 9);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 10);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left), nullptr);
+
+	c_binary_tree<int, c_poly_node> all_right{ { 10, 11, 12, 13, 14, 15, 16, 17, 18 } };
+	c_bst_iterator_in_order<int, c_poly_node> in_order_moves_all_right{ &all_right.root };
+	EXPECT_EQ((**in_order_moves_all_right)->value, 10);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 11);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 12);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 13);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 14);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 15);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 16);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 17);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 18);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right), nullptr);
+	
+	c_binary_tree<int, c_poly_node> one_left_test_rightmost_check{ { 10, 5, 6, 7, 8, 9, 11 } };
+	c_bst_iterator_in_order<int, c_poly_node> in_order_moves_rightmost_check{ &one_left_test_rightmost_check.root };
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 5);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 6);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 7);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 8);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 9);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 10);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 11);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check), nullptr);
 }
 
 TEST(c_linked_list, c_linked_list_funcs_and_tests)
-{
-	c_linked_list<int, c_poly_node> one_item_begin_and_end{ 8 };
-	EXPECT_EQ((**one_item_begin_and_end.begin())->value, 8);
-	EXPECT_EQ((**one_item_begin_and_end.end()), nullptr);
-	
-	c_linked_list<int, c_poly_node> begin_and_end{ { 10, 15, 2, 44, 2, 13 } };
-	EXPECT_EQ((**begin_and_end.begin())->value, 10);
-	EXPECT_EQ((**begin_and_end.end()), nullptr);
-
-	EXPECT_NE(begin_and_end.begin(), begin_and_end.end());
-
-	int vect_index{ 0 };
-	std::vector<int> check_vals{ 10, 15, 2, 44, 2, 13 };
-	for(c_poly_node<int> * * node : begin_and_end)//test that the linked list is iterable to the likings of a for each loop
-	{
-		EXPECT_EQ((**node).value, check_vals[vect_index]);
-		++vect_index;
-	}
-	
+{	
 	c_linked_list<int, c_poly_node> one_param_constructor{ 5 };
 	EXPECT_EQ(one_param_constructor.length(), 1);//only head to count
 	EXPECT_EQ((*one_param_constructor[0])->value, 5);
@@ -828,6 +934,39 @@ TEST(c_linked_list, c_linked_list_funcs_and_tests)
 	EXPECT_EQ(reverse_nodes.head->children[0]->children[0]->children[0]->children[0], nullptr);
 }
 
+TEST(c_linked_list_iterator, c_linked_list_iterator_operations)
+{
+	c_linked_list<int, c_poly_node> only_head{ 10 };
+	c_linked_list_iterator<int, c_poly_node> only_head_and_end{ &only_head.head };
+	EXPECT_EQ((**only_head_and_end)->value, 10);
+	++only_head_and_end;
+	EXPECT_EQ(**only_head_and_end, nullptr);
+
+	c_linked_list<int, c_poly_node> lots_to_navigate{ { 10, 8, 15, 19, 20, 13 } };
+	c_linked_list_iterator<int, c_poly_node> navigate_long_list{ &lots_to_navigate.head };
+	EXPECT_EQ((**navigate_long_list)->value, 10);
+	++navigate_long_list;
+	EXPECT_EQ((**navigate_long_list)->value, 8);
+	++navigate_long_list;
+	EXPECT_EQ((**navigate_long_list)->value, 15);
+	++navigate_long_list;
+	EXPECT_EQ((**navigate_long_list)->value, 19);
+	++navigate_long_list;
+	EXPECT_EQ((**navigate_long_list)->value, 20);
+	++navigate_long_list;
+	EXPECT_EQ((**navigate_long_list)->value, 13);
+	++navigate_long_list;
+	EXPECT_EQ(**navigate_long_list, nullptr);
+
+	std::vector<int> values_to_check{ 10, 8, 15, 19, 20, 13 };
+	int index{ 0 };
+	for (c_poly_node<int> * * current : lots_to_navigate)//checking for for each compatability, it uses begin(), end(), !=, *, and prefix of ++
+	{
+		EXPECT_EQ((*current)->value, values_to_check[index]);
+		++index;
+	}
+}
+
 /*
  * unique pointers can't be shared
  * shared pointers have a reference count and delete when it reaches 0
@@ -837,9 +976,18 @@ TEST(c_linked_list, c_linked_list_funcs_and_tests)
  * smart pointers are appearently not thread safe I think, which worries me a little
  */
 
+//when making quick sort, I should make an optional parameter for the index of the pivot value
+//but by default I'll use the rightmost
+//well, index isn't the best way to put it since the index would be different per list
+//but like, a way they can tell some way to get the value
+//maybe a function passed in so they could do like arr.size / 2 and it would evaluate that each time
+//and mine would just be arr.size
+
+//might do a function pointer parameter with the default as a lambda that returns arr.size() - 1 for the rightmost as the index
+
 TEST(c_sorts, c_sort_header_tests)
 {
-	std::vector<int> small_duplicates_negatives{ 1, 2, 4, 4, -4, 6, 7, -10, 10, 9, 10 };
+	std::vector<int> small_duplicates_negatives_odd{ 1, 2, 4, 4, -4, 6, 7, -10, 10, 9, 10 };
 
 	std::vector<std::vector<int>& (*)(std::vector<int>&)> sorts{//vector of function pointers, same return type and same parameters
 		c_bubble_sort<int>::sort,
@@ -847,18 +995,19 @@ TEST(c_sorts, c_sort_header_tests)
 		c_counting_sort<int>::sort,
 		c_max_heap_sort<int, c_poly_node>::sort,
 		c_min_heap_sort<int, c_poly_node>::sort,
-		c_bst_sorts<int, c_binary_tree, c_poly_node>::sort,
-		c_bst_sorts<int, c_avl_binary_tree, c_poly_node>::sort,
-		c_bst_sorts<int, c_red_black_binary_tree, c_red_black_poly_node>::sort,
-		c_merge_sort<int>::sort
+		c_bst_sorts<int, c_poly_node, c_binary_tree>::sort,
+		c_bst_sorts<int, c_poly_node, c_avl_binary_tree>::sort,
+		c_bst_sorts<int, c_red_black_poly_node, c_red_black_binary_tree>::sort,
+		c_merge_sort<int>::sort//,
+		//c_quick_sort<int>::sort
 	};
 
 	for(std::vector<int>& (*srt)(std::vector<int>&) : sorts)//for each sort function pointer
 	{
-		c_general_algorithms::scramble_vals(small_duplicates_negatives);
-		srt(small_duplicates_negatives);
-		for (int i{ 0 }; i < static_cast<int>(small_duplicates_negatives.size()) - 1; ++i)//check that it's sorted
-			EXPECT_LE(small_duplicates_negatives[i], small_duplicates_negatives[i + 1]);
+		c_general_algorithms::scramble_vals(small_duplicates_negatives_odd);
+		srt(small_duplicates_negatives_odd);
+		for (int i{ 0 }; i < static_cast<int>(small_duplicates_negatives_odd.size()) - 1; ++i)//check that it's sorted
+			EXPECT_LE(small_duplicates_negatives_odd[i], small_duplicates_negatives_odd[i + 1]);
 		//testing::internal::SleepMilliseconds(1000);//you can add this line to let the random seed for scramble be different each second
 	}
 
@@ -867,19 +1016,20 @@ TEST(c_sorts, c_sort_header_tests)
 		c_bubble_sort<int, std::greater<>>::sort,
 		c_comb_sort<int, std::greater<>>::sort,
 		c_counting_sort<int, std::greater<>>::sort,
-		c_bst_sorts<int, c_binary_tree, c_poly_node, std::greater<>>::sort,
-		c_bst_sorts<int, c_avl_binary_tree, c_poly_node, std::greater<>>::sort,
-		c_bst_sorts<int, c_red_black_binary_tree, c_red_black_poly_node, std::greater<>>::sort,
+		c_bst_sorts<int, c_poly_node, c_binary_tree, std::greater<>>::sort,
+		c_bst_sorts<int, c_poly_node, c_avl_binary_tree, std::greater<>>::sort,
+		c_bst_sorts<int, c_red_black_poly_node, c_red_black_binary_tree, std::greater<>>::sort,
 		c_merge_sort<int, std::greater<>>::sort,
-		c_heap_sort<int, c_poly_node, std::greater<>>::sort
+		//c_quick_sort<int, std::greater<>>::sort,
+		c_heap_sort<int, c_poly_node, std::greater<>>::sort//this is the same as a normal max heap, but I wanted to show it's possible to pass your own operations to this sort
 	};
 
 	for (std::vector<int>& (*srt)(std::vector<int>&) : reverse_sorts)//for each sort function pointer
 	{
-		c_general_algorithms::scramble_vals(small_duplicates_negatives);
-		srt(small_duplicates_negatives);
-		for (int i{ 0 }; i < static_cast<int>(small_duplicates_negatives.size()) - 1; ++i)//check that it's sorted in reverse
-			EXPECT_GE(small_duplicates_negatives[i], small_duplicates_negatives[i + 1]);
+		c_general_algorithms::scramble_vals(small_duplicates_negatives_odd);
+		srt(small_duplicates_negatives_odd);
+		for (int i{ 0 }; i < static_cast<int>(small_duplicates_negatives_odd.size()) - 1; ++i)//check that it's sorted in reverse
+			EXPECT_GE(small_duplicates_negatives_odd[i], small_duplicates_negatives_odd[i + 1]);
 		//testing::internal::SleepMilliseconds(1000);//you can add this line to let the random seed for scramble be different each second
 	}
 }

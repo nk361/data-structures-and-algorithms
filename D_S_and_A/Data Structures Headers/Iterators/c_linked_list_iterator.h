@@ -1,4 +1,5 @@
 #pragma once
+#include <iterator>
 
 template <class ValType, template<class> class NodeType>
 class c_linked_list_iterator : public std::iterator<std::forward_iterator_tag, NodeType<ValType>, size_t, NodeType<ValType> * *, NodeType<ValType> *>

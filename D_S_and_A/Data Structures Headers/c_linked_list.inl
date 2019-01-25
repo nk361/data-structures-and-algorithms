@@ -41,7 +41,7 @@ c_linked_list<ValType, NodeType>::~c_linked_list()
 }
 
 template <class ValType, template <class> class NodeType>
-NodeType<ValType> * * c_linked_list<ValType, NodeType>::operator[](int index)
+NodeType<ValType> * * c_linked_list<ValType, NodeType>::operator[](int const& index)
 {
 	NodeType<ValType> * * current{ &head };
 	for (int i{ 0 }; i <= index; ++i)//go down each node until you reach that count
@@ -60,7 +60,7 @@ NodeType<ValType> * * c_linked_list<ValType, NodeType>::operator[](int index)
 template <class ValType, template <class> class NodeType>
 c_linked_list_iterator<ValType, NodeType> c_linked_list<ValType, NodeType>::begin()
 {
-	return c_linked_list_iterator<ValType, NodeType>(&head);
+	return c_linked_list_iterator<ValType, NodeType>{ &head };
 }
 
 template <class ValType, template <class> class NodeType>
@@ -73,7 +73,7 @@ c_linked_list_iterator<ValType, NodeType> c_linked_list<ValType, NodeType>::end(
 		while (tail->children[0] != nullptr)//navigate down the list looking for the end
 			tail = tail->children[0];
 
-	return c_linked_list_iterator<ValType, NodeType>(&tail->children[0]);
+	return c_linked_list_iterator<ValType, NodeType>{ &tail->children[0] };
 }
 
 template <class ValType, template <class> class NodeType>

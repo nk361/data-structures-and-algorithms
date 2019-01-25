@@ -1,16 +1,22 @@
 #pragma once
 #include <vector>
+
 #include "c_tree.h"
+#include "Iterators/c_bst_iterator_in_order.h"
 
 template <class ValType, template<class> class NodeType, typename Operation = std::less<>>
 class c_binary_tree : public c_tree<ValType, NodeType>
 {
+	NodeType<ValType> * tail = nullptr;
 public:
 	c_binary_tree() = delete;
 	explicit c_binary_tree(ValType const& val);
 	explicit c_binary_tree(std::vector<ValType> const& vals);
 	
 	~c_binary_tree();//not virtual because of unique tree navigation
+
+	c_bst_iterator_in_order<ValType, NodeType> begin();
+	c_bst_iterator_in_order<ValType, NodeType> end();
 
 	virtual void add_item(ValType const& val) override;
 	virtual void add_items(std::vector<ValType> const& vals) override;

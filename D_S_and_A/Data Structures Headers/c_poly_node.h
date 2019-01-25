@@ -19,11 +19,6 @@ public:
 		children = other.children;
 		return *this;
 	}
-
-	//bool operator==(c_poly_node other) { return true; }
-
-	/*bool operator==(c_poly_node other) { return value == other.value && children == other.children; }
-	bool operator!=(c_poly_node other) { return !(*this == other); }*/
 };
 
 #include "c_poly_node.inl"

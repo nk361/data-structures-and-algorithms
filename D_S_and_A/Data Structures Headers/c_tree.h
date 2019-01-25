@@ -11,11 +11,11 @@ public:
 
 	explicit c_tree(ValType const& val);
 
+	~c_tree();//not virtual because of unique tree navigation
+
 	virtual void add_item(ValType const& val) = 0;
 	virtual void add_items(std::vector<ValType> const& vals) = 0;
 	virtual void remove_item(ValType const& val) = 0;
-
-	~c_tree();//not virtual because of unique tree navigation
 };
 
 #include "c_tree.inl"

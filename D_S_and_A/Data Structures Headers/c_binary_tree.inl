@@ -56,6 +56,25 @@ c_binary_tree<ValType, NodeType, Operation>::~c_binary_tree()//not virtual becau
 }
 
 template <class ValType, template<class> class NodeType, typename Operation>
+c_bst_iterator_in_order<ValType, NodeType> c_binary_tree<ValType, NodeType, Operation>::begin()
+{
+	return c_bst_iterator_in_order<ValType, NodeType>{ &(c_binary_tree<ValType, NodeType, Operation>::root) };
+}
+
+//this function finds the end of the tree by using ONLY right nodes similar to a linked list to find the rightmost node (good for only in order traversal)
+template <class ValType, template<class> class NodeType, typename Operation>
+c_bst_iterator_in_order<ValType, NodeType> c_binary_tree<ValType, NodeType, Operation>::end()
+{
+	if (tail == nullptr)
+		tail = c_binary_tree<ValType, NodeType, Operation>::root;
+
+	while (tail->children[1] != nullptr)
+		tail = tail->children[1];
+
+	return c_bst_iterator_in_order<ValType, NodeType>{ &tail->children[1] };
+}
+
+template <class ValType, template<class> class NodeType, typename Operation>
 void c_binary_tree<ValType, NodeType, Operation>::add_item(ValType const& val)
 {
 	Operation const op = Operation();
@@ -124,10 +143,13 @@ void c_binary_tree<ValType, NodeType, Operation>::remove_item(ValType const& val
 		}
 }
 
-//these only work for nodes that don't have other pointer references to change other than just grandparent, left, and right
+//these only work for nodes that don't have other pointer references to change other than just left and right
 template <class ValType, template<class> class NodeType, typename Operation>
 NodeType<ValType> * c_binary_tree<ValType, NodeType, Operation>::rotate_left(NodeType<ValType> * grandparent)
 {
+	if (tail == grandparent)//to prevent sending an outdated tail to the left side which would make it look for a new tail there when end() is called
+		tail = grandparent->children[1]->children[1];
+
 	NodeType<ValType> * temp{ grandparent->children[1] };//store grandparent's right child
 	grandparent->children[1] = temp->children[0];//put right's left child as grandparent's right
 	temp->children[0] = grandparent;//put old grandparent as grandparent's right child's left child
@@ -153,6 +175,9 @@ NodeType<ValType> * c_binary_tree<ValType, NodeType, Operation>::rotate_left_rig
 template <class ValType, template<class> class NodeType, typename Operation>
 NodeType<ValType> * c_binary_tree<ValType, NodeType, Operation>::rotate_right_left(NodeType<ValType> * grandparent)
 {
+	if (tail == grandparent)//to prevent sending an outdated tail to the left side which would make it look for a new tail there when end() is called
+		tail = grandparent->children[1];
+
 	grandparent->children[1] = rotate_right(grandparent->children[1]);
 	return rotate_left(grandparent);
 }
@@ -204,7 +229,7 @@ std::vector<NodeType<ValType> * *> c_binary_tree<ValType, NodeType, Operation>::
 		else
 		{
 			if ((*current)->children[1] == nullptr)
-				return {};
+				return {};//returning an empty list
 			current = &(*current)->children[1];
 		}
 		ancestors.push_back(current);
