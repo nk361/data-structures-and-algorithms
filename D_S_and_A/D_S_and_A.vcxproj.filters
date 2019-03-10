@@ -90,6 +90,9 @@
     <ClInclude Include="Algorithms\c_heap_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithms\c_quick_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -164,6 +167,9 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Data Structures Headers\Iterators\c_bst_iterator_in_order.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Algorithms\c_quick_sort.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

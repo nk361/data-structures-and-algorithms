@@ -2,7 +2,7 @@
 #include "c_bst_iterator_in_order.h"
 
 template <class ValType, template <class> class NodeType>
-c_bst_iterator_in_order<ValType, NodeType>::c_bst_iterator_in_order(NodeType<ValType> * * node)
+c_bst_iterator_in_order<ValType, NodeType>::c_bst_iterator_in_order(NodeType<ValType> * * const& node)
 {
 	current = node;
 	if((*node) != nullptr)//end() calls this constructor with nullptr
@@ -23,7 +23,7 @@ c_bst_iterator_in_order<ValType, NodeType>& c_bst_iterator_in_order<ValType, Nod
 	//3 posibilities, left, right, up to parent
 	//but also a check for the rightmost node to change to a propper end
 
-	if((*current)->children[1] == nullptr)//if there's no right child
+	if((*current)->children[1] == nullptr)//if there's no right child, check if it's rightmost
 	{
 		if (ancestors.size() == 1 && ancestors.back().first->children[0] == nullptr && ancestors.back().first->children[1] == nullptr)//if there's only a root, mark it as fully explored so it can be rightmost
 			ancestors.back().second = false;

@@ -18,6 +18,54 @@ c_linked_list<ValType, NodeType>::c_linked_list(std::vector<ValType> const& vals
 }
 
 template <class ValType, template <class> class NodeType>
+c_linked_list<ValType, NodeType>::c_linked_list(c_linked_list<ValType, NodeType>& other)//copy constructor, pass by reference to avoid infinite copy
+{
+	*this = other;//reuse copy code in copy assignment operator
+}
+
+template <class ValType, template <class> class NodeType>
+c_linked_list<ValType, NodeType>& c_linked_list<ValType, NodeType>::operator=(c_linked_list<ValType, NodeType>& other)//copy assignment operator
+{
+	if (this != &other)//check for self assignment
+	{
+		this->~c_linked_list();//free nodes
+		//be careful of out of memory exceptions since you want these structures to be fine when huge
+
+		//perform copy
+		c_linked_list_iterator<ValType, NodeType> current_iter{ &head }, other_iter{ other.begin() };
+		while (other_iter != other.end())//this only works because the iterator goes to the nullptr spot at the end of the new list, bst iterator doesn't work like that
+		{
+			(**current_iter) = new NodeType<ValType>{ (**other_iter)->value, static_cast<int>((**other_iter)->children.size()) };//size instead of 1 incase future implementations need more and so that the code is similar in other copy constructors without magic numbers
+			++current_iter;
+			++other_iter;
+		}
+
+		tail = (**current_iter);//set tail while you have it instead of having to recalculate
+	}
+	return *this;
+}
+
+template <class ValType, template <class> class NodeType>
+c_linked_list<ValType, NodeType>::c_linked_list(c_linked_list<ValType, NodeType>&& other) noexcept//move constructor
+{
+	*this = other;//reuse move code in move assignment operator
+}
+
+template <class ValType, template <class> class NodeType>
+c_linked_list<ValType, NodeType>& c_linked_list<ValType, NodeType>::operator=(c_linked_list<ValType, NodeType>&& other) noexcept//move assignment operator
+{
+	if (this != &other)//check for self assignment
+	{
+		//perform move
+		head = other.head;
+		tail = other.tail;
+		other.head = nullptr;
+		other.tail = nullptr;
+	}
+	return *this;
+}
+
+template <class ValType, template <class> class NodeType>
 c_linked_list<ValType, NodeType>::~c_linked_list()
 {
 	if (head != nullptr)

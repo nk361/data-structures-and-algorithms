@@ -11,8 +11,14 @@ public:
 	NodeType<ValType> * head = nullptr;
 
 	c_linked_list() = delete;
-	c_linked_list(ValType const& val);
-	c_linked_list(std::vector<ValType> const& vals);
+	explicit c_linked_list(ValType const& val);
+	explicit c_linked_list(std::vector<ValType> const& vals);
+
+	c_linked_list(c_linked_list<ValType, NodeType>& other);//copy constructor
+	c_linked_list<ValType, NodeType>& operator=(c_linked_list<ValType, NodeType>& other);//copy assignment operator
+
+	c_linked_list(c_linked_list<ValType, NodeType>&& other) noexcept;//move constructor
+	c_linked_list<ValType, NodeType>& operator=(c_linked_list<ValType, NodeType>&& other) noexcept;//move assignment operator
 
 	~c_linked_list();
 

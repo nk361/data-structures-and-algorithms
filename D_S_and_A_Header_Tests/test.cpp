@@ -1,4 +1,4 @@
- #include "pch.h"
+#include "pch.h"
 #include <array>
 #include <vector>
 
@@ -24,6 +24,7 @@
 #include "../D_S_and_A/Algorithms/c_min_heap_sort.h"
 #include "../D_S_and_A/Algorithms/c_bst_sorts.h"
 #include "../D_S_and_A/Algorithms/c_merge_sort.h"
+#include "../D_S_and_A/Algorithms/c_quick_sort.h"
 #include "../D_S_and_A/Algorithms/c_comb_sort.h"
 #include "../D_S_and_A/Algorithms/c_heap_sort.h"
 
@@ -114,16 +115,139 @@ TEST(c_node_header_tests, c_tree_node_constructors)
 	EXPECT_TRUE(redblack.red);
 }
 
+TEST(c_bsts_iterators, c_bst_iterator_constructor_and_iterator_tests)
+{
+	c_binary_tree<int, c_poly_node> only_root{ 10 };
+	c_bst_iterator_in_order<int, c_poly_node> only_root_then_end{ &only_root.root };
+	EXPECT_EQ((**only_root_then_end)->value, 10);
+	++only_root_then_end;
+	EXPECT_EQ(**only_root_then_end, nullptr);
+
+	c_binary_tree<int, c_poly_node> lots_to_navigate{ { 10, 5, 15, 2, 7, 12, 18, 1, 6, 13, 20, 0, 25 } };
+
+	/*
+	 * I think this is sufficient for testing traversals
+	 *
+	 *	    10
+	 *	    /\
+	 *	   5  15
+	 *	  /\  / \
+	 *	  2 7 12 18
+	 *	 / /  \   \
+	 *	 1 6  13  20  //one dangling child each way
+	 *	/          \
+	 *	0           25  //two dangling nodes each way
+	 *
+	 */
+
+	c_bst_iterator_in_order<int, c_poly_node> in_order_moves{ &lots_to_navigate.root };
+	EXPECT_EQ((**in_order_moves)->value, 0);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 1);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 2);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 5);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 6);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 7);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 10);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 12);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 13);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 15);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 18);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 20);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves)->value, 25);
+	++in_order_moves;
+	EXPECT_EQ((**in_order_moves), nullptr);
+
+	std::vector<int> values_to_check{ 0, 1, 2, 5, 6, 7, 10, 12, 13, 15, 18, 20, 25 };
+	int val_index{ 0 };
+	for (c_poly_node<int> * * current : lots_to_navigate)//checking for for each compatability, it uses begin(), end(), !=, *, and prefix of ++
+	{
+		EXPECT_EQ((*current)->value, values_to_check[val_index]);
+		++val_index;
+	}
+
+	c_binary_tree<int, c_poly_node> all_left{ { 10, 9, 8, 7, 6, 5, 4, 3, 2 } };
+	c_bst_iterator_in_order<int, c_poly_node> in_order_moves_all_left{ &all_left.root };
+	EXPECT_EQ((**in_order_moves_all_left)->value, 2);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 3);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 4);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 5);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 6);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 7);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 8);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 9);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left)->value, 10);
+	++in_order_moves_all_left;
+	EXPECT_EQ((**in_order_moves_all_left), nullptr);
+
+	c_binary_tree<int, c_poly_node> all_right{ { 10, 11, 12, 13, 14, 15, 16, 17, 18 } };
+	c_bst_iterator_in_order<int, c_poly_node> in_order_moves_all_right{ &all_right.root };
+	EXPECT_EQ((**in_order_moves_all_right)->value, 10);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 11);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 12);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 13);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 14);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 15);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 16);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 17);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right)->value, 18);
+	++in_order_moves_all_right;
+	EXPECT_EQ((**in_order_moves_all_right), nullptr);
+
+	c_binary_tree<int, c_poly_node> one_left_test_rightmost_check{ { 10, 5, 6, 7, 8, 9, 11 } };
+	c_bst_iterator_in_order<int, c_poly_node> in_order_moves_rightmost_check{ &one_left_test_rightmost_check.root };
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 5);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 6);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 7);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 8);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 9);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 10);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 11);
+	++in_order_moves_rightmost_check;
+	EXPECT_EQ((**in_order_moves_rightmost_check), nullptr);
+}
+
 TEST(c_binary_tree_tests, c_binary_tree_function_tests)
 {
 	c_binary_tree<int, c_poly_node> b_tree{ 30 };
 	b_tree.add_items({ 12, 72, 109, 23, 83, 22, 43, 28, 67, 43, 30 });
 
 	EXPECT_EQ(b_tree.root->value, 30);
-	
 	EXPECT_EQ(b_tree.root->children[0]->value, 12);
 	EXPECT_EQ(b_tree.root->children[1]->value, 72);
-
 	EXPECT_EQ(b_tree.root->children[1]->children[1]->value, 109);
 	EXPECT_EQ(b_tree.root->children[0]->children[1]->value, 23);
 	EXPECT_EQ(b_tree.root->children[1]->children[1]->children[0]->value, 83);
@@ -133,6 +257,24 @@ TEST(c_binary_tree_tests, c_binary_tree_function_tests)
 	EXPECT_EQ(b_tree.root->children[1]->children[0]->children[1]->value, 67);
 	EXPECT_EQ(b_tree.root->children[1]->children[0]->children[1]->children[0]->value, 43);
 	EXPECT_EQ(b_tree.root->children[1]->children[0]->children[0]->value, 30);
+
+	c_binary_tree<int, c_poly_node> b_tree_copy{ 20 };
+	b_tree_copy = b_tree;//test copy constructor and copy assignment
+	EXPECT_EQ(b_tree_copy.root->value, 30);
+	EXPECT_EQ(b_tree_copy.root->children[0]->value, 12);
+	EXPECT_EQ(b_tree_copy.root->children[1]->value, 72);
+	EXPECT_EQ(b_tree_copy.root->children[1]->children[1]->value, 109);
+	EXPECT_EQ(b_tree_copy.root->children[0]->children[1]->value, 23);
+	EXPECT_EQ(b_tree_copy.root->children[1]->children[1]->children[0]->value, 83);
+	EXPECT_EQ(b_tree_copy.root->children[0]->children[1]->children[0]->value, 22);
+	EXPECT_EQ(b_tree_copy.root->children[1]->children[0]->value, 43);
+	EXPECT_EQ(b_tree_copy.root->children[0]->children[1]->children[1]->value, 28);
+	EXPECT_EQ(b_tree_copy.root->children[1]->children[0]->children[1]->value, 67);
+	EXPECT_EQ(b_tree_copy.root->children[1]->children[0]->children[1]->children[0]->value, 43);
+	EXPECT_EQ(b_tree_copy.root->children[1]->children[0]->children[0]->value, 30);
+
+	b_tree_copy.root->children[0]->value = 10;
+	EXPECT_NE(b_tree.root->children[0]->value, b_tree_copy.root->children[0]->value);//proof they're different in memory
 
 	//tree rotations!
 	c_binary_tree<int, c_poly_node> b_tree_need_l_r{ { 4, 6, 8 } };
@@ -316,38 +458,38 @@ TEST(c_avl_binary_tree_tests, c_avl_function_tests)
 	EXPECT_EQ(avl_int_tree_add_item_and_rebal.root->children[1]->children[1]->children[1]->value, 18);
 
 	/*
-			Tab sizes are different in VS compared to github
-	      10			   5			right rotate on 10
+		Tab sizes are different in VS compared to github
+		 10				   5			right rotate on 10
 		  /				  /\
 		 5			->	 2 10
 		/				 
 		2				
 
-		 5					5			right left rotate on 2
-		 /\					/\
+		 5				5			right left rotate on 2
+		 /\				/\
 		2 10		->		3 10
-		\					/\
-		 4					2 4
+		\				/\
+		 4				2 4
 		/
 		3
 
-		5					  5			left rotate on 10
-		/\					 / \
+		5				  5			left rotate on 10
+		/\				 / \
 		3 10		->		3   12
 		/\  \				/\  / \
 		2 4  12				2 4 10 18
-			  \
-			   18
+			\
+			18
 
-		  5					  5			left right rotate on 18
+		  5				  5			left right rotate on 18
 		 / \				 / \
 		3   12		->		3   12
 		/\  / \				/\  / \
 		2 4 10 18			2 4 10 17
-			   /				   /\
-			  15				  15 18
-			   \
-				17
+			/				/\
+			15				15 18
+			\
+			17
 	 */
 
 	c_avl_binary_tree<int, c_poly_node> avl_int_sorted_list{ { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 } };
@@ -724,129 +866,37 @@ TEST(c_red_black_bst, c_red_black_bst_funcs_and_rebalancing)
  * THESE CANNOT RELY ON VALUES FOR NAVIGATION
  */
 
-TEST(c_bsts_iterators, c_bst_iterator_constructor_and_iterator_tests)
+TEST(c_linked_list_iterator, c_linked_list_iterator_operations)
 {
-	c_binary_tree<int, c_poly_node> only_root{ 10 };
-	c_bst_iterator_in_order<int, c_poly_node> only_root_then_end{ &only_root.root };
-	EXPECT_EQ((**only_root_then_end)->value, 10);
-	++only_root_then_end;
-	EXPECT_EQ(**only_root_then_end, nullptr);
+	c_linked_list<int, c_poly_node> only_head{ 10 };
+	c_linked_list_iterator<int, c_poly_node> only_head_and_end{ &only_head.head };
+	EXPECT_EQ((**only_head_and_end)->value, 10);
+	++only_head_and_end;
+	EXPECT_EQ(**only_head_and_end, nullptr);
 
-	c_binary_tree<int, c_poly_node> lots_to_navigate{ { 10, 5, 15, 2, 7, 12, 18, 1, 6, 13, 20, 0, 25 } };
+	c_linked_list<int, c_poly_node> lots_to_navigate{ { 10, 8, 15, 19, 20, 13 } };
+	c_linked_list_iterator<int, c_poly_node> navigate_long_list{ &lots_to_navigate.head };
+	EXPECT_EQ((**navigate_long_list)->value, 10);
+	++navigate_long_list;
+	EXPECT_EQ((**navigate_long_list)->value, 8);
+	++navigate_long_list;
+	EXPECT_EQ((**navigate_long_list)->value, 15);
+	++navigate_long_list;
+	EXPECT_EQ((**navigate_long_list)->value, 19);
+	++navigate_long_list;
+	EXPECT_EQ((**navigate_long_list)->value, 20);
+	++navigate_long_list;
+	EXPECT_EQ((**navigate_long_list)->value, 13);
+	++navigate_long_list;
+	EXPECT_EQ(**navigate_long_list, nullptr);
 
-	/* 
-	 * I think this is sufficient for testing traversals
-	 *
-	 *	    10
-	 *	    /\
-	 *	   5  15
-	 *	  /\  / \
-	 *	  2 7 12 18
-	 *	 / /  \   \
-	 *	 1 6  13  20  //one dangling child each way
-	 *	/          \
-	 *	0           25  //two dangling nodes each way
-	 *
-	 */
-
-	c_bst_iterator_in_order<int, c_poly_node> in_order_moves{ &lots_to_navigate.root };
-	EXPECT_EQ((**in_order_moves)->value, 0);
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves)->value, 1);
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves)->value, 2);
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves)->value, 5);
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves)->value, 6);
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves)->value, 7);
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves)->value, 10);//TODO add copy constructors, copy assignments, move, and move asignments for classes with pointer variables
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves)->value, 12);
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves)->value, 13);
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves)->value, 15);
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves)->value, 18);
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves)->value, 20);
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves)->value, 25);
-	++in_order_moves;
-	EXPECT_EQ((**in_order_moves), nullptr);
-
-	std::vector<int> values_to_check{ 0, 1, 2, 5, 6, 7, 10, 12, 13, 15, 18, 20, 25 };
-	int val_index{ 0 };
+	std::vector<int> values_to_check{ 10, 8, 15, 19, 20, 13 };
+	int index{ 0 };
 	for (c_poly_node<int> * * current : lots_to_navigate)//checking for for each compatability, it uses begin(), end(), !=, *, and prefix of ++
 	{
-		EXPECT_EQ((*current)->value, values_to_check[val_index]);
-		++val_index;
+		EXPECT_EQ((*current)->value, values_to_check[index]);
+		++index;
 	}
-
-	c_binary_tree<int, c_poly_node> all_left{ { 10, 9, 8, 7, 6, 5, 4, 3, 2 } };
-	c_bst_iterator_in_order<int, c_poly_node> in_order_moves_all_left{ &all_left.root };
-	EXPECT_EQ((**in_order_moves_all_left)->value, 2);
-	++in_order_moves_all_left;
-	EXPECT_EQ((**in_order_moves_all_left)->value, 3);
-	++in_order_moves_all_left;
-	EXPECT_EQ((**in_order_moves_all_left)->value, 4);
-	++in_order_moves_all_left;
-	EXPECT_EQ((**in_order_moves_all_left)->value, 5);
-	++in_order_moves_all_left;
-	EXPECT_EQ((**in_order_moves_all_left)->value, 6);
-	++in_order_moves_all_left;
-	EXPECT_EQ((**in_order_moves_all_left)->value, 7);
-	++in_order_moves_all_left;
-	EXPECT_EQ((**in_order_moves_all_left)->value, 8);
-	++in_order_moves_all_left;
-	EXPECT_EQ((**in_order_moves_all_left)->value, 9);
-	++in_order_moves_all_left;
-	EXPECT_EQ((**in_order_moves_all_left)->value, 10);
-	++in_order_moves_all_left;
-	EXPECT_EQ((**in_order_moves_all_left), nullptr);
-
-	c_binary_tree<int, c_poly_node> all_right{ { 10, 11, 12, 13, 14, 15, 16, 17, 18 } };
-	c_bst_iterator_in_order<int, c_poly_node> in_order_moves_all_right{ &all_right.root };
-	EXPECT_EQ((**in_order_moves_all_right)->value, 10);
-	++in_order_moves_all_right;
-	EXPECT_EQ((**in_order_moves_all_right)->value, 11);
-	++in_order_moves_all_right;
-	EXPECT_EQ((**in_order_moves_all_right)->value, 12);
-	++in_order_moves_all_right;
-	EXPECT_EQ((**in_order_moves_all_right)->value, 13);
-	++in_order_moves_all_right;
-	EXPECT_EQ((**in_order_moves_all_right)->value, 14);
-	++in_order_moves_all_right;
-	EXPECT_EQ((**in_order_moves_all_right)->value, 15);
-	++in_order_moves_all_right;
-	EXPECT_EQ((**in_order_moves_all_right)->value, 16);
-	++in_order_moves_all_right;
-	EXPECT_EQ((**in_order_moves_all_right)->value, 17);
-	++in_order_moves_all_right;
-	EXPECT_EQ((**in_order_moves_all_right)->value, 18);
-	++in_order_moves_all_right;
-	EXPECT_EQ((**in_order_moves_all_right), nullptr);
-	
-	c_binary_tree<int, c_poly_node> one_left_test_rightmost_check{ { 10, 5, 6, 7, 8, 9, 11 } };
-	c_bst_iterator_in_order<int, c_poly_node> in_order_moves_rightmost_check{ &one_left_test_rightmost_check.root };
-	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 5);
-	++in_order_moves_rightmost_check;
-	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 6);
-	++in_order_moves_rightmost_check;
-	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 7);
-	++in_order_moves_rightmost_check;
-	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 8);
-	++in_order_moves_rightmost_check;
-	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 9);
-	++in_order_moves_rightmost_check;
-	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 10);
-	++in_order_moves_rightmost_check;
-	EXPECT_EQ((**in_order_moves_rightmost_check)->value, 11);
-	++in_order_moves_rightmost_check;
-	EXPECT_EQ((**in_order_moves_rightmost_check), nullptr);
 }
 
 TEST(c_linked_list, c_linked_list_funcs_and_tests)
@@ -857,7 +907,22 @@ TEST(c_linked_list, c_linked_list_funcs_and_tests)
 	(*one_param_constructor[0])->value = 10;
 	EXPECT_EQ(one_param_constructor.head->value, 10);//original changed
 	EXPECT_THROW(one_param_constructor[1], std::out_of_range);
-	
+
+	c_linked_list<int, c_poly_node> many_vals_to_copy{ { 3, 6, 9 } };
+	c_linked_list<int, c_poly_node> copy{ many_vals_to_copy };//test copy constructor
+	EXPECT_EQ(copy.head->value, 3);
+	EXPECT_EQ(copy.head->children[0]->value, 6);
+	EXPECT_EQ(copy.head->children[0]->children[0]->value, 9);
+	copy.head->children[0]->children[0]->value = 18;
+	EXPECT_NE(many_vals_to_copy.head->children[0]->children[0]->value, copy.head->children[0]->children[0]->value);//see if the change only happened to the copy
+
+	copy = many_vals_to_copy;//test copy assignment operator
+	EXPECT_EQ(copy.head->value, 3);
+	EXPECT_EQ(copy.head->children[0]->value, 6);
+	EXPECT_EQ(copy.head->children[0]->children[0]->value, 9);
+	copy.head->children[0]->value = 25;
+	EXPECT_NE(many_vals_to_copy.head->children[0]->value, copy.head->children[0]->value);//again, change occured only in copy
+
 	c_linked_list<int, c_poly_node> many_param_constructor_delete{ { 4, 10, 8, 2, 16 } };
 	EXPECT_EQ(many_param_constructor_delete.length(), 5);//many items to count
 	EXPECT_EQ(many_param_constructor_delete.head->value, 4);
@@ -934,38 +999,7 @@ TEST(c_linked_list, c_linked_list_funcs_and_tests)
 	EXPECT_EQ(reverse_nodes.head->children[0]->children[0]->children[0]->children[0], nullptr);
 }
 
-TEST(c_linked_list_iterator, c_linked_list_iterator_operations)
-{
-	c_linked_list<int, c_poly_node> only_head{ 10 };
-	c_linked_list_iterator<int, c_poly_node> only_head_and_end{ &only_head.head };
-	EXPECT_EQ((**only_head_and_end)->value, 10);
-	++only_head_and_end;
-	EXPECT_EQ(**only_head_and_end, nullptr);
 
-	c_linked_list<int, c_poly_node> lots_to_navigate{ { 10, 8, 15, 19, 20, 13 } };
-	c_linked_list_iterator<int, c_poly_node> navigate_long_list{ &lots_to_navigate.head };
-	EXPECT_EQ((**navigate_long_list)->value, 10);
-	++navigate_long_list;
-	EXPECT_EQ((**navigate_long_list)->value, 8);
-	++navigate_long_list;
-	EXPECT_EQ((**navigate_long_list)->value, 15);
-	++navigate_long_list;
-	EXPECT_EQ((**navigate_long_list)->value, 19);
-	++navigate_long_list;
-	EXPECT_EQ((**navigate_long_list)->value, 20);
-	++navigate_long_list;
-	EXPECT_EQ((**navigate_long_list)->value, 13);
-	++navigate_long_list;
-	EXPECT_EQ(**navigate_long_list, nullptr);
-
-	std::vector<int> values_to_check{ 10, 8, 15, 19, 20, 13 };
-	int index{ 0 };
-	for (c_poly_node<int> * * current : lots_to_navigate)//checking for for each compatability, it uses begin(), end(), !=, *, and prefix of ++
-	{
-		EXPECT_EQ((*current)->value, values_to_check[index]);
-		++index;
-	}
-}
 
 /*
  * unique pointers can't be shared
@@ -976,19 +1010,11 @@ TEST(c_linked_list_iterator, c_linked_list_iterator_operations)
  * smart pointers are appearently not thread safe I think, which worries me a little
  */
 
-//when making quick sort, I should make an optional parameter for the index of the pivot value
-//but by default I'll use the rightmost
-//well, index isn't the best way to put it since the index would be different per list
-//but like, a way they can tell some way to get the value
-//maybe a function passed in so they could do like arr.size / 2 and it would evaluate that each time
-//and mine would just be arr.size
-
-//might do a function pointer parameter with the default as a lambda that returns arr.size() - 1 for the rightmost as the index
-
 TEST(c_sorts, c_sort_header_tests)
 {
 	std::vector<int> small_duplicates_negatives_odd{ 1, 2, 4, 4, -4, 6, 7, -10, 10, 9, 10 };
 
+	//all sorts of sorts
 	std::vector<std::vector<int>& (*)(std::vector<int>&)> sorts{//vector of function pointers, same return type and same parameters
 		c_bubble_sort<int>::sort,
 		c_comb_sort<int>::sort,
@@ -998,8 +1024,11 @@ TEST(c_sorts, c_sort_header_tests)
 		c_bst_sorts<int, c_poly_node, c_binary_tree>::sort,
 		c_bst_sorts<int, c_poly_node, c_avl_binary_tree>::sort,
 		c_bst_sorts<int, c_red_black_poly_node, c_red_black_binary_tree>::sort,
-		c_merge_sort<int>::sort//,
-		//c_quick_sort<int>::sort
+		c_merge_sort<int>::sort,
+		c_quick_sort<int, 0>::sort,//leftmost pivot
+		c_quick_sort<int>::sort,//default is 1, rightmost pivot
+		c_quick_sort<int, 2>::sort,//middle pivot
+		c_quick_sort<int, 3>::sort//random pivot
 	};
 
 	for(std::vector<int>& (*srt)(std::vector<int>&) : sorts)//for each sort function pointer
@@ -1011,7 +1040,7 @@ TEST(c_sorts, c_sort_header_tests)
 		//testing::internal::SleepMilliseconds(1000);//you can add this line to let the random seed for scramble be different each second
 	}
 
-	//Now lets sort in reverse order
+	//Now let's sort in reverse order
 	std::vector<std::vector<int>& (*)(std::vector<int>&)> reverse_sorts{//vector of function pointers, same return type and same parameters
 		c_bubble_sort<int, std::greater<>>::sort,
 		c_comb_sort<int, std::greater<>>::sort,
@@ -1020,7 +1049,7 @@ TEST(c_sorts, c_sort_header_tests)
 		c_bst_sorts<int, c_poly_node, c_avl_binary_tree, std::greater<>>::sort,
 		c_bst_sorts<int, c_red_black_poly_node, c_red_black_binary_tree, std::greater<>>::sort,
 		c_merge_sort<int, std::greater<>>::sort,
-		//c_quick_sort<int, std::greater<>>::sort,
+		c_quick_sort<int, 1, std::greater<>>::sort,
 		c_heap_sort<int, c_poly_node, std::greater<>>::sort//this is the same as a normal max heap, but I wanted to show it's possible to pass your own operations to this sort
 	};
 

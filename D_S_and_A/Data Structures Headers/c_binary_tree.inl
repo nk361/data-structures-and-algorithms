@@ -11,6 +11,60 @@ c_binary_tree<ValType, NodeType, Operation>::c_binary_tree(std::vector<ValType> 
 		c_binary_tree<ValType, NodeType, Operation>::add_item(vals[i]);
 }
 
+template <class ValType, template<class> class NodeType, typename Operation>
+c_binary_tree<ValType, NodeType, Operation>::c_binary_tree(c_binary_tree<ValType, NodeType, Operation>& other)//copy constructor
+{
+	*this = other;//reuse copy code in copy assignment operator
+}
+
+template <class ValType, template<class> class NodeType, typename Operation>
+c_binary_tree<ValType, NodeType, Operation>& c_binary_tree<ValType, NodeType, Operation>::operator=(c_binary_tree<ValType, NodeType, Operation>& other)//copy assignment operator
+{
+	if (this != &other)
+	{
+		this->~c_binary_tree();//free nodes
+
+		//perform copy
+		//algorithm for level order traversal or breadth first search, may be replaced by an iterator, not sure how to make seperate begin and end functions
+		//to be sure all items have the exact same position in the tree as other
+		if(other.root != nullptr)
+		{
+			std::vector<NodeType<ValType> *> unvisited{ other.root };//max size that this gets is the largest level + the first two children, this vector is used like a queue
+			while (!unvisited.empty())
+			{
+				if(unvisited[0]->children[0] != nullptr)//has a left child
+					unvisited.push_back(unvisited[0]->children[0]);
+				if(unvisited[0]->children[1] != nullptr)//has a right child
+					unvisited.push_back(unvisited[0]->children[1]);
+
+				c_binary_tree<ValType, NodeType, Operation>::add_item(unvisited[0]->value);//add value to current tree
+				unvisited.erase(unvisited.begin());//remove first item in unvisited
+			}
+		}
+	}
+	return *this;
+}
+
+template <class ValType, template<class> class NodeType, typename Operation>
+c_binary_tree<ValType, NodeType, Operation>::c_binary_tree(c_binary_tree<ValType, NodeType, Operation>&& other) noexcept//move constructor
+{
+	*this = other;//reuse move code in copy assignment operator
+}
+
+template <class ValType, template<class> class NodeType, typename Operation>
+c_binary_tree<ValType, NodeType, Operation>& c_binary_tree<ValType, NodeType, Operation>::operator=(c_binary_tree<ValType, NodeType, Operation>&& other) noexcept//move assignment operator
+{
+	if(this != &other)
+	{
+		//perform move
+		c_binary_tree<ValType, NodeType, Operation>::root = other.root;
+		tail = other.tail;
+		other.root = nullptr;
+		other.tail = nullptr;
+	}
+	return *this;
+}
+
 /*
  *This deconstructor uses a pointer to a pointer so that it can navigate items without changing them or change them with *current
  *It favors navigating left first, right when there is no left child
@@ -77,28 +131,34 @@ c_bst_iterator_in_order<ValType, NodeType> c_binary_tree<ValType, NodeType, Oper
 template <class ValType, template<class> class NodeType, typename Operation>
 void c_binary_tree<ValType, NodeType, Operation>::add_item(ValType const& val)
 {
-	Operation const op = Operation();
+	if (c_binary_tree<ValType, NodeType, Operation>::root == nullptr)//incase there is no root
+		c_binary_tree<ValType, NodeType, Operation>::root = new NodeType<ValType>{ val, 2 };
+	else
+	{
+		Operation const op = Operation();
 
-	NodeType<ValType> * current{ c_tree<ValType, NodeType>::root };
-	while (true)
-		if (op(val, current->value))
-		{
-			if (current->children[0] == nullptr)
+		NodeType<ValType> * current{ c_binary_tree<ValType, NodeType, Operation>::root };
+		while (true)
+			if (op(val, current->value))
 			{
-				current->children[0] = new NodeType<ValType>{ val, 2 };
-				break;
+				if (current->children[0] == nullptr)
+				{
+					current->children[0] = new NodeType<ValType>{ val, 2 };
+					break;
+				}
+				current = current->children[0];
 			}
-			current = current->children[0];
-		}
-		else//greater than or equal to
-		{
-			if (current->children[1] == nullptr)
+			else//greater than or equal to
 			{
-				current->children[1] = new NodeType<ValType>{ val, 2 };
-				break;
+				if (current->children[1] == nullptr)
+				{
+					current->children[1] = new NodeType<ValType>{ val, 2 };
+					break;
+				}
+				current = current->children[1];
 			}
-			current = current->children[1];
-		}
+	}
+	
 }
 
 template <class ValType, template<class> class NodeType, typename Operation>

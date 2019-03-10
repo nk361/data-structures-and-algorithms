@@ -10,7 +10,7 @@ public:
 	std::vector<std::pair<NodeType<ValType> *, bool>> ancestors;//I need the path to navigate back up and the boolean to tell me which way to go
 
 	c_bst_iterator_in_order() = delete;
-	explicit c_bst_iterator_in_order(NodeType<ValType> * * node);
+	explicit c_bst_iterator_in_order(NodeType<ValType> * * const& node);
 	//no destructor because current is deleted in c_poly_node
 	c_bst_iterator_in_order<ValType, NodeType>& operator++();
 	c_bst_iterator_in_order<ValType, NodeType> operator++(int);

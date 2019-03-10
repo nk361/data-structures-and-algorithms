@@ -2,7 +2,7 @@
 #include "c_linked_list_iterator.h"
 
 template <class ValType, template<class> class NodeType>
-c_linked_list_iterator<ValType, NodeType>::c_linked_list_iterator(NodeType<ValType> * * node) : current(node) {}
+c_linked_list_iterator<ValType, NodeType>::c_linked_list_iterator(NodeType<ValType> * * const& node) : current(node) {}
 
 template <class ValType, template<class> class NodeType>
 c_linked_list_iterator<ValType, NodeType>& c_linked_list_iterator<ValType, NodeType>::operator++()

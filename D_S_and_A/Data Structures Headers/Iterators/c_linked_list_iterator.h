@@ -7,7 +7,7 @@ class c_linked_list_iterator : public std::iterator<std::forward_iterator_tag, N
 	NodeType<ValType> * * current;
 public:
 	c_linked_list_iterator() = delete;
-	explicit c_linked_list_iterator(NodeType<ValType> * * node);
+	explicit c_linked_list_iterator(NodeType<ValType> * * const& node);
 	//no destructor because current is deleted in c_poly_node
 	c_linked_list_iterator<ValType, NodeType>& operator++();
 	c_linked_list_iterator<ValType, NodeType> operator++(int);
