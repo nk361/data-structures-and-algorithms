@@ -17,7 +17,7 @@ std::vector<MyType>& c_counting_sort<MyType, Operation>::sort(std::vector<MyType
 	{
 		typename std::map<MyType, MyType, Operation>::iterator found{ index_and_count.find(arr[i]) };
 		if (found == index_and_count.end())//not found
-			index_and_count.insert({ arr[i], 1 });//add "index" and count of 1//inserting into a map uses a red black tree with insertion of O(logn) but I use it n times if all values are unique
+			index_and_count.insert({ arr[i], 1 });//add "index" and count of 1//inserting into a map uses a red black tree with insertion of O(logn) but I use it n times if all values are unique, less if not
 		else//found
 			++found->second;//increment count
 	}

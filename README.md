@@ -11,22 +11,45 @@ I'm using google test to test my headers
     - [x] [Max Heap](../master/D_S_and_A/Data%20Structures%20Headers/c_max_heap.inl)
     - [x] [Min Heap](../master/D_S_and_A/Data%20Structures%20Headers/c_min_heap.inl)
     - [x] [Linked List](../master/D_S_and_A/Data%20Structures%20Headers/c_linked_list.inl)
+    - [ ] Doubly Linked List
+    - [ ] Queue
+    - [ ] Stack
+    - [ ] DeQueue
+    - [ ] Interval Tree
+    - [ ] Fibonacci Heap
+    - [ ] Graph
+    - [ ] Tensor
   - Iterators
     - [x] [Linked List Iterator](../master/D_S_and_A/Data%20Structures%20Headers/Iterators/c_linked_list_iterator.inl)
     - [x] [Binary Search Tree In Order Traversal Iterator](../master/D_S_and_A/Data%20Structures%20Headers/Iterators/c_bst_iterator_in_order.inl)
+    - [ ] Binary Search Tree Post Order Traversal Iterator
+    - [ ] Binary Search Tree Pre Order Traversal Iterator
+    - [ ] Binary Search Tree Level Order Traversal Iterator (Breadth First Search)
   - Algorithms
-    - [x] [Bubble Sort](../master/D_S_and_A/Algorithms/c_bubble_sort.inl) -> O(n^2)
-    - [x] [Comb Sort](../master/D_S_and_A/Algorithms/c_comb_sort.inl) -> O(n^2)
-    - [x] [Counting Sort](../master/D_S_and_A/Algorithms/c_counting_sort.inl) -> O(nlogn)
-    - [x] [Max Heap Sort](../master/D_S_and_A/Algorithms/c_max_heap_sort.inl) -> O(nlogn)
-    - [x] [Min Heap Sort](../master/D_S_and_A/Algorithms/c_min_heap_sort.inl) -> O(nlogn)
-    - [x] [Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(n^2)
-    - [x] [AVL Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(nlogn)
-    - [x] [Red Black Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(nlogn)
-    - [x] [Merge Sort](../master/D_S_and_A/Algorithms/c_merge_sort.inl) -> O(nlogn)
-    - [x] [Quick Sort](../master/D_S_and_A/Algorithms/c_quick_sort.inl) -> O(n^2)
-    - [x] [Capital Sigma (summation)](../master/D_S_and_A/Algorithms/c_general_algorithms.h) -> O(n)
-    - [x] [Capital Pi](../master/D_S_and_A/Algorithms/c_general_algorithms.h) -> O(n)
+    - Sorts
+      - [x] [Bubble Sort](../master/D_S_and_A/Algorithms/c_bubble_sort.inl) -> O(n^2)
+      - [x] [Comb Sort](../master/D_S_and_A/Algorithms/c_comb_sort.inl) -> O(n^2)
+      - [x] [Counting Sort](../master/D_S_and_A/Algorithms/c_counting_sort.inl) -> O(nlogn)
+      - [x] [Max Heap Sort](../master/D_S_and_A/Algorithms/c_max_heap_sort.inl) -> O(nlogn)
+      - [x] [Min Heap Sort](../master/D_S_and_A/Algorithms/c_min_heap_sort.inl) -> O(nlogn)
+      - [x] [Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(n^2)
+      - [x] [AVL Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(nlogn)
+      - [x] [Red Black Binary Search Tree Sort](../master/D_S_and_A/Algorithms/c_bst_sorts.inl) -> O(nlogn)
+      - [x] [Merge Sort](../master/D_S_and_A/Algorithms/c_merge_sort.inl) -> O(nlogn)
+      - [x] [Quick Sort](../master/D_S_and_A/Algorithms/c_quick_sort.inl) -> O(n^2)
+      - [ ] Insertion Sort
+      - [ ] Selection Sort
+    - Searches
+      - [ ] Linear Search
+      - [ ] Binary Search
+      - [ ] Jump Search
+      - [ ] Interpolation Search
+      - [ ] Exponential Search
+      - [ ] Sublist Search
+      - [ ] Fibonacci Search
+    - Other
+      - [x] [Capital Sigma (summation)](../master/D_S_and_A/Algorithms/c_general_algorithms.h) -> O(n)
+      - [x] [Capital Pi](../master/D_S_and_A/Algorithms/c_general_algorithms.h) -> O(n)
   - Tests
     - Data Structures
       - [x] [Binary Search Tree](../master/D_S_and_A_Header_Tests/test.cpp#L243)
@@ -35,21 +58,21 @@ I'm using google test to test my headers
       - [x] [Heap](../master/D_S_and_A_Header_Tests/test.cpp#L558)
       - [x] [Max Heap](../master/D_S_and_A_Header_Tests/test.cpp#L586)
       - [x] [Min Heap](../master/D_S_and_A_Header_Tests/test.cpp#L750)
-      - [x] [Linked List](../master/D_S_and_A_Header_Tests/test.cpp#L902)
+      - [x] [Linked List](../master/D_S_and_A_Header_Tests/test.cpp#L906)
     - Iterators
-      - [x] [Linked List Iterator](../master/D_S_and_A_Header_Tests/test.cpp#L869)
+      - [x] [Linked List Iterator](../master/D_S_and_A_Header_Tests/test.cpp#L873)
       - [x] [Binary Search Tree In Order Traversal Iterator](../master/D_S_and_A_Header_Tests/test.cpp#L118)
     - Algorithms
-      - [x] [Sorts](../master/D_S_and_A_Header_Tests/test.cpp#L1013)
-      - [x] [Bubble Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1019)
-      - [x] [Comb Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1020)
-      - [x] [Counting Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1021)
-      - [x] [Max Heap Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1022)
-      - [x] [Min Heap Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1023)
-      - [x] [Binary Search Tree Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1024)
-      - [x] [AVL Binary Search Tree Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1025)
-      - [x] [Red Black Binary Search Tree Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1026)
-      - [x] [Merge Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1027)
-      - [x] [Quick Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1028)
+      - [x] [Sorts](../master/D_S_and_A_Header_Tests/test.cpp#L1015)
+      - [x] [Bubble Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1021)
+      - [x] [Comb Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1022)
+      - [x] [Counting Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1023)
+      - [x] [Max Heap Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1024)
+      - [x] [Min Heap Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1025)
+      - [x] [Binary Search Tree Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1026)
+      - [x] [AVL Binary Search Tree Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1027)
+      - [x] [Red Black Binary Search Tree Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1028)
+      - [x] [Merge Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1029)
+      - [x] [Quick Sort](../master/D_S_and_A_Header_Tests/test.cpp#L1030)
       - [x] [Capital Sigma (summation)](../master/D_S_and_A_Header_Tests/test.cpp#L54)
       - [x] [Capital Pi](../master/D_S_and_A_Header_Tests/test.cpp#L68)

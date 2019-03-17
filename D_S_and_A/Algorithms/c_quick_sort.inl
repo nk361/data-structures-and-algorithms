@@ -1,5 +1,5 @@
 #pragma once
-#include "time.h"
+#include <ctime>
 
 #include "c_quick_sort.h"
 
@@ -22,13 +22,13 @@ std::vector<MyType>& c_quick_sort<MyType, PivotType, Operation>::sort(std::vecto
 		else if (PivotType == 3)
 		{
 			srand(static_cast<unsigned int>(time(nullptr)));//initialize random once
-			pivot_index = [](int const& range) { return static_cast<int>(floor(rand() % range)); };////random 0 to range - 1
+			pivot_index = [](int const& range) { return static_cast<int>(floor(rand() % range)); };//random 0 to range - 1
 		}
 		else
 			throw std::out_of_range("PivotType value out of range in c_quick_sort");
 
 		//first left, right, and pivot indexes
-		std::vector<int> left_right_pivot_indexes{ 0, static_cast<int>(arr.size() - 1), pivot_index(static_cast<int>(arr.size())) };//using this as a queue but adding and removing three items at a time
+		std::vector<int> left_right_pivot_indexes{ 0, static_cast<int>(arr.size()) - 1, pivot_index(static_cast<int>(arr.size())) };//using this as a queue but adding and removing three items at a time
 		
 		while(!left_right_pivot_indexes.empty())//all groups of three indexes have been dealt with and all areas to the left and right of pivot had too few elements to have their index info added
 		{
@@ -48,7 +48,6 @@ std::vector<MyType>& c_quick_sort<MyType, PivotType, Operation>::sort(std::vecto
 					++temp_left_index;
 					std::swap(arr[temp_right_index], arr[temp_left_index]);
 				}
-
 				++temp_right_index;
 			}
 
@@ -73,5 +72,6 @@ std::vector<MyType>& c_quick_sort<MyType, PivotType, Operation>::sort(std::vecto
 			left_right_pivot_indexes.erase(left_right_pivot_indexes.begin(), left_right_pivot_indexes.begin() + 3);//remove the first three items
 		}
 	}
+
 	return arr;
 }

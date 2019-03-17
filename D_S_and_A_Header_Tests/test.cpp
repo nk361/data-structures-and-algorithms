@@ -19,13 +19,13 @@
 #include "../D_S_and_A/Data Structures Headers/Iterators/c_bst_iterator_in_order.h"
 
 #include "../D_S_and_A/Algorithms/c_bubble_sort.h"
+#include "../D_S_and_A/Algorithms/c_comb_sort.h"
 #include "../D_S_and_A/Algorithms/c_counting_sort.h"
 #include "../D_S_and_A/Algorithms/c_max_heap_sort.h"
 #include "../D_S_and_A/Algorithms/c_min_heap_sort.h"
 #include "../D_S_and_A/Algorithms/c_bst_sorts.h"
 #include "../D_S_and_A/Algorithms/c_merge_sort.h"
 #include "../D_S_and_A/Algorithms/c_quick_sort.h"
-#include "../D_S_and_A/Algorithms/c_comb_sort.h"
 #include "../D_S_and_A/Algorithms/c_heap_sort.h"
 
 TEST(c_general_algorithms_header, c_small_general_algorithms)
@@ -866,6 +866,10 @@ TEST(c_red_black_bst, c_red_black_bst_funcs_and_rebalancing)
  * THESE CANNOT RELY ON VALUES FOR NAVIGATION
  */
 
+/*
+ * I should look into heap/tree merging
+ */
+
 TEST(c_linked_list_iterator, c_linked_list_iterator_operations)
 {
 	c_linked_list<int, c_poly_node> only_head{ 10 };
@@ -900,7 +904,7 @@ TEST(c_linked_list_iterator, c_linked_list_iterator_operations)
 }
 
 TEST(c_linked_list, c_linked_list_funcs_and_tests)
-{	
+{
 	c_linked_list<int, c_poly_node> one_param_constructor{ 5 };
 	EXPECT_EQ(one_param_constructor.length(), 1);//only head to count
 	EXPECT_EQ((*one_param_constructor[0])->value, 5);
@@ -998,8 +1002,6 @@ TEST(c_linked_list, c_linked_list_funcs_and_tests)
 	EXPECT_EQ(reverse_nodes.head->children[0]->children[0]->children[0]->value, 3);
 	EXPECT_EQ(reverse_nodes.head->children[0]->children[0]->children[0]->children[0], nullptr);
 }
-
-
 
 /*
  * unique pointers can't be shared
