@@ -1,8 +1,8 @@
 #pragma once
 #include "c_red_black_poly_node.h"
 
-template <class ValType>
-c_red_black_poly_node<ValType>::c_red_black_poly_node(ValType const& val, int const& chldrn_size, bool const& r) : red(r)
+template<class DataType>
+c_red_black_poly_node<DataType>::c_red_black_poly_node(DataType const& val, int const& chldrn_size, bool const& r) : red(r)
 {
 	value = val;
 
@@ -10,8 +10,8 @@ c_red_black_poly_node<ValType>::c_red_black_poly_node(ValType const& val, int co
 		children.push_back(nullptr);
 }
 
-template <class ValType>
-c_red_black_poly_node<ValType>::~c_red_black_poly_node()
+template<class DataType>
+c_red_black_poly_node<DataType>::~c_red_black_poly_node()
 {
 	for (int i{ 0 }; i < children.size(); ++i)
 	{

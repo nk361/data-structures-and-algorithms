@@ -4,14 +4,14 @@
 #include "c_merge_sort.h"
 
 //O(nlogn)
-template<class MyType, typename Operation>
-std::vector<MyType>& c_merge_sort<MyType, Operation>::sort(std::vector<MyType>& arr)
+template<class DataType, typename Operation>
+std::vector<DataType>& c_merge_sort<DataType, Operation>::sort(std::vector<DataType>& arr)
 {
-	Operation op = Operation();
-
 	if (static_cast<int>(arr.size()) > 1)
 	{
-		std::vector<std::vector<MyType>> split_parts;//to hold vectors to merge
+		Operation const op = Operation();
+		
+		std::vector<std::vector<DataType>> split_parts;//to hold vectors to merge
 
 		//divide
 		for (int i{ 0 }; i < static_cast<int>(arr.size()); ++i)

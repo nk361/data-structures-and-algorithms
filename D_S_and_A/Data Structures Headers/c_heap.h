@@ -1,24 +1,26 @@
 #pragma once
 #include <cmath>
-#include "c_binary_tree.h"
 
-template <class ValType, template<class> class NodeType, typename Operation>
-class c_heap : public c_binary_tree<ValType, NodeType>
+#include "c_binary_tree.h"
+#include "c_poly_node.h"
+
+template<class DataType, class NodeType = c_poly_node<DataType>, typename Operation = std::greater<>>
+class c_heap : public c_binary_tree<DataType, NodeType>
 {
 public:
 	int size;
 
 	c_heap() = delete;
-	explicit c_heap(ValType const& val);
-	explicit c_heap(std::vector<ValType> const& vals);
+	explicit c_heap(DataType const& val);
+	explicit c_heap(std::vector<DataType> const& vals);
 
 	//uses c_binary_tree's destructor
 
-	void trickle_up(std::vector<NodeType<ValType> * *> ancstrs) const;
+	void trickle_up(std::vector<NodeType * *> ancstrs) const;
 	void trickle_down();
 
-	void add_item(ValType const& val) override;
-	void add_items(std::vector<ValType> const& vals) override;
+	void add_item(DataType const& val) override;
+	void add_items(std::vector<DataType> const& vals) override;
 	void remove_item();
 	
 	int static amount_in_level(int const& level);

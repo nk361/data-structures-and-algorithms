@@ -8,8 +8,8 @@
 //Checking two values next to each other and swapping if the left is larger
 //Each time through the largest number is found in the unsorted part
 //So it leaves one more spot at the end of the vector out of the check each time until only the first two values are left to check
-template<class MyType, typename Operation>
-std::vector<MyType>& c_bubble_sort<MyType, Operation>::sort(std::vector<MyType>& arr)
+template<class DataType, typename Operation>
+std::vector<DataType>& c_bubble_sort<DataType, Operation>::sort(std::vector<DataType>& arr)
 {
 	Operation const op = Operation();
 

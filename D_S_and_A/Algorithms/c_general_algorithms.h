@@ -26,13 +26,13 @@ namespace c_general_algorithms
 	//If it doesn't find it, it adds the current value to an unordered_map to be looked for later
 	//If it does find it, the function returns THE FIRST pair of values in order that they are in in the vector that sum to the desired value
 	//When no pair sum to the desired sum, a pair of two zeros is returned to be used in a check condition
-	template<class ValsType, class SumType>
-	std::pair<ValsType, ValsType> static pair_equal_to_sum(std::vector<ValsType> const& vals, SumType const& desired_sum)
+	template<class ValTypes, class SumType>
+	std::pair<ValTypes, ValTypes> static pair_equal_to_sum(std::vector<ValTypes> const& vals, SumType const& desired_sum)
 	{
-		std::unordered_map<ValsType, ValsType> encountered{};
+		std::unordered_map<ValTypes, ValTypes> encountered{};
 		for (int i{ 0 }; i < static_cast<int>( vals.size() ); ++i)
 		{
-			typename std::unordered_map<ValsType, ValsType>::iterator found = encountered.find(desired_sum - vals[i]);
+			typename std::unordered_map<ValTypes, ValTypes>::iterator found = encountered.find(desired_sum - vals[i]);
 			if (found == encountered.end())
 				encountered.insert({ vals[i], vals[i] });
 			else

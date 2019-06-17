@@ -1,8 +1,8 @@
 #pragma once
 #include "c_bst_iterator_in_order.h"
 
-template <class ValType, template <class> class NodeType>
-c_bst_iterator_in_order<ValType, NodeType>::c_bst_iterator_in_order(NodeType<ValType> * * const& node)
+template<class DataType, class NodeType>
+c_bst_iterator_in_order<DataType, NodeType>::c_bst_iterator_in_order(NodeType * * const& node)
 {
 	current = node;
 	if((*node) != nullptr)//end() calls this constructor with nullptr
@@ -17,11 +17,11 @@ c_bst_iterator_in_order<ValType, NodeType>::c_bst_iterator_in_order(NodeType<Val
 	}
 }
 
-template <class ValType, template <class> class NodeType>
-c_bst_iterator_in_order<ValType, NodeType>& c_bst_iterator_in_order<ValType, NodeType>::operator++()
+template<class DataType, class NodeType>
+c_bst_iterator_in_order<DataType, NodeType>& c_bst_iterator_in_order<DataType, NodeType>::operator++()
 {
 	//3 posibilities, left, right, up to parent
-	//but also a check for the rightmost node to change to a propper end
+	//but also a check for the rightmost node to change to a proper end
 
 	if((*current)->children[1] == nullptr)//if there's no right child, check if it's rightmost
 	{
@@ -29,7 +29,7 @@ c_bst_iterator_in_order<ValType, NodeType>& c_bst_iterator_in_order<ValType, Nod
 			ancestors.back().second = false;
 
 		bool rightmost = true;
-		for(std::pair<NodeType<ValType> *, bool> ancestor : ancestors)//check that all ancestors have been fully explored
+		for(std::pair<NodeType *, bool> ancestor : ancestors)//check that all ancestors have been fully explored
 			if(ancestor.second)//top to bottom checking has a higher chance of finding a true value FASTER than bottom to top
 			{
 				rightmost = false;
@@ -89,26 +89,26 @@ c_bst_iterator_in_order<ValType, NodeType>& c_bst_iterator_in_order<ValType, Nod
 	return *this;
 }
 
-template <class ValType, template <class> class NodeType>
-c_bst_iterator_in_order<ValType, NodeType> c_bst_iterator_in_order<ValType, NodeType>::operator++(int)//postfix
+template<class DataType, class NodeType>
+c_bst_iterator_in_order<DataType, NodeType> c_bst_iterator_in_order<DataType, NodeType>::operator++(int)//postfix
 {
-	c_bst_iterator_in_order<ValType, NodeType> temp = *this; ++*this; return temp;
+	c_bst_iterator_in_order<DataType, NodeType> temp = *this; ++*this; return temp;
 }
 
-template <class ValType, template <class> class NodeType>
-bool c_bst_iterator_in_order<ValType, NodeType>::operator==(c_bst_iterator_in_order<ValType, NodeType> other) const
+template<class DataType, class NodeType>
+bool c_bst_iterator_in_order<DataType, NodeType>::operator==(c_bst_iterator_in_order<DataType, NodeType> other) const
 {
 	return *current == **other;
 }
 
-template <class ValType, template <class> class NodeType>
-bool c_bst_iterator_in_order<ValType, NodeType>::operator!=(c_bst_iterator_in_order<ValType, NodeType> const& other) const
+template<class DataType, class NodeType>
+bool c_bst_iterator_in_order<DataType, NodeType>::operator!=(c_bst_iterator_in_order<DataType, NodeType> const& other) const
 {
 	return !(*this == other);
 }
 
-template <class ValType, template <class> class NodeType>
-NodeType<ValType> * * c_bst_iterator_in_order<ValType, NodeType>::operator*()
+template<class DataType, class NodeType>
+NodeType * * c_bst_iterator_in_order<DataType, NodeType>::operator*()
 {
 	return current;
 }

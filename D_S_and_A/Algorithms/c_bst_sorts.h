@@ -1,11 +1,11 @@
 #pragma once
 #include <vector>
 
-template <class MyType, template <class> class NodeType, template <class ValType, template <class> class NodeType, typename Operation> class BstType, typename Operation = std::less<>>
+template<class DataType, class NodeType = c_red_black_poly_node<DataType>, typename Operation = std::less<>, class TreeType = c_red_black_binary_tree<DataType, NodeType, Operation>>
 class c_bst_sorts
 {
 public:
-	std::vector<MyType> static& sort(std::vector<MyType>& arr);
+	std::vector<DataType> static& sort(std::vector<DataType>& arr);
 };
 
 #include "c_bst_sorts.inl"

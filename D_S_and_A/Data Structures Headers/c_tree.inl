@@ -1,22 +1,22 @@
 #pragma once
 #include "c_tree.h"
 
-template <class ValType, template<class> class NodeType>
-c_tree<ValType, NodeType>::c_tree(ValType const& val)
+template<class DataType, class NodeType>
+c_tree<DataType, NodeType>::c_tree(DataType const& val)
 {
-	root = new NodeType<ValType>{ val, 2 };
+	root = new NodeType{ val, 2 };
 }
 
-template <class ValType, template<class> class NodeType>
-c_tree<ValType, NodeType>::~c_tree()//not virtual because of unique tree navigation
+template<class DataType, class NodeType>
+c_tree<DataType, NodeType>::~c_tree()//not virtual because of unique tree navigation
 {
 	if (root != nullptr)//incase root was all that was left and it was removed
 	{
-		NodeType<ValType> * * current{ &root };//made to navigate without changing tree pointer values unless intended
-		std::vector<NodeType<ValType> * *> ancestors{ { current } };//using this vector like a stack
+		NodeType * * current{ &root };//made to navigate without changing tree pointer values unless intended
+		std::vector<NodeType * *> ancestors{ { current } };//using this vector like a stack
 		while (true)
 		{
-			for (int i{ 0 }; i < (*current)->children.size(); ++i)//look through all children for one that isn't null to become current
+			for (int i{ 0 }; i < static_cast<int>((*current)->children.size()); ++i)//look through all children for one that isn't null to become current
 				if ((*current)->children[i] != nullptr)
 				{
 					current = &((*current)->children[i]);
@@ -25,7 +25,7 @@ c_tree<ValType, NodeType>::~c_tree()//not virtual because of unique tree navigat
 				}
 
 			bool all_null{ true };//check if the current node has only null children
-			for (int i{ 0 }; i < (*current)->children.size(); ++i)
+			for (int i{ 0 }; i < static_cast<int>((*current)->children.size()); ++i)
 				if ((*current)->children[i] != nullptr)
 					all_null = false;
 

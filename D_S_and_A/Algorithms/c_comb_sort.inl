@@ -4,8 +4,8 @@
 #include "c_comb_sort.h"
 
 //O(n^2) but better than bubble sort in some cases when almost sorted
-template<class MyType, typename Operation>
-std::vector<MyType>& c_comb_sort<MyType, Operation>::sort(std::vector<MyType>& arr)
+template<class DataType, typename Operation>
+std::vector<DataType>& c_comb_sort<DataType, Operation>::sort(std::vector<DataType>& arr)
 {
 	Operation const op = Operation();
 

@@ -4,12 +4,12 @@
 #include "c_quick_sort.h"
 
 //O(n^2), average of O(nlogn)
-template<class MyType, int PivotType, typename Operation>
-std::vector<MyType>& c_quick_sort<MyType, PivotType, Operation>::sort(std::vector<MyType>& arr)
+template<class DataType, int PivotType, typename Operation>
+std::vector<DataType>& c_quick_sort<DataType, PivotType, Operation>::sort(std::vector<DataType>& arr)
 {
 	if (static_cast<int>(arr.size()) > 1)
 	{
-		Operation op = Operation();
+		Operation const op = Operation();
 
 		int(*pivot_index)(int const&);//function pointer for finding our pivot every time
 

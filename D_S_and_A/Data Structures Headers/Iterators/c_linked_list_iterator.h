@@ -1,19 +1,19 @@
 #pragma once
 #include <iterator>
 
-template <class ValType, template<class> class NodeType>
-class c_linked_list_iterator : public std::iterator<std::forward_iterator_tag, NodeType<ValType>, size_t, NodeType<ValType> * *, NodeType<ValType> *>
+template<class DataType, class NodeType = c_poly_node<DataType>>
+class c_linked_list_iterator : public std::iterator<std::forward_iterator_tag, NodeType, size_t, NodeType * *, NodeType *>
 {
-	NodeType<ValType> * * current;
+	NodeType * * current;
 public:
 	c_linked_list_iterator() = delete;
-	explicit c_linked_list_iterator(NodeType<ValType> * * const& node);
+	explicit c_linked_list_iterator(NodeType * * const& node);
 	//no destructor because current is deleted in c_poly_node
-	c_linked_list_iterator<ValType, NodeType>& operator++();
-	c_linked_list_iterator<ValType, NodeType> operator++(int);
-	bool operator==(c_linked_list_iterator<ValType, NodeType> other) const;
-	bool operator!=(c_linked_list_iterator<ValType, NodeType> const& other) const;
-	NodeType<ValType> * * operator*();
+	c_linked_list_iterator<DataType, NodeType>& operator++();
+	c_linked_list_iterator<DataType, NodeType> operator++(int);
+	bool operator==(c_linked_list_iterator<DataType, NodeType> other) const;
+	bool operator!=(c_linked_list_iterator<DataType, NodeType> const& other) const;
+	NodeType * * operator*();
 };
 
 #include "c_linked_list_iterator.inl"

@@ -1,11 +1,11 @@
 #pragma once
 #include "../Data Structures Headers/c_min_heap.h"
 
-template<class MyType, template <class> class NodeType>
+template<class DataType, class NodeType = c_poly_node<DataType>>
 class c_min_heap_sort
 {
 public:
-	std::vector<MyType> static& sort(std::vector<MyType>& arr);
+	std::vector<DataType> static& sort(std::vector<DataType>& arr);
 };
 
 #include "c_min_heap_sort.inl"
