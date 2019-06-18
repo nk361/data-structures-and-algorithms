@@ -1,4 +1,5 @@
 #pragma once
+
 #include "c_heap.h"
 
 template<class DataType, class NodeType, typename Operation>

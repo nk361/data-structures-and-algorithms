@@ -1,5 +1,5 @@
 #pragma once
-#include "../Data Structures Headers/c_max_heap.h"
+#include "../Data Structures/c_max_heap.h"
 
 template<class DataType, class NodeType = c_poly_node<DataType>>
 class c_max_heap_sort

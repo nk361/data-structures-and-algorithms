@@ -1,6 +1,8 @@
 #pragma once
+
 #include <vector>
 
+#include "c_poly_node.h"
 #include "c_tree.h"
 #include "Iterators/c_bst_iterator_in_order.h"
 

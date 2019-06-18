@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-#include "../Data Structures Headers/c_heap.h"
+#include "../Data Structures/c_heap.h"
 
 template<class DataType, class NodeType = c_poly_node<DataType>, typename Operation = std::less<>>
 class c_heap_sort

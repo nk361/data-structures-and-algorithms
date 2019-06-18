@@ -21,79 +21,79 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Algorithms\c_general_algorithms.h">
+    <ClInclude Include="Algorithms\c_bst_sorts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Algorithms\c_bubble_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Algorithms\c_counting_sort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Algorithms\c_max_heap_sort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Algorithms\c_min_heap_sort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_binary_tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_linked_list.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_max_heap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_min_heap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_poly_node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_heap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_red_black_binary_tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_avl_binary_tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_avl_node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Algorithms\c_merge_sort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Algorithms\c_bst_sorts.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structures Headers\c_red_black_poly_node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Algorithms\c_comb_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Data Structures Headers\Iterators\c_bst_iterator_in_order.h">
+    <ClInclude Include="Algorithms\c_counting_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Data Structures Headers\Iterators\c_linked_list_iterator.h">
+    <ClInclude Include="Algorithms\c_deep_learning.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithms\c_general_algorithms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Algorithms\c_heap_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithms\c_max_heap_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithms\c_merge_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithms\c_min_heap_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Algorithms\c_quick_sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Algorithms\c_deep_learning.h">
+    <ClInclude Include="Data Structures\Iterators\c_bst_iterator_in_order.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\Iterators\c_linked_list_iterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_avl_binary_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_avl_node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_binary_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_heap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_linked_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_max_heap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_min_heap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_poly_node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_red_black_binary_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_red_black_poly_node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -106,73 +106,115 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Data Structures Headers\c_tree.inl">
+    <None Include="Data Structures\c_tree.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Data Structures Headers\c_binary_tree.inl">
+    <None Include="Data Structures\Iterators\c_bst_iterator_in_order.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Data Structures Headers\c_poly_node.inl">
+    <None Include="Data Structures\Iterators\c_linked_list_iterator.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Data Structures Headers\c_heap.inl">
+    <None Include="Data Structures\c_avl_binary_tree.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Data Structures Headers\c_linked_list.inl">
+    <None Include="Data Structures\c_avl_node.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Data Structures Headers\c_max_heap.inl">
+    <None Include="Data Structures\c_binary_tree.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Data Structures Headers\c_min_heap.inl">
+    <None Include="Data Structures\c_heap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Data Structures Headers\c_node.inl">
+    <None Include="Data Structures\c_linked_list.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Algorithms\c_bubble_sort.inl">
+    <None Include="Data Structures\c_max_heap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Algorithms\c_counting_sort.inl">
+    <None Include="Data Structures\c_min_heap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Algorithms\c_max_heap_sort.inl">
+    <None Include="Data Structures\c_node.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Algorithms\c_min_heap_sort.inl">
+    <None Include="Data Structures\c_poly_node.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Data Structures Headers\c_avl_binary_tree.inl">
+    <None Include="Data Structures\c_red_black_binary_tree.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Data Structures Headers\c_avl_node.inl">
+    <None Include="Data Structures\c_red_black_poly_node.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Algorithms\c_quick_sort.inl">
       <Filter>Header Files</Filter>
     </None>
     <None Include="Algorithms\c_bst_sorts.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Algorithms\c_merge_sort.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="Data Structures Headers\c_red_black_poly_node.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="Data Structures Headers\c_red_black_binary_tree.inl">
+    <None Include="Algorithms\c_bubble_sort.inl">
       <Filter>Header Files</Filter>
     </None>
     <None Include="Algorithms\c_comb_sort.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Data Structures Headers\Iterators\c_linked_list_iterator.inl">
+    <None Include="Algorithms\c_counting_sort.inl">
       <Filter>Header Files</Filter>
     </None>
     <None Include="Algorithms\c_heap_sort.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Data Structures Headers\Iterators\c_bst_iterator_in_order.inl">
+    <None Include="Algorithms\c_max_heap_sort.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Algorithms\c_quick_sort.inl">
+    <None Include="Algorithms\c_merge_sort.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Algorithms\c_min_heap_sort.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\Iterators\c_bst_iterator_in_order.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\Iterators\c_linked_list_iterator.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_avl_binary_tree.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_avl_node.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_binary_tree.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_heap.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_linked_list.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_max_heap.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_min_heap.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_node.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_poly_node.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_red_black_binary_tree.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_red_black_poly_node.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_tree.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

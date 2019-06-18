@@ -1,8 +1,10 @@
 #pragma once
-#include <cmath>
 
-#include "c_binary_tree.h"
+#include <cmath>
+#include <vector>
+
 #include "c_poly_node.h"
+#include "c_binary_tree.h"
 
 template<class DataType, class NodeType = c_poly_node<DataType>, typename Operation = std::greater<>>
 class c_heap : public c_binary_tree<DataType, NodeType>

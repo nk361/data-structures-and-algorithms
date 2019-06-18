@@ -36,6 +36,16 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Algorithms\test_miscellaneous_algorithms.cpp" />
+    <ClCompile Include="Algorithms\test_sorts.cpp" />
+    <ClCompile Include="Data Structures\Iterators\test_bst_iterator.cpp" />
+    <ClCompile Include="Data Structures\Iterators\test_linked_list_iterator.cpp" />
+    <ClCompile Include="Data Structures\test_avl_binary_tree.cpp" />
+    <ClCompile Include="Data Structures\test_binary_tree.cpp" />
+    <ClCompile Include="Data Structures\test_linked_list.cpp" />
+    <ClCompile Include="Data Structures\test_max_and_min_heaps.cpp" />
+    <ClCompile Include="Data Structures\test_nodes.cpp" />
+    <ClCompile Include="Data Structures\test_red_black_binary_tree.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

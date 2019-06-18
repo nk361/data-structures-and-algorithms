@@ -1,5 +1,5 @@
 #pragma once
-#include "../Data Structures Headers/c_min_heap.h"
+#include "../Data Structures/c_min_heap.h"
 
 template<class DataType, class NodeType = c_poly_node<DataType>>
 class c_min_heap_sort
