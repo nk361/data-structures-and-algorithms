@@ -1,4 +1,5 @@
 #pragma once
+
 #include "c_avl_node.h"
 
 template <class ValType>

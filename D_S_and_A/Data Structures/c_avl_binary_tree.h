@@ -1,4 +1,7 @@
 #pragma once
+
+#include <vector>
+
 #include "c_binary_tree.h"
 
 template<class DataType, class NodeType = c_poly_node<DataType>, typename Operation = std::less<>>

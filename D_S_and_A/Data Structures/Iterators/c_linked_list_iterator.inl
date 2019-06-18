@@ -1,4 +1,5 @@
 #pragma once
+
 #include "c_linked_list_iterator.h"
 
 template<class DataType, class NodeType>

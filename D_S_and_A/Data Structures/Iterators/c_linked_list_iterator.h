@@ -1,4 +1,5 @@
 #pragma once
+
 #include <iterator>
 
 template<class DataType, class NodeType = c_poly_node<DataType>>

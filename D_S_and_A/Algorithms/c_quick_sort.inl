@@ -1,4 +1,5 @@
 #pragma once
+
 #include <ctime>
 
 #include "c_quick_sort.h"

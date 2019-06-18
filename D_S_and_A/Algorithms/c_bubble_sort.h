@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 
 template<class DataType, typename Operation = std::less<>>

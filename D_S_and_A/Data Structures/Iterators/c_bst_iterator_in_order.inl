@@ -1,4 +1,5 @@
 #pragma once
+
 #include "c_bst_iterator_in_order.h"
 
 template<class DataType, class NodeType>

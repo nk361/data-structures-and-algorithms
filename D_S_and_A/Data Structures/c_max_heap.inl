@@ -1,4 +1,7 @@
 #pragma once
+
+#include <vector>
+
 #include "c_max_heap.h"
 
 template<class DataType, class NodeType>

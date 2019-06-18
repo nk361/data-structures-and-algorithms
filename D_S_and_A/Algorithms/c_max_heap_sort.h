@@ -1,4 +1,7 @@
 #pragma once
+
+#include <vector>
+
 #include "../Data Structures/c_max_heap.h"
 
 template<class DataType, class NodeType = c_poly_node<DataType>>

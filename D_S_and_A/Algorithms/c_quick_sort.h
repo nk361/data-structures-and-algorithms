@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 
 template<class DataType, int PivotType = 1, typename Operation = std::less<>>//default pivot is rightmost value

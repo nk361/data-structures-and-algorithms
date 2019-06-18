@@ -1,4 +1,5 @@
 #pragma once
+
 #include "c_red_black_poly_node.h"
 
 template<class DataType>

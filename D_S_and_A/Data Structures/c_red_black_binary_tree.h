@@ -1,5 +1,9 @@
 #pragma once
+
+#include <vector>
+
 #include "c_binary_tree.h"
+#include "c_red_black_poly_node.h"
 
 template<class DataType, class NodeType = c_red_black_poly_node<DataType>, typename Operation = std::less<>>
 class c_red_black_binary_tree : public c_binary_tree<DataType, NodeType, Operation>
