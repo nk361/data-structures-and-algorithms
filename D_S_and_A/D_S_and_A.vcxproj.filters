@@ -96,6 +96,12 @@
     <ClInclude Include="Data Structures\c_tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Data Structures\c_priority_queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structures\c_heap_interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -215,6 +221,9 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Data Structures\c_tree.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Data Structures\c_priority_queue.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

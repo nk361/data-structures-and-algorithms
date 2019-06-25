@@ -10,6 +10,12 @@ c_min_heap<DataType, NodeType>::c_min_heap(DataType const& val) : c_heap<DataTyp
 template<class DataType, class NodeType>
 c_min_heap<DataType, NodeType>::c_min_heap(std::vector<DataType> const& vals) : c_heap<DataType, NodeType, std::less<>>(vals) {}
 
+template <class DataType, class NodeType>
+DataType c_min_heap<DataType, NodeType>::get_top()
+{
+	return c_heap<DataType, NodeType, std::less<>>::get_top();
+}
+
 template<class DataType, class NodeType>
 void c_min_heap<DataType, NodeType>::add_item(DataType const& val)
 {

@@ -163,11 +163,13 @@
     <ClInclude Include="Data Structures\c_avl_node.h" />
     <ClInclude Include="Data Structures\c_binary_tree.h" />
     <ClInclude Include="Data Structures\c_heap.h" />
+    <ClInclude Include="Data Structures\c_heap_interface.h" />
     <ClInclude Include="Data Structures\c_linked_list.h" />
     <ClInclude Include="Data Structures\c_max_heap.h" />
     <ClInclude Include="Data Structures\c_min_heap.h" />
     <ClInclude Include="Data Structures\c_node.h" />
     <ClInclude Include="Data Structures\c_poly_node.h" />
+    <ClInclude Include="Data Structures\c_priority_queue.h" />
     <ClInclude Include="Data Structures\c_red_black_binary_tree.h" />
     <ClInclude Include="Data Structures\c_red_black_poly_node.h" />
     <ClInclude Include="Data Structures\c_tree.h" />
@@ -204,6 +206,7 @@
     <None Include="Data Structures\c_min_heap.inl" />
     <None Include="Data Structures\c_node.inl" />
     <None Include="Data Structures\c_poly_node.inl" />
+    <None Include="Data Structures\c_priority_queue.inl" />
     <None Include="Data Structures\c_red_black_binary_tree.inl" />
     <None Include="Data Structures\c_red_black_poly_node.inl" />
     <None Include="Data Structures\c_tree.inl" />

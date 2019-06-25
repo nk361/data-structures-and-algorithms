@@ -10,6 +10,12 @@ c_max_heap<DataType, NodeType>::c_max_heap(DataType const& val) : c_heap<DataTyp
 template<class DataType, class NodeType>
 c_max_heap<DataType, NodeType>::c_max_heap(std::vector<DataType> const& vals) : c_heap<DataType, NodeType, std::greater<>>(vals) {}
 
+template <class DataType, class NodeType>
+DataType c_max_heap<DataType, NodeType>::get_top()
+{
+	return c_heap<DataType, NodeType, std::greater<>>::get_top();
+}
+
 template<class DataType, class NodeType>
 void c_max_heap<DataType, NodeType>::add_item(DataType const& val)
 {

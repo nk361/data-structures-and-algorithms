@@ -19,7 +19,7 @@
 #include "../../D_S_and_A/Data Structures/c_red_black_poly_node.h"
 #include "../../D_S_and_A/Data Structures/c_red_black_binary_tree.h"
 
-TEST(c_sorts, c_sort_header_tests)
+TEST(c_sorts, c_sort_header_tests)//should I do one namespace called sorts and define them all there while their code will be written elsewhere?
 {
 	std::vector<int> small_duplicates_negatives_odd{ 1, 2, 4, 4, -4, 6, 7, -10, 10, 9, 10 };
 

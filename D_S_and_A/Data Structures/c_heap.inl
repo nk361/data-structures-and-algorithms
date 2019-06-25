@@ -64,6 +64,12 @@ void c_heap<DataType, NodeType, Operation>::trickle_down()
 	}
 }
 
+template <class DataType, class NodeType, typename Operation>
+DataType c_heap<DataType, NodeType, Operation>::get_top()
+{
+	return c_heap<DataType, NodeType, Operation>::root->value;
+}
+
 template<class DataType, class NodeType, typename Operation>
 void c_heap<DataType, NodeType, Operation>::add_item(DataType const& val)//virtual goes only in class declaration
 {

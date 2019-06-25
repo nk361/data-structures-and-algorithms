@@ -4,13 +4,14 @@ I'm using google test to test my headers
 
 # Features:
   - Data Structures
-    - [x] [Binary Search Tree](../master/D_S_and_A/Data%20Structures%20Headers/c_binary_tree.inl)
-    - [x] [AVL Binary Search Tree](../master/D_S_and_A/Data%20Structures%20Headers/c_AVL_binary_tree.inl)
-    - [x] [Red Black Binary Search Tree](../master/D_S_and_A/Data%20Structures%20Headers/c_red_black_binary_tree.inl)
-    - [x] [Heap](../master/D_S_and_A/Data%20Structures%20Headers/c_heap.inl)
-    - [x] [Max Heap](../master/D_S_and_A/Data%20Structures%20Headers/c_max_heap.inl)
-    - [x] [Min Heap](../master/D_S_and_A/Data%20Structures%20Headers/c_min_heap.inl)
-    - [x] [Linked List](../master/D_S_and_A/Data%20Structures%20Headers/c_linked_list.inl)
+    - [x] [Binary Search Tree](../master/D_S_and_A/Data%20Structures/c_binary_tree.inl)
+    - [x] [AVL Binary Search Tree](../master/D_S_and_A/Data%20Structures/c_AVL_binary_tree.inl)
+    - [x] [Red Black Binary Search Tree](../master/D_S_and_A/Data%20Structures/c_red_black_binary_tree.inl)
+    - [x] [Heap](../master/D_S_and_A/Data%20Structures/c_heap.inl)
+    - [x] [Max Heap](../master/D_S_and_A/Data%20Structures/c_max_heap.inl)
+    - [x] [Min Heap](../master/D_S_and_A/Data%20Structures/c_min_heap.inl)
+	- [x] [Priority Queue](../master/D_S_and_A/Data%20Structures/c_priority_queue.inl)
+    - [x] [Linked List](../master/D_S_and_A/Data%20Structures/c_linked_list.inl)
     - [ ] Doubly Linked List
     - [ ] Queue
     - [ ] Stack
@@ -20,8 +21,8 @@ I'm using google test to test my headers
     - [ ] Graph
     - [ ] Tensor
   - Iterators
-    - [x] [Linked List Iterator](../master/D_S_and_A/Data%20Structures%20Headers/Iterators/c_linked_list_iterator.inl)
-    - [x] [Binary Search Tree In Order Traversal Iterator](../master/D_S_and_A/Data%20Structures%20Headers/Iterators/c_bst_iterator_in_order.inl)
+    - [x] [Linked List Iterator](../master/D_S_and_A/Data%20Structures/Iterators/c_linked_list_iterator.inl)
+    - [x] [Binary Search Tree In Order Traversal Iterator](../master/D_S_and_A/Data%20Structures/Iterators/c_bst_iterator_in_order.inl)
     - [ ] Binary Search Tree Post Order Traversal Iterator
     - [ ] Binary Search Tree Pre Order Traversal Iterator
     - [ ] Binary Search Tree Level Order Traversal Iterator (Breadth First Search)
@@ -58,6 +59,7 @@ I'm using google test to test my headers
       - [x] [Heap](../master/D_S_and_A_Tests/Data%20Structures/test_max_and_min_heaps.cpp)
       - [x] [Max Heap](../master/D_S_and_A_Tests/Data%20Structures/test_max_and_min_heaps.cpp)
       - [x] [Min Heap](../master/D_S_and_A_Tests/Data%20Structures/test_max_and_min_heaps.cpp)
+	  - [x] [Priority Queue](../master/D_S_and_A_Tests/Data%20Structures/test_priority_queue.cpp)
       - [x] [Linked List](../master/D_S_and_A_Tests/Data%20Structures/test_linked_list.cpp)
     - Iterators
       - [x] [Linked List Iterator](../master/D_S_and_A_Tests/Data%20Structures/Iterators/test_linked_list_iterator.cpp)

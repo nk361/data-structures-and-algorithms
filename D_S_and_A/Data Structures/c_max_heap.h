@@ -13,9 +13,10 @@ public:
 	explicit c_max_heap(DataType const& val);
 	explicit c_max_heap(std::vector<DataType> const& vals);
 
+	DataType get_top() override;
 	void add_item(DataType const& val) override;
 	void add_items(std::vector<DataType> const& vals) override;
-	void remove_item();
+	void remove_item() override;
 };
 
 #include "c_max_heap.inl"

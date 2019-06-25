@@ -217,4 +217,10 @@ TEST(c_heap_tests, c_max_and_min_heap_tests)
 	EXPECT_EQ(larger_min_heap_remove.root->value, 82);
 	larger_min_heap_remove.remove_item();
 	EXPECT_EQ(larger_min_heap_remove.root, nullptr);
+
+	/*c_min_heap<int> testing_binary_remove_is_gone{ { 5, 20, 30 } };
+	testing_binary_remove_is_gone.remove_item(20);
+
+	c_heap<int> also_testing_it_is_gone_in_heap{ { 30, 20, 10 } };
+	also_testing_it_is_gone_in_heap.remove_item(20);*/
 }
