@@ -5,7 +5,7 @@ I'm using google test to test my headers
 # Features:
   - Data Structures
     - [x] [Binary Search Tree](../master/D_S_and_A/Data%20Structures/c_binary_tree.inl)
-    - [x] [AVL Binary Search Tree](../master/D_S_and_A/Data%20Structures/c_AVL_binary_tree.inl)
+    - [x] [AVL Binary Search Tree](../master/D_S_and_A/Data%20Structures/c_avl_binary_tree.inl)
     - [x] [Red Black Binary Search Tree](../master/D_S_and_A/Data%20Structures/c_red_black_binary_tree.inl)
     - [x] [Heap](../master/D_S_and_A/Data%20Structures/c_heap.inl)
     - [x] [Max Heap](../master/D_S_and_A/Data%20Structures/c_max_heap.inl)
